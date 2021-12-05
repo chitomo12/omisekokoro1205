@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  PushNotificationSwiftUI
+//  PushNotificationStury
 //
 //  Created by 福田正知 on 2021/12/04.
 //
@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack{
+            Text("Hello, World!")
+        }
     }
 }
 
