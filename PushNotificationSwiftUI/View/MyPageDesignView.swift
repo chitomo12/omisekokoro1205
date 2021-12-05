@@ -212,7 +212,7 @@ struct MyPageDesignView: View {
                         myPageTabSelection = 0
                     }){
                         VStack {
-                            Text("投稿").font(.title3)
+                            Text("投稿").font(.body)
                         }
                         .frame(width:180)
                     }
@@ -221,7 +221,7 @@ struct MyPageDesignView: View {
                         myPageTabSelection = 1
                     }) {
                         VStack {
-                            Text("ブックマーク").font(.title3)
+                            Text("ブックマーク").font(.body)
                         }
                         .frame(width:180)
                     }
@@ -231,8 +231,8 @@ struct MyPageDesignView: View {
                 Divider()
                 
                 if myPageTabSelection == 0 {
-                    
-                    Text("投稿一覧")
+                    Text("再読み込み")
+                        .font(.callout)
                         .padding()
                         .onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
@@ -243,6 +243,10 @@ struct MyPageDesignView: View {
                                 }
                             }
                         }
+                        .onTapGesture {
+                            // ブックマーク一覧を読み込み
+                            getUserPostedPosts(userUID: environmentCurrentUserData.uid)
+                        }
                     VStack {
                         ForEach(0..<postedPostCardList.count, id: \.self) { count in
                             // 投稿をリスト化して表示
@@ -250,7 +254,8 @@ struct MyPageDesignView: View {
                         }
                     }
                 } else if myPageTabSelection == 1 {
-                    Text("ブックマーク一覧")
+                    Text("再読み込み")
+                        .font(.callout)
                         .padding()
                         .onAppear{
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
@@ -260,6 +265,10 @@ struct MyPageDesignView: View {
                                     isMyBookmarkListInitialized = true
                                 }
                             }
+                        }
+                        .onTapGesture {
+                            // ブックマーク一覧を読み込み
+                            getUserRegisteredBookmarks(userUID: environmentCurrentUserData.uid)
                         }
                     LazyVStack {
                         ForEach(0..<bookmarkedPostCardList.count, id: \.self) { count in
@@ -400,7 +409,7 @@ struct MyPageDesignView: View {
                                     print("documentID: \(documentSnapshot?.documentID)")
                                     // ドキュメントごとの処理を行う
                                     // bookmarkedPostCardListに追加する
-                                    let postName = String(describing: documentSnapshot!.get("name"))
+                                    let postName = String(describing: documentSnapshot!.get("name") as! String)
                                     let postCreatedAt = documentSnapshot!.get("created_at") as! Timestamp
                                       let postCreatedAtDate = postCreatedAt.dateValue()
                                         let postCreatedAtString = formatter.string(from: postCreatedAtDate)
