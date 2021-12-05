@@ -15,10 +15,13 @@ struct CommentListView: View {
     @Binding var mapSwitch: MapSwitch
     
     @State var postList: [Post] = []
+    @State var notificationList: [NotificationData] = []
     
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
     
     let pushNotificationSender = PushNotificationSender()
+    
+    var notificationController = NotificationController()
     
     var body: some View {
         VStack {
@@ -45,16 +48,21 @@ struct CommentListView: View {
             Button(action: {
                 postList = [] // 初期化
                 print("データを取得します...")
-                getPostListFromAll()
+//                getPostListFromAll()
+                notificationController.getNotificationList(userUID: environmentCurrentUserData.uid) { notificationListResult in
+                    print("notificationListを取得しました")
+                    notificationList = notificationListResult
+                }
                 print("postList: \(postList)")
             }) {
-                Text("コメント取得")
+                Text("GetNotificationList")
             }
-            List(postList){ post in
+            List(notificationList){ notification in
                 VStack(alignment: .leading){
-                    Text(post.omiseName).font(.caption)
-                    Text(post.comment)
-                    Text(post.created_at).font(.caption)
+                    Text(notification.sendUserUid ?? "").font(.caption)
+                    Text(notification.title ?? "")
+                    Text(notification.body).font(.caption)
+                    Text(notification.created_at).font(.caption2)
                 }
             }
         }
