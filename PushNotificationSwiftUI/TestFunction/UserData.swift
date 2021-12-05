@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 class UserData: ObservableObject {
     @Published var uid: String = ""
@@ -76,6 +77,24 @@ class UserData: ObservableObject {
         
         // 名前を変更するユーザーの関連投稿のcreated_by_nameを全て変更する
         
+    }
+    
+    // 指定したユーザーUIDのデバイストークンを取得する
+    func getFcmTokenFromUserUID(userUID: String, completion: @escaping (String) -> ()) {
+        var fcmToken: String = "dummy"
+        
+        db.collection("userCollection")
+            .document("userDocument")
+            .collection("subUserCollection")
+            .document(userUID)
+            .getDocument{ document, error in
+                if let document = document {
+                    if document.get("fcmToken") != nil {
+                        fcmToken = document.get("fcmToken") as! String
+                    }
+                }
+                completion(fcmToken)
+            }
     }
 }
 

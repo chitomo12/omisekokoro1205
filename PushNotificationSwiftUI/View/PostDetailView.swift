@@ -126,17 +126,21 @@ struct PostDetailView: View {
                                     AddFavorite(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
                                         isFavoriteAddedToSelectedPost.toggle()
                                         // 投稿者のFCMトークンを取得
-                                        // let posterFcmToken = getFcmTokenFromUserUID(userUid: selectedPost.created_by)
-                                        // プッシュ通知を送る
-                                        pushNotificationSender
-                                            .sendPushNotification(to: "",
-                                                                  userId: environmentCurrentUser.uid,
-                                                                  title: "❤️が送られました",
-                                                                  body: "\(selectedPost.comment)",
-                                                                  completion: {
-                                                print("プッシュ通知を送りました")
-                                            })
-                                    })
+                                        var posterFcmToken: String = "dummy"
+                                        environmentCurrentUser.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
+                                            posterFcmToken = result
+                                            print("posterFcmToken: \(posterFcmToken)")
+                                            // 取得したFCMを使いプッシュ通知を送る
+                                            pushNotificationSender.sendPushNotification(to: posterFcmToken,
+                                                                      userId: environmentCurrentUser.uid,
+                                                                      title: "❤️が送られました",
+                                                                      body: "\(selectedPost.comment)",
+                                                                      completion: {
+                                                    print("プッシュ通知を送りました")
+                                                })
+                                        }
+                                    }
+                                   )
                                 } else {
                                     // お気に入りがある場合の処理
                                     RemoveFavorite(favDocumentID: favDocumentID, postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {

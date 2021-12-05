@@ -13,6 +13,7 @@ import Firebase
 import FirebaseAuth
 
 class LoginController: ObservableObject {
+    @EnvironmentObject var environmentFcmToken: FcmToken
 //    var appDelegate = AppDelegate()
     
     @Published var errorMessage: String = ""
@@ -65,7 +66,7 @@ class LoginController: ObservableObject {
     }
     
     // ログインのためのメソッド
-    func authLoginUser(email: String, password: String) {
+    func authLoginUser(email: String, password: String, deviceToken: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             print("strongSelf: \(strongSelf)")
@@ -75,14 +76,14 @@ class LoginController: ObservableObject {
                 print("ログイン成功")
                 if let user = Auth.auth().currentUser {
                     
-//                    // FCMトークンを発行＆登録
+                    // FCMトークンを発行＆登録
 //                    print("LoginControllerから参照したFCMトークン：\(self!.appDelegate.fcmToken)")
-//                    if let authCurrentUser = Auth.auth().currentUser{
-//                        self!.setFcmTokenToFirestore(
-//                            userUid: authCurrentUser.uid ?? "dummy",
-//                            fcmToken: self!.appDelegate.fcmToken
-//                        )
-//                    }
+                    if let authCurrentUser = Auth.auth().currentUser{
+                        self!.setFcmTokenToFirestore(
+                            userUid: authCurrentUser.uid,
+                            fcmToken: deviceToken
+                        )
+                    }
                     
                     print("user.uid: \(user.uid), user.email: \(user.email ?? "")")
                     self!.loggedInUserUID = user.uid
@@ -104,13 +105,13 @@ class LoginController: ObservableObject {
     
     func logoutUser(){
         do{
-//            // プッシュ通知が誤送されないよう、ログアウト前にfcmTokenをリセットする
-//            if let authCurrentUser = Auth.auth().currentUser{
-//                self.setFcmTokenToFirestore(
-//                    userUid: authCurrentUser.uid ?? "guest",
-//                    fcmToken: ""
-//                )
-//            }
+            // プッシュ通知が誤送されないよう、ログアウト前にfcmTokenをリセットする
+            if let authCurrentUser = Auth.auth().currentUser{
+                self.setFcmTokenToFirestore(
+                    userUid: authCurrentUser.uid,
+                    fcmToken: ""
+                )
+            }
             try Auth.auth().signOut()
             self.isDidLogout = true
         } catch let signOutError as NSError {

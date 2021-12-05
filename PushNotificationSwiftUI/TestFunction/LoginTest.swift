@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LoginTest: View {
+    @EnvironmentObject var environmentFcmToken: FcmToken
+    
     @ObservedObject var loginController = LoginController()
     @ObservedObject var currentUser: UserData
     
@@ -32,7 +34,9 @@ struct LoginTest: View {
                 Divider()
                 Button(action: {
                     print("ログインします")
-                    loginController.authLoginUser(email: loginUserEmail, password: loginUserPassword)
+                    loginController.authLoginUser(email: loginUserEmail,
+                                                  password: loginUserPassword,
+                                                  deviceToken: environmentFcmToken.fcmTokenString)
                 }) {
                     Text("ログイン").padding()
                 }

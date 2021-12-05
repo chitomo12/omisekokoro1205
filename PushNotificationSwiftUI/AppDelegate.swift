@@ -47,16 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                 return
             }
             print("（AppDelegate内）トークン: \(token)")
-            self.fcmToken = token
+//            self.fcmToken = token
             // ログイン中のユーザーがいれば、当該ユーザーのデータベースにFCMトークンを追加する。
             if let authCurrentUser = Auth.auth().currentUser {
-                let _ = setFcmTokenToEnvironment(fcmToken: token)
                 self.loginController.setFcmTokenToFirestore(
                     userUid: authCurrentUser.uid,
                     fcmToken: token
                 )
             }
-//            setFcmTokenToEnvironment(fcmToken: token)
         }
         print("messaging: \(messaging)")
     }
@@ -93,12 +91,4 @@ extension AppDelegate {
    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
       completionHandler([.banner, .sound])
    }
-}
-
-public func setFcmTokenToEnvironment(fcmToken: String) -> String{
-    @EnvironmentObject var envFcmToken: FcmToken
-    
-    print("fcmToken:\(fcmToken)を環境にセットします")
-//    envFcmToken.fcmTokenString = fcmToken
-    return fcmToken
 }

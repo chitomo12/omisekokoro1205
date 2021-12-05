@@ -182,8 +182,8 @@
 				13F9D3FD275C7D6000D121F2 /* TabBarView.swift */,
 				13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */,
 				13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */,
-				13F9D3E4275C7D5F00D121F2 /* TestFunction */,
 				13F9D3CB275C7D5E00D121F2 /* View */,
+				13F9D3E4275C7D5F00D121F2 /* TestFunction */,
 				13F9D2E9275B984C00D121F2 /* Assets.xcassets */,
 				13F9D2EB275B984C00D121F2 /* Preview Content */,
 			);
