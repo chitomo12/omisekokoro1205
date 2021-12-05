@@ -22,23 +22,26 @@ struct CommentListView: View {
     
     var body: some View {
         VStack {
-            Button(action: {
-                print("プッシュ通知を送ります")
-                pushNotificationSender
-                    .sendPushNotification(to:  "czIhz_lX1kjPurs2FDPC0K:APA91bEgZuYuGA_8KUiZvtnPbIu6ctlgvUBx0cYk1suM51i_yTop1WLEOn3l6b-dYzdQOtAGjM5qattdooTFjU8w3uPMUp5Z7KDqHHpYf-KfW9j4n9lh2UCsZv2wsRmysgBjAH7J5ZoU",
-                                          userId: environmentCurrentUserData.uid,
-                                          title: "title test", body: "test body") {
-                        print("プッシュ通知を送りました")
-                    }
-            }) {
-                Text("プッシュ通知を送る")
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
-                    .frame(width: 200, height: 40, alignment: .center)
-                    .background(linearGradientForButton)
-                    .cornerRadius(20)
-                    .padding()
-            }
+            
+//            テスト用
+//            Button(action: {
+//                print("プッシュ通知を送ります")
+//                pushNotificationSender
+//                    .sendPushNotification(to:  "czIhz_lX1kjPurs2FDPC0K:APA91bEgZuYuGA_8KUiZvtnPbIu6ctlgvUBx0cYk1suM51i_yTop1WLEOn3l6b-dYzdQOtAGjM5qattdooTFjU8w3uPMUp5Z7KDqHHpYf-KfW9j4n9lh2UCsZv2wsRmysgBjAH7J5ZoU",
+//                                          userId: environmentCurrentUserData.uid,
+//                                          title: "title test", body: "test body") {
+//                        print("プッシュ通知を送りました")
+//                    }
+//            }) {
+//                Text("プッシュ通知を送る")
+//                    .font(.system(size: 16, weight: .bold, design: .rounded))
+//                    .foregroundColor(.white)
+//                    .frame(width: 200, height: 40, alignment: .center)
+//                    .background(linearGradientForButton)
+//                    .cornerRadius(20)
+//                    .padding()
+//            }
+            
             Button(action: {
                 postList = [] // 初期化
                 print("データを取得します...")
