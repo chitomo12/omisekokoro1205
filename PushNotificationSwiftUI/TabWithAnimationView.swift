@@ -67,6 +67,11 @@ struct TabWithAnimationView: View {
     @State var rotationThree = false
     @State var rotationFour = false
         
+    init(currentUser: UserData){
+        self.currentUser = currentUser
+//        self.environmentFcmToken.fcmTokenString = appDelegate.fcmToken
+    }
+    
     var body: some View {
         ZStack{
             VStack{
@@ -90,6 +95,18 @@ struct TabWithAnimationView: View {
                 .tabViewStyle(PageTabViewStyle())
                 .animation(.default, value: selectedTag)
                 .edgesIgnoringSafeArea(.top)
+                .onAppear {
+                    // プッシュ通知用トークンを取得し、環境変数に格納する。
+                    Messaging.messaging().token { token, error in
+                      if let error = error {
+                        print("Error fetching FCM registration token: \(error)")
+                      } else if let token = token {
+                        print("FCM registration token: \(token)")
+//                        self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
+                          environmentFcmToken.fcmTokenString = token
+                      }
+                    }
+                }
                 
                 // タブ選択コーナー
                 ZStack (alignment: .center){
