@@ -29,7 +29,6 @@ struct MapAndSearch: View {
     @ObservedObject var currentUser: UserData
     
     // 選択中の緯度経度
-    
     @Binding var searchedLocationName: String
     @Binding var searchedAddress: String
     @Binding var mapSwitch: MapSwitch

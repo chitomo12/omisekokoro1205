@@ -41,6 +41,7 @@ struct PostDetailView: View {
     @State var postData = PostData()
     
     @State var pushNotificationSender = PushNotificationSender()
+    @State var notificationController = NotificationController()
     
     var body: some View {
 //        let bounds = UIScreen.main.bounds
@@ -125,6 +126,7 @@ struct PostDetailView: View {
                                     // お気に入りされてない場合の処理
                                     AddFavorite(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
                                         isFavoriteAddedToSelectedPost.toggle()
+                                        
                                         // 投稿者のFCMトークンを取得
                                         var posterFcmToken: String = "dummy"
                                         environmentCurrentUser.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
@@ -166,12 +168,37 @@ struct PostDetailView: View {
                             // Bookmarkボタン
                             Button(action:{
                                 if isBookmarkAddedToSelectedPost == false{
-                                    // お気に入りされてない場合の処理
+                                    // ブックマークされてない場合の処理
                                     AddBookmark(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
                                         isBookmarkAddedToSelectedPost.toggle()
+                                        
+                                        // 投稿者のFCMトークンを取得
+                                        var posterFcmToken: String = "dummy"
+                                        environmentCurrentUser.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
+                                            posterFcmToken = result
+                                            print("posterFcmToken: \(posterFcmToken)")
+                                            // 取得したFCMを使いプッシュ通知を送る
+                                            pushNotificationSender.sendPushNotification(to: posterFcmToken,
+                                                                      userId: environmentCurrentUser.uid,
+                                                                      title: "🔖投稿がブックマークされました",
+                                                                      body: "\(selectedPost.comment)",
+                                                                      completion: {
+                                                    print("プッシュ通知を送りました")
+                                                })
+                                            // お知らせ一覧に追加する
+                                            notificationController.addNotificationList(
+                                                notificationData: NotificationData(sendUserUid: environmentCurrentUser.uid,
+                                                                                   receiveUserUid: selectedPost.created_by,
+                                                                                   relatedPostUid: selectedPost.documentId,
+                                                                                   title: "🔖投稿がブックマークされました",
+                                                                                   body: "\(selectedPost.comment)",
+                                                                                   created_at: "time"
+                                                                                  )
+                                            )
+                                        }
                                     })
                                 } else {
-                                    // お気に入りがある場合の処理
+                                    // ブックマークがある場合の処理
                                     RemoveBookmark(bookmarkDocumentID: bookmarkDocumentID, postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
                                         isBookmarkAddedToSelectedPost.toggle()
                                     })
