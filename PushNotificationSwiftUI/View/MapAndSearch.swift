@@ -208,7 +208,9 @@ struct MapAndSearch: View {
                     
                         // 起動時に表示し、ログイン状態をチェックするポップオーバー
                         .popover(isPresented: $isShowLoginCheckView){
-                            if isShowLoginView == false {
+                            if isShowLoginView == false,
+                               let loggedInUserName = environmentCurrentUserData.userName {
+                                // ログイン中＆ユーザー名が存在する場合
                                 VStack{
                                     Image("omisekokoroLogo")
                                         .resizable()
@@ -221,8 +223,9 @@ struct MapAndSearch: View {
                                         print("ログイン情報を確認します")
                                         // ログイン情報を確認
                                         environmentCurrentUserData.CheckIfUserLoggedIn { isLoggedIn in
-                                            if isLoggedIn == true {
-                                                print("\(environmentCurrentUserData.userName!)さんこんにちは！")
+                                            if isLoggedIn == true && loggedInUserName.isEmpty == false {
+                                                // ログイン中＆名前が存在する場合
+                                                print("\(loggedInUserName)さんこんにちは！")
                                                 
 //                                                // プッシュ通知の確認
 //                                                UNUserNotificationCenter.current()
@@ -239,13 +242,19 @@ struct MapAndSearch: View {
 //                                                }
                                                 
                                                 isShowLoginCheckView = false
-                                            } else {
+                                            } else if loggedInUserName.isEmpty == true {
+                                                print("ユーザー名登録画面を表示します")
+                                            } else{
                                                 print("ログイン画面を表示します")
                                                 isShowLoginView = true
                                             }
                                         }
                                     })
-                            }else{
+                            } else if isShowLoginView == false && environmentCurrentUserData.userName == nil{
+                                // ログイン中＆ユーザー名が存在しない場合
+                                NameRegisterView(currentUser: environmentCurrentUserData)
+                            } else {
+                                // ログアウト中は新規登録＆ログイン画面へ
                                 AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
                             }
                         }.opacity(0.95)

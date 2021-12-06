@@ -35,7 +35,6 @@ struct AuthTest: View {
         
         NavigationView{
             ZStack {
-                
                 VStack{
                     Image("omisekokoroLogo")
                         .resizable()
@@ -118,6 +117,11 @@ struct AuthTest: View {
                     } else {
                         // ログインしていない場合、ログインまたは新規登録のビューを表示する
                         VStack{
+                            // 新規登録画面へ
+                            NavigationLink(destination: RegisterView(loginController: loginController), label: {
+                                Text("新規登録")
+                            })
+                            
                             Text("新規登録").font(.title2).fontWeight(.ultraLight).padding()
                             Text("メールアドレス").fontWeight(.ultraLight)
                             TextField("email", text: $createUserEmail, prompt:
@@ -166,11 +170,10 @@ struct AuthTest: View {
                 Spacer()
                 }
             }
-        }.navigationBarHidden(true)
             .onAppear(perform: {
                 print("AuthTestが表示されました")
-            }
-            )
+            })
+        }.navigationBarHidden(true)
     }
 }
 

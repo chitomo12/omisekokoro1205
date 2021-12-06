@@ -61,6 +61,7 @@ class LoginController: ObservableObject {
                 self.errorMessage = String(describing: error!)
             } else {
                 print("成功：\(String(describing: authResult))")
+                self.isDidLogin = true 
             }
         }
     }
