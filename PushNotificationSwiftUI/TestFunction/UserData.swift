@@ -5,12 +5,15 @@
 //  Created by 福田正知 on 2021/11/23.
 //
 
+import SwiftUI
 import Foundation
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
 class UserData: ObservableObject {
+    @EnvironmentObject var isShowProgress: ShowProgress
+    
     @Published var uid: String = ""
     @Published var email: String = ""
     @Published var userName: String? // 最初はnilのためオプショナル型にする
@@ -76,7 +79,19 @@ class UserData: ObservableObject {
             }
         
         // 名前を変更するユーザーの関連投稿のcreated_by_nameを全て変更する
-        
+        db.collection("locationCollection")
+            .document("locationDocument")
+            .collection("subLocCollection")
+            .whereField("postUserUID", isEqualTo: userUID)
+            .getDocuments { querySnapshots, error in
+                for document in querySnapshots!.documents {
+                    self.db.collection("locationCollection")
+                        .document("locationDocument")
+                        .collection("subLocCollection")
+                        .document(document.documentID)
+                        .setData(["postUserName" : userNewName], merge: true)
+                }
+            }
     }
     
     // 指定したユーザーUIDのデバイストークンを取得する

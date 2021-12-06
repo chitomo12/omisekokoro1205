@@ -20,7 +20,8 @@ struct LoginTest: View {
     @State var isDidLogin = ""
     
     var body: some View {
-        NavigationView{
+        ZStack{
+//        NavigationView{
             VStack{
                 Text("ログイン").padding(.horizontal)
                 Text("メールアドレス").fontWeight(.ultraLight)
@@ -33,6 +34,7 @@ struct LoginTest: View {
                 ).autocapitalization(.none)
                 Divider()
                 Button(action: {
+                    loginController.isLoading = true
                     print("ログインします")
                     loginController.authLoginUser(email: loginUserEmail,
                                                   password: loginUserPassword,
@@ -45,6 +47,13 @@ struct LoginTest: View {
                 }
             }
             .padding(.horizontal)
+//        }
+            if loginController.isLoading == true {
+                ProgressView()
+                    .frame(width: 200, height: 300, alignment: .center)
+                    .background(Color.white)
+                    .opacity(0.9)
+            }
         }
         NavigationLink(destination: DidLoginTest(loginController: loginController,
                                                  currentUser: currentUser,

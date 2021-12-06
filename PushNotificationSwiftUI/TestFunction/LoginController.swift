@@ -14,6 +14,7 @@ import FirebaseAuth
 
 class LoginController: ObservableObject {
     @EnvironmentObject var environmentFcmToken: FcmToken
+    @Published var isGuestMode = IsGuestMode()
 //    var appDelegate = AppDelegate()
     
     @Published var errorMessage: String = ""
@@ -73,6 +74,7 @@ class LoginController: ObservableObject {
             print("strongSelf: \(strongSelf)")
             if error != nil {
                 print("ログインエラー：\(String(describing: error))")
+                self?.isLoading = false
             } else {
                 print("ログイン成功")
                 if let user = Auth.auth().currentUser {
@@ -100,6 +102,7 @@ class LoginController: ObservableObject {
                         self!.isDidLogout = false
                     })
                 }
+                self?.isLoading = false 
             }
         }
     }
@@ -176,7 +179,23 @@ class LoginController: ObservableObject {
                 print("userName: \(registeringName)")
                 print("created_at: \(Timestamp(date: Date()))")
                 
-                completion()
+                self.isGuestMode.guestModeSwitch = false 
+                
+                // プッシュ通知用トークンを取得し、環境変数に格納する。
+                Messaging.messaging().token { token, error in
+                  if let error = error {
+                    print("Error fetching FCM registration token: \(error)")
+                  } else if let token = token {
+                    print("FCM registration token: \(token)")
+//                        self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
+//                      environmentFcmToken.fcmTokenString = token
+                      self.setFcmTokenToFirestore(userUid: registeringUser.uid, fcmToken: token)
+                      completion()
+                  }
+                }
+//                self.setFcmTokenToFirestore(userUid: registeringUser.uid, fcmToken: "testToken")
+//
+//                completion()
             }
             self.isLoading = false
         }

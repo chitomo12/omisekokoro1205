@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DidLoginTest: View {
     @EnvironmentObject var environmentCurrentUserData: UserData
+    @EnvironmentObject var isGuestMode: IsGuestMode
     
     @ObservedObject var loginController: LoginController
     @ObservedObject var currentUser: UserData
@@ -69,6 +70,7 @@ struct DidLoginTest: View {
         }
         .onAppear(perform: {
             print("DidLoginTestが表示されました")
+            isGuestMode.guestModeSwitch = false 
         })
     }
 }
