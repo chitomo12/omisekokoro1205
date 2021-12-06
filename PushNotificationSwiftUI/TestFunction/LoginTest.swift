@@ -46,7 +46,10 @@ struct LoginTest: View {
             }
             .padding(.horizontal)
         }
-        NavigationLink(destination: DidLoginTest(loginController: loginController, currentUser: currentUser, isShowLoginCheckView: $isShowLoginCheckView).navigationBarHidden(true), isActive: $loginController.isDidLogin ){
+        NavigationLink(destination: DidLoginTest(loginController: loginController,
+                                                 currentUser: currentUser,
+                                                 isShowLoginCheckView: $isShowLoginCheckView).navigationBarHidden(true),
+                       isActive: $loginController.isDidLogin ){
             EmptyView()
         }
     }
