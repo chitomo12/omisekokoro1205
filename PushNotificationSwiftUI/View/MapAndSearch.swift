@@ -24,6 +24,7 @@ struct MapAndSearch: View {
     //            .edgesIgnoringSafeArea(.bottom)
     //    }
     @EnvironmentObject var environmentCurrentUserData: UserData
+    @EnvironmentObject var isGuestMode: IsGuestMode
     
     @ObservedObject var omiseDataList = OmiseData()
     @ObservedObject var currentUser: UserData
@@ -76,7 +77,9 @@ struct MapAndSearch: View {
     @State var isBookmarkAddedToSelectedPost: Bool = false
     @State var BookmarkID: String = ""
     
+    @State var isCheckingLoginStatus = true
     @State var isShowLoginCheckView = true
+    @State var isShowNameRegisterView = false
     @State var isShowLoginView = false
     
     var viewController = ViewController()
@@ -114,7 +117,13 @@ struct MapAndSearch: View {
                     // 投稿画面表示ボタン
                     Button(action: {
                         print("Buttonが押されました")
-                        isPopover = true
+                        if isGuestMode.guestModeSwitch == true {
+                            // ゲストモードの場合
+                            isShowLoginView = true
+                        } else {
+                            // ログイン中の場合
+                            isPopover = true
+                        }
                     }) {
                         ZStack(){
                             Circle()
@@ -208,56 +217,64 @@ struct MapAndSearch: View {
                     
                         // 起動時に表示し、ログイン状態をチェックするポップオーバー
                         .popover(isPresented: $isShowLoginCheckView){
-                            if isShowLoginView == false,
-                               let loggedInUserName = environmentCurrentUserData.userName {
+//                            if isShowLoginView == false,
+//                               let loggedInUserName = environmentCurrentUserData.userName {
                                 // ログイン中＆ユーザー名が存在する場合
                                 VStack{
-                                    Image("omisekokoroLogo")
-                                        .resizable()
-                                        .frame(width: 300, height: 300, alignment: .center)
-                                        .scaledToFill()
-                                    Text("🥘いらっしゃい！")
-                                    ProgressView()
+                                    if isCheckingLoginStatus == true {
+                                        Image("omisekokoroLogo")
+                                            .resizable()
+                                            .frame(width: 300, height: 300, alignment: .center)
+                                            .scaledToFill()
+                                        Text("🥘いらっしゃい！")
+                                        ProgressView()
+                                    }
+                                    if isShowLoginView == true {
+                                        AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
+                                    }
+                                    if isShowNameRegisterView == true {
+                                        NameRegisterView(currentUser: environmentCurrentUserData)
+                                    }
                                 }
                                     .onAppear(perform: {
-                                        print("ログイン情報を確認します")
                                         // ログイン情報を確認
                                         environmentCurrentUserData.CheckIfUserLoggedIn { isLoggedIn in
-                                            if isLoggedIn == true && loggedInUserName.isEmpty == false {
-                                                // ログイン中＆名前が存在する場合
+                                            if isLoggedIn == true,
+                                               let loggedInUserName = environmentCurrentUserData.userName {
+                                                // ログイン中＆名前が存在する場合 → そのままポップオーバーを閉じメイン画面へ
                                                 print("\(loggedInUserName)さんこんにちは！")
-                                                
-//                                                // プッシュ通知の確認
-//                                                UNUserNotificationCenter.current()
-//                                                    .requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-//                                                        if granted == true {
-//                                                            print("プッシュ通知が承認されました")
-//                                                            // Push通知を有効化します
-//                                                            // application.registerForRemoteNotifications()
-//
-//                                                      } else {
-//                                                            print("プッシュ通知が拒否されました")
-//                                                        }
-//
-//                                                }
-                                                
+                                                isGuestMode.guestModeSwitch = false
+                                                isCheckingLoginStatus = false
                                                 isShowLoginCheckView = false
-                                            } else if loggedInUserName.isEmpty == true {
+                                            } else if environmentCurrentUserData.userName == nil {
+                                                // ログイン中＆名前が存在しない場合
                                                 print("ユーザー名登録画面を表示します")
-                                            } else{
+                                                isGuestMode.guestModeSwitch = false
+                                                isCheckingLoginStatus = false
+                                                isShowNameRegisterView = true
+                                            } else {
+                                                // ログアウト中
                                                 print("ログイン画面を表示します")
+//                                                isShowLoginCheckView = false
+                                                isGuestMode.guestModeSwitch = true
+                                                isCheckingLoginStatus = false
                                                 isShowLoginView = true
                                             }
                                         }
                                     })
-                            } else if isShowLoginView == false && environmentCurrentUserData.userName == nil{
-                                // ログイン中＆ユーザー名が存在しない場合
-                                NameRegisterView(currentUser: environmentCurrentUserData)
-                            } else {
-                                // ログアウト中は新規登録＆ログイン画面へ
-                                AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
-                            }
-                        }.opacity(0.95)
+                            
+//                            } else if isShowNameRegisterView == true {
+//                                // ログイン中＆ユーザー名が存在しない場合
+//                                NameRegisterView(currentUser: environmentCurrentUserData)
+//                            } else {
+//                                // ログアウト中は新規登録＆ログイン画面へ
+//                                AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
+//                            }
+                        }.opacity(0.95) // popoverここまで
+                    
+//                        .popover(isPresented: $isShowLoginView) {
+//                            AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
+//                        }
                 } // ZStack(alignment: .bottomTrailing)ここまで
                 
                 // ロード中表示のビュー（コメント読み込み後に非表示）

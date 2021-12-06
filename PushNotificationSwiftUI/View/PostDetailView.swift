@@ -254,6 +254,7 @@ struct PostDetailView: View {
                                     Image(systemName: "house.fill")
                                     Text(selectedPost.omiseName)
                                 }
+                                .padding(.horizontal)
                                 
         //                        HStack {
         //                            Image(systemName: "map.fill")

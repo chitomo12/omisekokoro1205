@@ -11,6 +11,7 @@ import FirebaseAuth
 
 struct AuthTest: View {
     @EnvironmentObject var environmentUserData: UserData
+    @EnvironmentObject var isGuestMode: IsGuestMode
     
     @ObservedObject var loginController = LoginController()
     
@@ -46,7 +47,7 @@ struct AuthTest: View {
                     if let authCurrentUser = Auth.auth().currentUser {
                         VStack{
                             // ログイン中のユーザー情報(Environment)
-                            Text("\(currentUser.email), \(currentUser.userName!)でログイン中").padding()
+                            Text("\(environmentUserData.email), \(environmentUserData.userName!)でログイン中").padding()
                             
                             Button(action: {
                                 isShowLoginCheckView = false
@@ -59,16 +60,6 @@ struct AuthTest: View {
                                     .cornerRadius(20)
                                     .padding()
                             }
-                            
-//                            NavigationLink(destination: TabWithAnimationView(currentUser: currentUser).navigationBarHidden(true)){
-//                                Text("メインページへ")
-//                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-//                                    .foregroundColor(.white)
-//                                    .frame(width: 200, height: 40, alignment: .center)
-//                                    .background(linearGradientForButton)
-//                                    .cornerRadius(20)
-//                                    .padding()
-//                            }
                             
                             // ログアウトボタン
                             Button(action: {
@@ -116,57 +107,64 @@ struct AuthTest: View {
                         }
                     } else {
                         // ログインしていない場合、ログインまたは新規登録のビューを表示する
-                        VStack{
-                            // 新規登録画面へ
-                            NavigationLink(destination: RegisterView(loginController: loginController), label: {
-                                Text("新規登録")
-                            })
-                            
-                            Text("新規登録").font(.title2).fontWeight(.ultraLight).padding()
-                            Text("メールアドレス").fontWeight(.ultraLight)
-                            TextField("email", text: $createUserEmail, prompt:
-                                Text("emailを入力してください")
-                            ).autocapitalization(.none)
-                            Text("パスワード").fontWeight(.ultraLight)
-                            TextField("パスワード", text: $createUserPassword, prompt:
-                                Text("パスワードを入力してください")
-                            ).autocapitalization(.none)
-                            Divider()
-                        }
-                        .padding(.horizontal)
-                        .onAppear(perform: {
-                            loginController.isDidLogout = true
+                        // 新規登録画面へ
+                        NavigationLink(destination: RegisterView(loginController: loginController), label: {
+                            Text("新規登録")
                         })
                         
-                        Button(action: {
-                            print("新規登録する")
-                            loginController.authCreateUser(email: createUserEmail, password: createUserPassword)
-                        }) {
-                            Text("新規登録します").padding()
-                        }
-                        if loginController.isCreatingFailed == true {
-                            Text("新規登録に失敗しました。").foregroundColor(.red)
-                        }
+//                        VStack{
+//                            Text("新規登録").font(.title2).fontWeight(.ultraLight).padding()
+//                            Text("メールアドレス").fontWeight(.ultraLight)
+//                            TextField("email", text: $createUserEmail, prompt:
+//                                Text("emailを入力してください")
+//                            ).autocapitalization(.none)
+//                            Text("パスワード").fontWeight(.ultraLight)
+//                            TextField("パスワード", text: $createUserPassword, prompt:
+//                                Text("パスワードを入力してください")
+//                            ).autocapitalization(.none)
+//                            Divider()
+//                        }
+//                        .padding(.horizontal)
+//                        .onAppear(perform: {
+//                            loginController.isDidLogout = true
+//                        })
+//                        Button(action: {
+//                            print("新規登録する")
+//                            loginController.authCreateUser(email: createUserEmail, password: createUserPassword)
+//                        }) {
+//                            Text("新規登録します").padding()
+//                        }
+//                        if loginController.isCreatingFailed == true {
+//                            Text("新規登録に失敗しました。").foregroundColor(.red)
+//                        }
                         
                         NavigationLink(destination: LoginTest(currentUser: currentUser, isShowLoginCheckView: $isShowLoginCheckView) ){
-                            Text("ログインする").padding()
+                            Text("ログイン").padding()
                         }
                         
-                        NavigationLink(destination: TabWithAnimationView(currentUser: UserData(uid: "Guest UID", email: "Guest@email.com", userName: "Guest Name")).navigationBarHidden(true), isActive: $isStartGuestMode){
+//                        NavigationLink(destination: TabWithAnimationView(currentUser: UserData(uid: "Guest UID", email: "Guest@email.com", userName: "Guest Name")).navigationBarHidden(true), isActive: $isStartGuestMode){
+//                            Text("ゲストモードでログイン")
+//                                .padding()
+//                                .onTapGesture{
+////                                    environmentUserData.uid = "Guest UID"
+////                                    environmentUserData.email = "guest@email"
+////                                    environmentUserData.userName = "Guest"
+////                                    print("environmentUserData: \(environmentUserData)")
+//                                    isStartGuestMode = true
+//                                }
+//                        }
+                        
+                        Button(action: {
+                            environmentUserData.uid = "Guest UID"
+                            environmentUserData.email = "guest@email"
+                            environmentUserData.userName = "Guest"
+                            isStartGuestMode = true
+                            isShowLoginCheckView = false
+                        }) {
                             Text("ゲストモードでログイン")
                                 .padding()
-                                .onTapGesture{
-//                                    environmentUserData.uid = "Guest UID"
-//                                    environmentUserData.email = "guest@email"
-//                                    environmentUserData.userName = "Guest"
-//                                    print("environmentUserData: \(environmentUserData)")
-                                    isStartGuestMode = true
-                                }
                         }
                     }
-    //                NavigationLink(destination: AuthTest().navigationBarHidden(false), isActive: $loginController.isDidLogout ){
-    //                    EmptyView()
-    //                }
                 Spacer()
                 }
             }

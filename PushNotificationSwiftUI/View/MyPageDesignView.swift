@@ -14,6 +14,7 @@ import FirebaseFirestore
 struct MyPageDesignView: View {
     @EnvironmentObject var environmentCurrentUserData: UserData
     @EnvironmentObject var isShowProgress: ShowProgress
+    @EnvironmentObject var isGuestMode: IsGuestMode
     
     @ObservedObject var currentUser: UserData
     
@@ -38,6 +39,7 @@ struct MyPageDesignView: View {
     @State var isMyBookmarkListInitialized = false
     
     @State var isShowLoginView = false
+    @State var isShowLoginCheckView = true 
     
     let loginController = LoginController()
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
@@ -103,10 +105,14 @@ struct MyPageDesignView: View {
                     .offset(x: 50, y: 40)
                     
                     .popover(isPresented: $isShowEditPopover) {
-                        NavigationView{
-                            VStack{
+                        NavigationView {
+                            VStack {
                                 Text("プロフィールを編集")
+                                    .font(.title)
+                                    .fontWeight(.light)
+                                    .padding()
                                 
+                                Text("プロフィール画像")
                                 // 最初は現在のプロフィール画像を読み込んで表示する。
                                 // PHPickerで写真を選択後は選択した画像を表示する。
                                 if selectedImage != nil{
@@ -136,7 +142,7 @@ struct MyPageDesignView: View {
                                     PHPickerView(isShowPHPicker: $isShowPHPicker, selectedImage: $selectedImage)
                                 }
                                 
-                                Button("アップロード"){
+                                Button("画像を保存"){
                                     isShowProgress.progressSwitch = true
                                     print("画像をアップロードします")
                                     if selectedImage != nil{
@@ -151,15 +157,20 @@ struct MyPageDesignView: View {
                                         isShowProgress.progressSwitch = false
                                     }
                                 }
+                                .padding(.bottom)
                                 
+                                Text("ユーザー名")
                                 TextField("ユーザー名",
                                           text: $inputText,
                                           prompt: Text("ユーザー名を入力してください")
                                 )
+                                    .padding(.horizontal)
                                     .onAppear{
                                         inputText = environmentCurrentUserData.userName!
                                     }
+                                Divider()
                                 Button(action: {
+                                    isShowProgress.progressSwitch = true
                                     print("保存ボタンが押されました")
                                     if inputText != environmentCurrentUserData.userName! {
                                         print("名前を\(environmentCurrentUserData.userName!)から\(inputText)に変更します")
@@ -168,6 +179,7 @@ struct MyPageDesignView: View {
                                             environmentCurrentUserData.userName = inputText
                                         })
                                     }
+                                    isShowProgress.progressSwitch = false
                                 }) {
                                     Text("保存")
                                 }
@@ -196,12 +208,12 @@ struct MyPageDesignView: View {
                                         .cornerRadius(20)
                                         .padding()
                                 }
-                                NavigationLink(destination: AuthTest(loginController: loginController,
-                                                                     isShowLoginCheckView: .constant(true),
-                                                                     currentUser: currentUser).navigationBarHidden(true),
-                                               isActive: $isShowLoginView ){
-                                    EmptyView()
-                                }
+                            }
+                            NavigationLink(destination: AuthTest(loginController: loginController,
+                                                                 isShowLoginCheckView: $isShowLoginCheckView,
+                                                                 currentUser: currentUser).navigationBarHidden(true),
+                                           isActive: $isShowLoginView) {
+                                EmptyView()
                             }
                         }
                     }
@@ -209,7 +221,6 @@ struct MyPageDesignView: View {
                 
                 // Environment
                 Text("\(environmentCurrentUserData.userName ?? "Guest")さん\nいらっしゃい🍲")
-//                    .font(.title)
                     .fontWeight(.thin)
                     .padding()
                 
@@ -247,50 +258,69 @@ struct MyPageDesignView: View {
                 
                 Divider()
                 
-                if myPageTabSelection == 0 {
-                    Text("再読み込み")
-                        .font(.callout)
-                        .padding()
-                        .onAppear{
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                if isMyPostsListInitialized == false{
+                if isGuestMode.guestModeSwitch == true {
+                    // ゲストモードの場合
+                    Button {
+                        print("ログイン画面を表示します")
+                        isShowLoginView = true
+                        isShowEditPopover = true
+                    } label: {
+                        Text("ログイン")
+                    }
+
+                } else {
+                    // ゲストモードでない場合
+                    if myPageTabSelection == 0 {
+                        HStack{
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                            Text("再読み込み")
+                                .font(.callout)
+                                .padding(.vertical)
+                                .onAppear{
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                        if isMyPostsListInitialized == false{
+                                            // ブックマーク一覧を読み込み
+                                            getUserPostedPosts(userUID: environmentCurrentUserData.uid)
+                                            isMyPostsListInitialized = true
+                                        }
+                                    }
+                                }
+                                .onTapGesture {
                                     // ブックマーク一覧を読み込み
                                     getUserPostedPosts(userUID: environmentCurrentUserData.uid)
-                                    isMyPostsListInitialized = true
                                 }
+                        }
+                        VStack {
+                            ForEach(0..<postedPostCardList.count, id: \.self) { count in
+                                // 投稿をリスト化して表示
+                                PostCardViewTwo(post: $postedPostCardList[count])
                             }
                         }
-                        .onTapGesture {
-                            // ブックマーク一覧を読み込み
-                            getUserPostedPosts(userUID: environmentCurrentUserData.uid)
-                        }
-                    VStack {
-                        ForEach(0..<postedPostCardList.count, id: \.self) { count in
-                            // 投稿をリスト化して表示
-                            PostCardViewTwo(post: $postedPostCardList[count])
-                        }
-                    }
-                } else if myPageTabSelection == 1 {
-                    Text("再読み込み")
-                        .font(.callout)
-                        .padding()
-                        .onAppear{
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                if isMyBookmarkListInitialized == false{
+                    } else if myPageTabSelection == 1 {
+                        HStack{
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                            Text("再読み込み")
+                                .font(.callout)
+                                .padding(.vertical)
+                                .onAppear{
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                        if isMyBookmarkListInitialized == false{
+                                            // ブックマーク一覧を読み込み
+                                            getUserRegisteredBookmarks(userUID: environmentCurrentUserData.uid)
+                                            isMyBookmarkListInitialized = true
+                                        }
+                                    }
+                                }
+                                .onTapGesture {
                                     // ブックマーク一覧を読み込み
                                     getUserRegisteredBookmarks(userUID: environmentCurrentUserData.uid)
-                                    isMyBookmarkListInitialized = true
                                 }
+                        }
+                        LazyVStack {
+                            ForEach(0..<bookmarkedPostCardList.count, id: \.self) { count in
+                                // 投稿をリスト化して表示
+                                PostCardViewTwo(post: $bookmarkedPostCardList[count])
                             }
-                        }
-                        .onTapGesture {
-                            // ブックマーク一覧を読み込み
-                            getUserRegisteredBookmarks(userUID: environmentCurrentUserData.uid)
-                        }
-                    LazyVStack {
-                        ForEach(0..<bookmarkedPostCardList.count, id: \.self) { count in
-                            // 投稿をリスト化して表示
-                            PostCardViewTwo(post: $bookmarkedPostCardList[count])
                         }
                     }
                 }
