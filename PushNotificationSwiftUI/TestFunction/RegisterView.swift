@@ -16,6 +16,10 @@ struct RegisterView: View {
     @State var inputUserPassword: String = ""
     @State var isShowLoginCheckView = false
     
+    @State var agreement = false
+    
+    @State var errorText: String? = ""
+    
     var body: some View {
         // ログインしていない場合、ログインまたは新規登録のビューを表示する
         VStack{
@@ -30,12 +34,34 @@ struct RegisterView: View {
             ).autocapitalization(.none)
             
             Divider()
+        
+            Toggle(isOn: $agreement) {
+                Text("利用規約に合意する")
+            }.padding()
+            
+            // エラーメッセージ
+            if errorText != nil {
+                Text(errorText!).foregroundColor(.red)
+            }
             
             Button(action: {
-                print("新規登録する")
-                loginController.authCreateUser(email: inputUserEmail, password: inputUserPassword)
+                print("新規登録します")
+                if agreement == false {
+                    errorText = "利用規約への合意が必要です"
+                } else {
+                    loginController.authCreateUser(email: inputUserEmail, password: inputUserPassword) { error in
+                        if error.localizedDescription == "The password must be 6 characters long or more." {
+                            errorText = "パスワードは最低６文字必要です"
+                        } else if error.localizedDescription == "An email address must be provided." {
+                            errorText = "メールアドレスが入力されていません"
+                        } else if error.localizedDescription == "The email address is badly formatted." {
+                            errorText = "メールアドレスの形式が正しくありません"
+                        }
+                    }
+                }
             }) {
-                Text("新規登録します").padding()
+//                Text("新規登録します").padding()
+                RedButtonView(buttonText: "新規登録").padding()
             }
             
             // 登録したらログイン後の名前登録画面に移行
@@ -47,7 +73,7 @@ struct RegisterView: View {
                 EmptyView()
             }
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 30)
         .onAppear(perform: {
             loginController.isDidLogout = true
         })
