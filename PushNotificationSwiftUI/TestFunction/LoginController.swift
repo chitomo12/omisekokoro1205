@@ -49,7 +49,7 @@ class LoginController: ObservableObject {
     }
     
     // ユーザー新規登録のためのメソッド
-    func authCreateUser(email: String, password: String){
+    func authCreateUser(email: String, password: String, completion: @escaping (Error) -> ()) {
         _ = Auth.auth().addStateDidChangeListener{ auth, user in
             print("auth: \(auth)")
             print("user: \(String(describing: user))")
@@ -60,6 +60,7 @@ class LoginController: ObservableObject {
                 print("エラー：\(String(describing: error))")
                 self.isCreatingFailed = true
                 self.errorMessage = String(describing: error!)
+                completion(error!)
             } else {
                 print("成功：\(String(describing: authResult))")
                 self.isDidLogin = true 
