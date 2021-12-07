@@ -66,6 +66,9 @@ struct TabWithAnimationView: View {
     @State var rotationTwo = false
     @State var rotationThree = false
     @State var rotationFour = false
+    
+    @State var isShowLoginView = false
+    @State var isShowLoginCheckView = false
         
     init(currentUser: UserData){
         self.currentUser = currentUser
@@ -86,7 +89,7 @@ struct TabWithAnimationView: View {
                     FeatureViewDesign()
                         .tabItem{}.tag(2)
                     
-                    MyPageDesignView(currentUser: currentUser, mapSwitch: $mapSwitch)
+                    MyPageDesignView(currentUser: currentUser, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)
                         .tabItem{}.tag(3)
                     
                     CommentListView(mapSwitch: $mapSwitch)
@@ -244,6 +247,10 @@ struct TabWithAnimationView: View {
                     .cornerRadius(10)
                     .opacity(0.95)
             }
+        }
+        
+        .popover(isPresented: $isShowLoginCheckView) {
+            AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
         }
     }
     

@@ -16,15 +16,17 @@ struct NotificationData: Identifiable{
     let relatedPostUid: String?
     let title: String
     let body: String
-    let created_at: String
 }
 
 class NotificationController: ObservableObject{
     @EnvironmentObject var environmentCurrentUser: UserData
     
     var notificationList: [NotificationData] = []
+    var notificationCardList: [NotificationCardData] = []
     
     let formatter = DateFormatter()
+    
+    let loginController = LoginController()
     
     // Firestoreのセッティング①
     var db: Firestore!
@@ -59,28 +61,54 @@ class NotificationController: ObservableObject{
             }
     }
     
-    public func getNotificationList(userUID: String, completion: @escaping ([NotificationData]) -> () ) {
+    public func getNotificationCardList(userUID: String, completion: @escaping ([NotificationCardData]) -> () ) {
         print("Notification一覧を取得します")
+        self.notificationCardList = []
+        
         db.collection("notificationCollection")
             .document("notificationDocument")
             .collection("subNotifiCollection")
             .whereField("receiveUserUid", isEqualTo: userUID)
             .getDocuments { querySnapshots, error in
                 if error == nil && querySnapshots!.documents.count != 0 {
+                    print("\(querySnapshots!.documents.count)件の通知を読み込みます")
                     for document in querySnapshots!.documents {
                         
+                        // 日付を取得しStringに変換
                         guard let notifiCreatedAt = document.get("created_at") as? Timestamp else { continue }
-//                        let notifiCreatedAtDate = notifiCreatedAt.dateValue()
                         let notifiCreatedAtString = self.formatter.string(from: notifiCreatedAt.dateValue())
                         
-                        self.notificationList.append(
-                            NotificationData(sendUserUid: document.get("sendUserUid") as? String,
-                                             receiveUserUid: document.get("receiveUserUid") as? String,
-                                             relatedPostUid: document.get("relatedPostUid") as? String,
-                                             title: document.get("title") as! String,
-                                             body: document.get("body") as! String,
-                                             created_at: notifiCreatedAtString)
-                            )
+                        // UIDからユーザー画像を取得
+                        getUserImageFromFirestorage(userUID: document.get("sendUserUid") as! String) { data in
+                            var senderUserImage: UIImage = UIImage(named: "SampleImage")!
+                            if data != nil {
+                                // ユーザー画像を取得できた場合はプロパティに格納する
+                                senderUserImage = UIImage(data: data!)!
+                            }
+                            
+                            // UIDから名前を取得
+                            self.loginController.getUserNameFromUid(userUid: document.get("sendUserUid") as! String) { nameString in
+                                var senderUserName = "dummy name"
+                                if nameString != nil{
+                                    senderUserName = nameString!
+                                }
+                                print("notificationCardListに追加します")
+                                print("\(document.get("title") as! String)")
+                                self.notificationCardList.append(
+                                    NotificationCardData(senderUserUIImage: senderUserImage,
+                                                         senderUserName: senderUserName,
+                                                         title: document.get("title") as! String,
+                                                         body: document.get("body") as! String,
+                                                         created_at: notifiCreatedAtString)
+                                )
+                                // 非同期で順次読み込まれるため、リストに要素を追加するごとに並び替えを行う
+                                self.notificationCardList = self.notificationCardList.sorted(by: { (a,b) -> Bool in
+                                    return a.created_at > b.created_at
+                                })
+                                completion(self.notificationCardList)
+                            }
+                            
+                        }
                     }
                     print("notificationList: \(self.notificationList)")
                 } else if error != nil {
@@ -88,7 +116,6 @@ class NotificationController: ObservableObject{
                 } else {
                     print("お知らせはありません")
                 }
-                completion(self.notificationList)
             }
     }
 }
