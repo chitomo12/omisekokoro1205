@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import UIKit
 
 // Mapでアノテーション選択時に表示されるビュー
 struct PostDetailView: View {
@@ -124,6 +125,7 @@ struct PostDetailView: View {
                             Button(action:{
                                 if isFavoriteAddedToSelectedPost == false{
                                     // お気に入りされてない場合の処理
+                                    // お気に入りに追加
                                     AddFavorite(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
                                         isFavoriteAddedToSelectedPost.toggle()
                                         
@@ -132,7 +134,7 @@ struct PostDetailView: View {
                                         environmentCurrentUser.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
                                             posterFcmToken = result
                                             print("posterFcmToken: \(posterFcmToken)")
-                                            // 取得したFCMを使いプッシュ通知を送る
+                                            // 取得したFCMトークンを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
                                                                       userId: environmentCurrentUser.uid,
                                                                       title: "❤️が送られました",
@@ -140,6 +142,15 @@ struct PostDetailView: View {
                                                                       completion: {
                                                     print("プッシュ通知を送りました")
                                                 })
+                                            
+                                            // お知らせ一覧に追加する
+                                            notificationController.addNotificationList(
+                                                notificationData: NotificationData(sendUserUid: environmentCurrentUser.uid,
+                                                                                   receiveUserUid: selectedPost.created_by,
+                                                                                   relatedPostUid: selectedPost.documentId,
+                                                                                   title: "❤️が送られました",
+                                                                                   body: "\(selectedPost.comment)")
+                                            )
                                         }
                                     }
                                    )
@@ -191,9 +202,7 @@ struct PostDetailView: View {
                                                                                    receiveUserUid: selectedPost.created_by,
                                                                                    relatedPostUid: selectedPost.documentId,
                                                                                    title: "🔖投稿がブックマークされました",
-                                                                                   body: "\(selectedPost.comment)",
-                                                                                   created_at: "time"
-                                                                                  )
+                                                                                   body: "\(selectedPost.comment)")
                                             )
                                         }
                                     })

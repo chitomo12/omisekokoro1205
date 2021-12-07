@@ -39,7 +39,7 @@ struct MyPageDesignView: View {
     @State var isMyBookmarkListInitialized = false
     
     @State var isShowLoginView = false
-    @State var isShowLoginCheckView = true 
+    @Binding var isShowLoginCheckView: Bool 
     
     let loginController = LoginController()
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
@@ -86,8 +86,14 @@ struct MyPageDesignView: View {
                     
                     // 編集ボタン
                     Button(action: {
-                        // 編集画面で表示する現在のプロフィール画像を渡す
-                        isShowEditPopover = true
+                        if isGuestMode.guestModeSwitch == false {
+                            // ログイン中は編集画面を表示
+                            // 編集画面で表示する現在のプロフィール画像を渡す
+                            isShowEditPopover = true
+                        } else {
+                            // ゲストモード中はログイン画面を表示
+                            isShowLoginCheckView = true
+                        }
                     }) {
                         ZStack{
                             Circle()
@@ -192,11 +198,15 @@ struct MyPageDesignView: View {
                                     environmentCurrentUserData.email = "guest@email"
                                     environmentCurrentUserData.userName = "Guest"
                                     environmentCurrentUserData.profileUIImage = UIImage(named: "SampleImage")
-                                    // リストを初期化
+                                    // 読み込んだリストを初期化
                                     postedPostCardList = []
                                     bookmarkedPostCardList = []
+                                    
+                                    // ゲストモードをtrueに
+                                    isGuestMode.guestModeSwitch = true
+                                    
                                     // 編集画面を閉じる
-//                                    isShowEditPopover = false
+                                    isShowEditPopover = false
                                     // ログイン画面へ
                                     isShowLoginView = true
                                 }) {
@@ -227,6 +237,7 @@ struct MyPageDesignView: View {
                 if environmentCurrentUserData.uid == "GuestUID"{
                     Button(action:{
                         print("Login")
+                        isShowLoginCheckView = true
                     }) {
                         Text("ログインする")
                     }
@@ -259,18 +270,19 @@ struct MyPageDesignView: View {
                 Divider()
                 
                 if isGuestMode.guestModeSwitch == true {
-                    // ゲストモードの場合
-                    Button {
-                        print("ログイン画面を表示します")
-                        isShowLoginView = true
-                        isShowEditPopover = true
-                    } label: {
-                        Text("ログイン")
-                    }
+//                    // ゲストモードの場合
+//                    Button {
+//                        print("ログイン画面を表示します")
+//                        isShowLoginView = true
+//                        isShowEditPopover = true
+//                    } label: {
+//                        Text("ログイン")
+//                    }
 
                 } else {
                     // ゲストモードでない場合
                     if myPageTabSelection == 0 {
+                        
                         HStack{
                             Image(systemName: "arrow.triangle.2.circlepath")
                             Text("再読み込み")
@@ -290,6 +302,8 @@ struct MyPageDesignView: View {
                                     getUserPostedPosts(userUID: environmentCurrentUserData.uid)
                                 }
                         }
+                        .foregroundColor(Color("ColorThree"))
+                        
                         VStack {
                             ForEach(0..<postedPostCardList.count, id: \.self) { count in
                                 // 投稿をリスト化して表示
@@ -525,6 +539,6 @@ struct MyPageDesignView: View {
 struct MyPageDesignView_Previews: PreviewProvider {
     static var previews: some View {
         MyPageDesignView(currentUser: UserData(uid: "sample", email: "sample@email.com", userName: "user name"),
-                         mapSwitch: .constant(.normal))
+                         mapSwitch: .constant(.normal), isShowLoginCheckView: .constant(false))
     }
 }

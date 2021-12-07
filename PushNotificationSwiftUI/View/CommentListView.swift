@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
+import UIKit
 import FirebaseFirestore
 import CoreLocation
 
 struct CommentListView: View {
+    
     @EnvironmentObject var environmentCurrentUserData: UserData
     
     @Binding var mapSwitch: MapSwitch
     
     @State var postList: [Post] = []
     @State var notificationList: [NotificationData] = []
+    
+    // カード表示用のリスト
+    @State var notificationCardList: [NotificationCardData] = []
     
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
     
@@ -24,47 +29,71 @@ struct CommentListView: View {
     var notificationController = NotificationController()
     
     var body: some View {
-        VStack {
+        let bounds = UIScreen.main.bounds
+        let screenWidth = bounds.width
+        ScrollView{
+            VStack(alignment: .center) {
+                
+    //            テスト用
+    //            Button(action: {
+    //                print("プッシュ通知を送ります")
+    //                pushNotificationSender
+    //                    .sendPushNotification(to:  "czIhz_lX1kjPurs2FDPC0K:APA91bEgZuYuGA_8KUiZvtnPbIu6ctlgvUBx0cYk1suM51i_yTop1WLEOn3l6b-dYzdQOtAGjM5qattdooTFjU8w3uPMUp5Z7KDqHHpYf-KfW9j4n9lh2UCsZv2wsRmysgBjAH7J5ZoU",
+    //                                          userId: environmentCurrentUserData.uid,
+    //                                          title: "title test", body: "test body") {
+    //                        print("プッシュ通知を送りました")
+    //                    }
+    //            }) {
+    //                Text("プッシュ通知を送る")
+    //                    .font(.system(size: 16, weight: .bold, design: .rounded))
+    //                    .foregroundColor(.white)
+    //                    .frame(width: 200, height: 40, alignment: .center)
+    //                    .background(linearGradientForButton)
+    //                    .cornerRadius(20)
+    //                    .padding()
+    //            }
             
-//            テスト用
-//            Button(action: {
-//                print("プッシュ通知を送ります")
-//                pushNotificationSender
-//                    .sendPushNotification(to:  "czIhz_lX1kjPurs2FDPC0K:APA91bEgZuYuGA_8KUiZvtnPbIu6ctlgvUBx0cYk1suM51i_yTop1WLEOn3l6b-dYzdQOtAGjM5qattdooTFjU8w3uPMUp5Z7KDqHHpYf-KfW9j4n9lh2UCsZv2wsRmysgBjAH7J5ZoU",
-//                                          userId: environmentCurrentUserData.uid,
-//                                          title: "title test", body: "test body") {
-//                        print("プッシュ通知を送りました")
-//                    }
-//            }) {
-//                Text("プッシュ通知を送る")
-//                    .font(.system(size: 16, weight: .bold, design: .rounded))
-//                    .foregroundColor(.white)
-//                    .frame(width: 200, height: 40, alignment: .center)
-//                    .background(linearGradientForButton)
-//                    .cornerRadius(20)
-//                    .padding()
-//            }
-            
-            Button(action: {
-                postList = [] // 初期化
-                print("データを取得します...")
-//                getPostListFromAll()
-                notificationController.getNotificationList(userUID: environmentCurrentUserData.uid) { notificationListResult in
-                    print("notificationListを取得しました")
-                    notificationList = notificationListResult
+                Image("omisekokoro_bar")
+                    .resizable()
+                    .padding(.top, 0.0)
+                    .scaledToFit()
+                    .frame(height:25)
+                Button(action: {
+                    notificationCardList = [] // 初期化
+                    print("データを取得します...")
+                    notificationController.getNotificationCardList(userUID: environmentCurrentUserData.uid) { notificationCardListResult in
+                        print("notificationListを取得しました")
+                        notificationCardList = notificationCardListResult
+                    
+                    }
+                    print("postList: \(postList)")
+                }) {
+                    Text("GetNotificationList")
                 }
-                print("postList: \(postList)")
-            }) {
-                Text("GetNotificationList")
-            }
-            List(notificationList){ notification in
-                VStack(alignment: .leading){
-                    Text(notification.sendUserUid ?? "").font(.caption)
-                    Text(notification.title ?? "")
-                    Text(notification.body).font(.caption)
-                    Text(notification.created_at).font(.caption2)
+                
+                VStack(alignment: .leading) {
+                    ForEach(0..<notificationCardList.count, id: \.self) { count in
+                        // 投稿をリスト化して表示
+                        NotificationCardView(notificationForCard: $notificationCardList[count])
+                            .background(Color.white)
+                    }
+                    Spacer()
                 }
+                .padding(.horizontal)
+                
+    //            List($notificationCardList){ notificationCard in
+    //                 NotificationCardView(notificationForCard: notificationCard)
+    //
+    ////                VStack(alignment: .leading){
+    ////                    Text("\(notificationCard.sendUserUid ?? "")さんからの通知").font(.caption)
+    ////                    Text(notificationCard.title)
+    ////                    Text(notificationCard.body).font(.caption)
+    ////                    Text(notificationCard.created_at).font(.caption2)
+    ////                        .padding()
+    ////                }
+    //            }
             }
+            .frame(width: screenWidth)
         }
     }
     

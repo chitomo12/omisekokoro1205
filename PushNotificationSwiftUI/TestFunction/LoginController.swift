@@ -216,9 +216,10 @@ class LoginController: ObservableObject {
                 } else {
                     if let document = document {
                         userName = document.get("userName") as? String
+                        print("ユーザー名「\(userName)」を取得しました")
+                        completion(userName)
                     }
                 }
-                completion(userName)
             }
     }
     

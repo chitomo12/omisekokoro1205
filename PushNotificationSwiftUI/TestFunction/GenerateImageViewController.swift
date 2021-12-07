@@ -91,13 +91,14 @@ class GenerateImageViewController: UIViewController {
         shadowRectangle.fill()
         
         // 吹き出し下のカラー三角形を描写
+        let randomCGFloat = CGFloat(Int.random(in: -5...5))
         let path = UIBezierPath()
         let triangleStartX = (labelRectSize.width + 30) / 2
         let triangleStartY = labelRectSize.height + 31
         path.move(to: CGPoint(x: triangleStartX, y: triangleStartY ))
-        path.addLine(to: CGPoint(x: triangleStartX + 10, y: triangleStartY))
+        path.addLine(to: CGPoint(x: triangleStartX + randomCGFloat + 10, y: triangleStartY))
         path.addLine(to: CGPoint(x: triangleStartX, y: triangleStartY + 10))
-        path.addLine(to: CGPoint(x: triangleStartX - 10, y: triangleStartY))
+        path.addLine(to: CGPoint(x: triangleStartX + randomCGFloat - 10, y: triangleStartY))
         path.close()
 //        UIColor(named: randomSelectedColorString!)!.setFill()
         path.fill()
