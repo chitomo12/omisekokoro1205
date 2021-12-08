@@ -52,8 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             if let authCurrentUser = Auth.auth().currentUser {
                 self.loginController.setFcmTokenToFirestore(
                     userUid: authCurrentUser.uid,
-                    fcmToken: token
-                )
+                    fcmToken: token) {
+                        print("FCMトークンを更新しました")
+                    }
             }
         }
         print("messaging: \(messaging)")

@@ -13,6 +13,7 @@ import GeoFire
 struct MapView: UIViewRepresentable {
     @EnvironmentObject var environmentCurrentUser: UserData
     @EnvironmentObject var isShowProgress: ShowProgress
+    @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
     @ObservedObject var postData = PostData()
     
@@ -50,7 +51,6 @@ struct MapView: UIViewRepresentable {
     
     // 表示するViewを作成する時に実行
     func makeUIView(context:Context) -> MKMapView {
-//        let map = MKMapView()  // MKMapViewインスタンスを生成→上位ビューで宣言するよう変更したためコメントアウト
         map.delegate = context.coordinator  // デリゲートを設定
         map.addGestureRecognizer(context.coordinator.myLongPress)
         return map
@@ -75,38 +75,8 @@ struct MapView: UIViewRepresentable {
                 longitudinalMeters: 100000.0
             )
             mapSwitch = .normal
-            
-        // OmiseSearchViewにて検索結果をタップ時に実行（廃止or移転予定）
-        case .focusSearchedLocation:
-            print("mapSwitch is \(mapSwitch)")
-//            let latitudeDeg = CLLocationDegrees(selectedLatitude)
-//            let longitudeDeg = CLLocationDegrees(selectedLongitude)
-//            print("\(searchedLocationName), latitudeDeg: \(latitudeDeg), longitudeDeg: \(longitudeDeg)")
-//            let mapFocusCenter = CLLocationCoordinate2D(latitude: latitudeDeg, longitude: longitudeDeg)
-//            let focusPin = MKPointAnnotation()
-//            focusPin.coordinate = mapFocusCenter
-//            focusPin.title = searchedAddress
-//            focusPin.subtitle = searchedLocationName
-//            print("uiView.region in .focusSearchedLocation")
-//            uiView.region = MKCoordinateRegion(
-//                center: mapFocusCenter,
-//                latitudinalMeters: 200.0,
-//                longitudinalMeters: 200.0
-//            )
-//            uiView.addAnnotation(focusPin)
-//            // addAnnotationと同時にfocusPinが選択状態になり、Firebaseにクエリが飛ばされ、データが無いのでクラッシュする。
-//            // 検索結果のタップとMapViewの接続を切ることで応急処置済み。
-//
-//            // 吹き出し表示にアニメーションをつける
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-//                uiView.selectAnnotation(focusPin, animated: true)
-//            }
-//
-//            mapSwitch = .normal
-//            isShowingDetail = false
-            
         default:
-            print("mapSwitch is default")
+            print("mapSwitchはデフォルトです")
         } // switchその２ ここまで
     } // func updateUIView ここまで
     
@@ -183,11 +153,14 @@ struct MapView: UIViewRepresentable {
             return annotationView
         } // アノテーションを返すメソッドここまで
         
-        // アノテーションが選択されたら呼ばれるメソッド
+        // アノテーションがタップ（選択）されたら呼ばれるメソッド
         func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {
             print("アノテーションがタップされました: \(annotationView.annotation!.title!!)")
             // ポップオーバーを表示（コンテンツはローディング表示）
             self.parent.isShowingDetailPopover = true
+//            self.parent.isShowPostDetailPopover.showSwitch = true
+            
+            // コンテンツはローディング表示
             self.parent.isShowingDetailContent = false
             
             // アノテーションが保持するdocumentIDからポストの詳細を取得し、詳細画面を表示する
@@ -238,8 +211,9 @@ struct MapView: UIViewRepresentable {
                             if data != nil {
                                 print("投稿者プロフィール画像を読み込みます：\(data!)")
                                 self.parent.selectedPostUserImageUIImage = UIImage(data: data!)!
+                                print("読み込みました")
                             } else {
-                                print("投稿者プロフィール画像が見つかりません")
+                                print("\(String(describing: onePost.created_by))のプロフィール画像が見つかりません")
                                 self.parent.selectedPostUserImageUIImage = UIImage(named: "SampleImage")!
                             }
                             

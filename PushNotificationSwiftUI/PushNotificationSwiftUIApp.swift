@@ -30,6 +30,8 @@ struct PushNotificationSwiftUIApp: App {
                 .environmentObject(ShowProgress())
                 .environmentObject(FcmToken())
                 .environmentObject(IsGuestMode())
+                .environmentObject(IsShowPostDetailPopover())
+                .environmentObject(PostForCardClass())
             
             //            ContentView()
             

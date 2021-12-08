@@ -12,6 +12,11 @@ import UIKit
 import GeoFire
 
 class ViewController: UIViewController {
+    @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
+    @EnvironmentObject var envPostForCardClass: PostForCardClass
+    
+    @State var isShowingDetailContent: Bool = false
+    
     var db: Firestore!
     
     override func viewDidLoad() {
@@ -65,4 +70,5 @@ class ViewController: UIViewController {
         print(postList)
         
     }
+    
 }

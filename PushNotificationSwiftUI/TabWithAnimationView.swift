@@ -12,6 +12,7 @@ import FirebaseAuth
 struct TabWithAnimationView: View {
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var environmentFcmToken: FcmToken
+    @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
     @ObservedObject var omiseDataList = OmiseData()
     @ObservedObject var postData = PostData()
@@ -69,6 +70,11 @@ struct TabWithAnimationView: View {
     
     @State var isShowLoginView = false
     @State var isShowLoginCheckView = false
+    
+    // 投稿詳細画面用のプロパティ
+    @State var isShowingDetailContent = false
+    @State var selectedPostDocumentUID: String = ""
+    @State var isShowingAlert = false
         
     init(currentUser: UserData){
         self.currentUser = currentUser
@@ -252,6 +258,57 @@ struct TabWithAnimationView: View {
         .popover(isPresented: $isShowLoginCheckView) {
             AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
         }
+        
+        .popover(isPresented: $isShowPostDetailPopover.showSwitch) {
+//            Text("isShowPostDetailPopover")
+            
+//            PostDetailView(selectedPost: $selectedPost,
+//                           isShowingDetailContent: $isShowingDetailContent,
+//                           selectedPostImageData: $selectedPostImageData,
+//                           selectedPostImageUIImage: $selectedPostImageUIImage,
+//                           selectedPostUserImageUIImage: $selectedPostUserImageUIImage,
+//                           isFavoriteAddedToSelectedPost: $isFavoriteAddedToSelectedPost,
+//                           isBookmarkAddedToSelectedPost: $isBookmarkAddedToSelectedPost,
+//                           )
+            
+            ZStack {
+                // 背景
+                Image("BackgroundOne")
+                    .resizable()
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+                    .scaledToFill()
+                    .clipped()
+                    .opacity(0.8)
+                
+                VStack {
+                    PostDetailViewTwo()
+                    
+                    // 削除ボタン
+                    Button(action:{
+                        isShowingAlert = true
+                        print("削除します")
+                    }){
+                        Text("削除")
+                    }
+                    .foregroundColor(.red)
+                    .padding()
+                    .alert(isPresented: $isShowingAlert){
+                        Alert(title: Text("本当に削除しますか？"),
+                              message: Text("元に戻すことはできません"),
+                              primaryButton: .cancel(Text("キャンセル")),
+                              secondaryButton: .destructive(Text("削除"), action: {
+                            // 削除ボタンが押されたら投稿削除を実行
+                            deleteComment(targetDocumentID: isShowPostDetailPopover.selectedPostDocumentUID)
+                            // 削除後、変数を初期化しポップオーバーを閉じる
+                            isShowPostDetailPopover.selectedPostDocumentUID = ""
+                            isShowPostDetailPopover.showSwitch = false
+//                            map.removeAnnotation(selectedPostAnnotation.annotation!)
+                        }))
+                    }
+                    
+                } // popover内のVStackここまで
+            }.ignoresSafeArea() //ZStackここまで
+        }
     }
     
     // Circleを動かすためのビュー固有関数
@@ -263,6 +320,88 @@ struct TabWithAnimationView: View {
         }
         (0..<IconColors.count).forEach{ IconColors[$0] = circleColorNow }
         IconColors[selectedIcon] = .white
+    }
+    
+    // ポスト詳細ポップオーバー表示用のメソッド
+    public func ShowPostDetail(postUID: String) {
+        // TabWithAnimationViewにポップオーバー表示の処理を要求
+        // コンテンツはローディング表示
+        isShowingDetailContent = false
+        isShowPostDetailPopover.showContent = false
+        // ポップオーバーを表示（コンテンツはローディング表示）
+//        self.parent.isShowingDetailPopover = true
+        isShowPostDetailPopover.showSwitch = true
+        
+        // documentIDからポストの詳細を取得し、詳細画面を生成する
+        let documentKeyId = postUID
+        let postData = PostData()
+//        var selectedPost = PostForCard()
+        postData.getPostDetail(documentKeyID: documentKeyId, completion: { onePost in
+//            // 削除するパターン分岐に備え、アノテーションを渡しておく
+//            self.parent.selectedPostAnnotation = annotationView
+//            // ドキュメントID自体はドキュメント内に保持されないので別に変数を用意して格納する
+//            self.parent.selectedPostDocumentID = onePost.documentId
+            // 投稿者名、コメント文などが格納されたドキュメント情報を渡す
+//            selectedPost = onePost
+            
+            
+//            self.envPostForCardData.documentId = documentKeyId
+//            self.envPostForCardData.created_at = onePost.created_at
+//
+//            // お店画像の読み込み（登録がない場合はダミー画像を表示）
+//            let postImageURL: URL? = URL(string: onePost.imageURL ?? "")
+//            if postImageURL != nil{
+//                print("①postImageURL: \(String(describing:postImageURL))を読み込みます")
+//                do{
+//                    self.selectedPostImageData = try Data(contentsOf: postImageURL!)
+//                } catch {
+//                    print("error")
+//                }
+//            } else {
+//                print("②postImageURLがnilです")
+//                self.parent.selectedPostImageData = nil
+//                self.parent.selectedPostImageUIImage = nil
+//            }
+//
+//            if self.parent.selectedPostImageData != nil{
+//                print("③")
+//                self.parent.selectedPostImageUIImage = UIImage(data: self.parent.selectedPostImageData!)!
+//            } else {
+//                print("④Error")
+//                self.parent.selectedPostImageUIImage = nil
+//            }
+//
+//            // ファボ、ブックマークの判定
+//            print("check start")
+//            CheckFavorite(postID: onePost.documentId, currentUserID: self.parent.environmentCurrentUser.uid, completion: { resultBool, foundedFavID in
+//                self.parent.isFavoriteAddedToSelectedPost = resultBool
+//                self.parent.FavoriteID = foundedFavID
+//
+//                CheckBookmark(postID: onePost.documentId, currentUserID: self.parent.environmentCurrentUser.uid, completion: { resultBool, foundedBookmarkID in
+//                    self.parent.isBookmarkAddedToSelectedPost = resultBool
+//                    self.parent.BookmarkID = foundedBookmarkID
+//
+//                    getUserImageFromFirestorage(userUID: onePost.created_by ?? "GuestUID") { data in
+//                        if data != nil {
+//                            print("投稿者プロフィール画像を読み込みます：\(data!)")
+//                            self.parent.selectedPostUserImageUIImage = UIImage(data: data!)!
+//                        } else {
+//                            print("投稿者プロフィール画像が見つかりません")
+//                            self.parent.selectedPostUserImageUIImage = UIImage(named: "SampleImage")!
+//                        }
+//
+//                        // 投稿詳細内容を表示
+//                        self.parent.isShowingDetailContent = true
+//                    }
+//                })
+//            })
+            
+        })
+//        // 同じアノテーションを連続タップすると反応がなくなる不具合：
+//        // 　- タップするとアノテーションが選択状態になるため、選択状態を解除してあげる。
+//        for annotation in mapView.selectedAnnotations {
+//            mapView.deselectAnnotation(annotation, animated: false)
+//        }
     }
 }
 

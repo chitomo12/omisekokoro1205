@@ -85,8 +85,9 @@ class LoginController: ObservableObject {
                     if let authCurrentUser = Auth.auth().currentUser{
                         self!.setFcmTokenToFirestore(
                             userUid: authCurrentUser.uid,
-                            fcmToken: deviceToken
-                        )
+                            fcmToken: deviceToken) {
+                                print("FCMトークンを更新しました")
+                            }
                     }
                     
                     print("user.uid: \(user.uid), user.email: \(user.email ?? "")")
@@ -109,20 +110,25 @@ class LoginController: ObservableObject {
     }
     
     func logoutUser(){
-        do{
-            // プッシュ通知が誤送されないよう、ログアウト前にfcmTokenをリセットする
-            if let authCurrentUser = Auth.auth().currentUser{
-                self.setFcmTokenToFirestore(
-                    userUid: authCurrentUser.uid,
-                    fcmToken: ""
-                )
-            }
-            try Auth.auth().signOut()
-            self.isDidLogout = true
-        } catch let signOutError as NSError {
-            print("サインアウト中にエラーが発生しました：\(signOutError)")
+        // プッシュ通知が誤送されないよう、ログアウト前にfcmTokenをリセットする
+        if let authCurrentUser = Auth.auth().currentUser{
+            let targetUserUID = authCurrentUser.uid
+            print("\(targetUserUID)のfcmTokenを初期化します")
+            self.setFcmTokenToFirestore(
+                userUid: targetUserUID,
+                fcmToken: "default") {
+                    print("\(targetUserUID)のfcmTokenを初期化しました")
+                    
+                    // トークンリセット後、サインアウトの処理を実行
+                    do{
+                        try Auth.auth().signOut()
+                        self.isDidLogout = true
+                        print("サインアウトしました")
+                    } catch let signOutError as NSError {
+                        print("サインアウト中にエラーが発生しました：\(signOutError)")
+                    }
+                }
         }
-        print("サインアウトします")
     }
     
     func CheckIfUserNameRegistered(userUid: String, completion: @escaping(Bool) -> Void) {
@@ -174,7 +180,7 @@ class LoginController: ObservableObject {
             if err != nil {
                 print("エラー: \(String(describing: err))")
             } else {
-                print("ユーザーを追加しました！")
+                print("新規ユーザー名を登録しました！")
                 print("userId: \(registeringUser.uid)")
                 print("userEmail: \(registeringUser.email)")
                 print("userName: \(registeringName)")
@@ -190,7 +196,7 @@ class LoginController: ObservableObject {
                     print("FCM registration token: \(token)")
 //                        self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
 //                      environmentFcmToken.fcmTokenString = token
-                      self.setFcmTokenToFirestore(userUid: registeringUser.uid, fcmToken: token)
+                      self.setFcmTokenToFirestore(userUid: registeringUser.uid, fcmToken: token, completion: { print("トークンを更新") })
                       completion()
                   }
                 }
@@ -225,7 +231,7 @@ class LoginController: ObservableObject {
     }
     
     // FCMトークンをユーザーに紐付けるメソッド
-    func setFcmTokenToFirestore(userUid: String, fcmToken: String){
+    func setFcmTokenToFirestore(userUid: String, fcmToken: String, completion: @escaping () -> () ){
         print("fcmToken「\(fcmToken)」をuserUid「\(userUid)」に登録します")
         
         db.collection("userCollection")
@@ -235,7 +241,13 @@ class LoginController: ObservableObject {
             .setData([
                 "userId": userUid,
                 "fcmToken": fcmToken
-            ], merge: true )
+            ], merge: true ) { error in
+                if error != nil{
+                    print("エラー：\(String(describing: error))")
+                } else {
+                    completion()
+                }
+            }
     }
 }
 

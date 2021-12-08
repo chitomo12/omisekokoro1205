@@ -21,7 +21,6 @@ struct LoginTest: View {
     
     var body: some View {
         ZStack{
-//        NavigationView{
             VStack{
                 Text("ログイン").padding(.horizontal)
                 Text("メールアドレス").fontWeight(.ultraLight)
@@ -46,8 +45,8 @@ struct LoginTest: View {
                     Text("ログインに失敗しました。").foregroundColor(.red)
                 }
             }
-            .padding(.horizontal)
-//        }
+            .padding(.horizontal, 30)
+
             if loginController.isLoading == true {
                 ProgressView()
                     .frame(width: 200, height: 300, alignment: .center)

@@ -13,11 +13,17 @@ import MapKit
 // 最新の投稿リストを表示するビュー
 struct FeatureViewDesign: View {
     @EnvironmentObject var isShowProgress: ShowProgress
+    @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
     @State var postList: [Post] = []
     
     @State var postCardList: [PostForCard] = []
     @State var isShowingProgressView = false
+    
+    // 投稿詳細ポップオーバー表示用のブーリアン（trueでポップオーバーが表示される）
+    @State var isShowingDetailPopover: Bool = false
+    // 投稿詳細コンテンツ表示用のブーリアン
+    @State var isShowingDetailContent: Bool = false 
     
     var body: some View {
 //        let bounds = UIScreen.main.bounds
@@ -142,6 +148,81 @@ struct FeatureViewDesign: View {
                 isShowProgress.progressSwitch = false
             }
     } // getPostListFromAllここまで
+    
+//    // カードが選択されたら呼ぶメソッド
+//    func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {
+//        print("カードがタップされました: \(post.documentId)")
+//        // ポップオーバーを表示（コンテンツはローディング表示）
+//        isShowingDetailPopover = true
+//        isShowingDetailContent = false
+//
+//        // アノテーションが保持するdocumentIDからポストの詳細を取得し、詳細画面を表示する
+//        let documentKeyId = annotationView.annotation!.title!!
+//        let postData = PostData()
+//        postData.getPostDetail(documentKeyID: documentKeyId, completion: { onePost in
+//            // 削除するパターン分岐に備え、アノテーションを渡しておく
+//            self.parent.selectedPostAnnotation = annotationView
+//            // ドキュメントID自体はドキュメント内に保持されないので別に変数を用意して格納する
+//            self.parent.selectedPostDocumentID = onePost.documentId
+//            // 投稿者名、コメント文などが格納されたドキュメント情報を渡す
+//            self.parent.selectedPost = onePost
+//
+//            // お店画像の読み込み（登録がない場合はダミー画像を表示）
+//            let postImageURL: URL? = URL(string: onePost.imageURL ?? "")
+//            if postImageURL != nil{
+//                print("①postImageURL: \(String(describing:postImageURL))を読み込みます")
+//                do{
+//                    self.parent.selectedPostImageData = try Data(contentsOf: postImageURL!)
+//                } catch {
+//                    print("error")
+//                }
+//            } else {
+//                print("②postImageURLがnilです")
+//                self.parent.selectedPostImageData = nil
+//                self.parent.selectedPostImageUIImage = nil
+//            }
+//
+//            if self.parent.selectedPostImageData != nil{
+//                print("③")
+//                self.parent.selectedPostImageUIImage = UIImage(data: self.parent.selectedPostImageData!)!
+//            } else {
+//                print("④Error")
+//                self.parent.selectedPostImageUIImage = nil
+//            }
+//
+//            // ファボ、ブックマークの判定
+//            print("check start")
+//            CheckFavorite(postID: onePost.documentId, currentUserID: self.parent.environmentCurrentUser.uid, completion: { resultBool, foundedFavID in
+//                self.parent.isFavoriteAddedToSelectedPost = resultBool
+//                self.parent.FavoriteID = foundedFavID
+//
+//                CheckBookmark(postID: onePost.documentId, currentUserID: self.parent.environmentCurrentUser.uid, completion: { resultBool, foundedBookmarkID in
+//                    self.parent.isBookmarkAddedToSelectedPost = resultBool
+//                    self.parent.BookmarkID = foundedBookmarkID
+//
+//                    getUserImageFromFirestorage(userUID: onePost.created_by ?? "GuestUID") { data in
+//                        if data != nil {
+//                            print("投稿者プロフィール画像を読み込みます：\(data!)")
+//                            self.parent.selectedPostUserImageUIImage = UIImage(data: data!)!
+//                        } else {
+//                            print("投稿者プロフィール画像が見つかりません")
+//                            self.parent.selectedPostUserImageUIImage = UIImage(named: "SampleImage")!
+//                        }
+//
+//                        // 投稿詳細内容を表示
+//                        self.parent.isShowingDetailContent = true
+//                    }
+//                })
+//            })
+//
+//        })
+//        // 同じアノテーションを連続タップすると反応がなくなる不具合：
+//        // 　- タップするとアノテーションが選択状態になるため、選択状態を解除してあげる。
+//        for annotation in mapView.selectedAnnotations {
+//            mapView.deselectAnnotation(annotation, animated: false)
+//        }
+//    }
+//    // アノテーションが選択されたら呼ばれるメソッドここまで
 }
 
 struct FeatureView_Previews: PreviewProvider {

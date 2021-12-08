@@ -47,18 +47,19 @@ struct AuthTest: View {
                     if let authCurrentUser = Auth.auth().currentUser {
                         VStack{
                             // ログイン中のユーザー情報(Environment)
-                            Text("\(environmentUserData.email), \(environmentUserData.userName!)でログイン中").padding()
+                            Text("\(environmentUserData.userName!)でログイン中").padding()
                             
                             Button(action: {
                                 isShowLoginCheckView = false
                             }){
-                                Text("メインページへ")
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
-                                    .frame(width: 200, height: 40, alignment: .center)
-                                    .background(linearGradientForButton)
-                                    .cornerRadius(20)
-                                    .padding()
+                                RedButtonView(buttonText: "メインページへ")
+//                                Text("メインページへ")
+//                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+//                                    .foregroundColor(.white)
+//                                    .frame(width: 200, height: 40, alignment: .center)
+//                                    .background(linearGradientForButton)
+//                                    .cornerRadius(20)
+//                                    .padding()
                             }
                             
                             // ログアウトボタン
@@ -67,12 +68,13 @@ struct AuthTest: View {
                                 currentUser.uid = ""
                                 currentUser.email = ""
                             }) {
-                                Text("ログアウトする")
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
-                                    .frame(width: 200, height: 40, alignment: .center)
-                                    .background(linearGradientForButton)
-                                    .cornerRadius(20)
+                                RedButtonView(buttonText: "ログアウトする")
+//                                Text("ログアウトする")
+//                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+//                                    .foregroundColor(.white)
+//                                    .frame(width: 200, height: 40, alignment: .center)
+//                                    .background(linearGradientForButton)
+//                                    .cornerRadius(20)
                             }
                         }
                         .onAppear{
@@ -100,16 +102,20 @@ struct AuthTest: View {
                             loginController.getUserNameFromUid(
                                 userUid: authCurrentUser.uid,
                                 completion: { userNameString in
-                                    print("ユーザー名: \(userNameString) を取得しました。")
+                                    print("ユーザー名: \(String(describing: userNameString)) を取得しました。")
                                     environmentUserData.userName = userNameString
                                     currentUser.userName = userNameString
                             })
+                            
+                            // ゲストモードを解除
+                            isGuestMode.guestModeSwitch = false
                         }
                     } else {
                         // ログインしていない場合、ログインまたは新規登録のビューを表示する
                         // 新規登録画面へ
                         NavigationLink(destination: RegisterView(loginController: loginController), label: {
-                            Text("新規登録")
+                            RedButtonView(buttonText: "新規登録")
+//                            Text("新規登録")
                         })
                         
 //                        VStack{
@@ -139,7 +145,8 @@ struct AuthTest: View {
 //                        }
                         
                         NavigationLink(destination: LoginTest(currentUser: currentUser, isShowLoginCheckView: $isShowLoginCheckView) ){
-                            Text("ログイン").padding()
+                            RedButtonView(buttonText: "ログイン")
+//                            Text("ログイン").padding()
                         }
                         
 //                        NavigationLink(destination: TabWithAnimationView(currentUser: UserData(uid: "Guest UID", email: "Guest@email.com", userName: "Guest Name")).navigationBarHidden(true), isActive: $isStartGuestMode){

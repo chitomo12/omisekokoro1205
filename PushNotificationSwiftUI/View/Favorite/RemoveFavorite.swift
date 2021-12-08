@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-func RemoveFavorite(favDocumentID: String, postID: String, userID: String, completion: @escaping () -> () ){
+func RemoveFavorite(postID: String, userID: String, completion: @escaping () -> () ){
     // documentIDから検索して削除する
     let db: Firestore!
     Firestore.firestore().settings = FirestoreSettings()
