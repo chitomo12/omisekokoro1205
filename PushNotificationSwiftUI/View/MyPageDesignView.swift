@@ -207,8 +207,8 @@ struct MyPageDesignView: View {
                                     
                                     // 編集画面を閉じる
                                     isShowEditPopover = false
-                                    // ログイン画面へ
-                                    isShowLoginView = true
+//                                    // ログイン画面へ
+//                                    isShowLoginView = true
                                 }) {
                                     Text("ログアウトする")
                                         .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -219,12 +219,12 @@ struct MyPageDesignView: View {
                                         .padding()
                                 }
                             }
-                            NavigationLink(destination: AuthTest(loginController: loginController,
-                                                                 isShowLoginCheckView: $isShowLoginCheckView,
-                                                                 currentUser: currentUser).navigationBarHidden(true),
-                                           isActive: $isShowLoginView) {
-                                EmptyView()
-                            }
+//                            NavigationLink(destination: AuthTest(loginController: loginController,
+//                                                                 isShowLoginCheckView: $isShowLoginCheckView,
+//                                                                 currentUser: currentUser).navigationBarHidden(true),
+//                                           isActive: $isShowLoginView) {
+//                                EmptyView()
+//                            }
                         }
                     }
                 }

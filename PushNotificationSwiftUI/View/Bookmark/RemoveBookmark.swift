@@ -8,13 +8,13 @@
 import SwiftUI
 import Firebase
 
-func RemoveBookmark(bookmarkDocumentID: String, postID: String, userID: String, completion: @escaping () -> () ){
+func RemoveBookmark(postID: String, userID: String, completion: @escaping () -> () ){
     // documentIDから検索して削除する
     let db: Firestore!
     Firestore.firestore().settings = FirestoreSettings()
     db = Firestore.firestore()
     
-    print("ドキュメントID：\(bookmarkDocumentID)を削除します")
+    print("ブックマークを削除します")
     
     db.collection("bookmarkCollection")
         .document("bookmarkDocument")

@@ -24,10 +24,14 @@ struct RegisterView: View {
         // ログインしていない場合、ログインまたは新規登録のビューを表示する
         VStack{
             Text("新規登録").font(.title2).fontWeight(.ultraLight).padding()
+            
             Text("メールアドレス").fontWeight(.ultraLight)
             TextField("email", text: $inputUserEmail, prompt:
                 Text("emailを入力してください")
             ).autocapitalization(.none)
+            
+            Divider()
+            
             Text("パスワード").fontWeight(.ultraLight)
             TextField("パスワード", text: $inputUserPassword, prompt:
                 Text("パスワードを入力してください")
@@ -63,21 +67,20 @@ struct RegisterView: View {
 //                Text("新規登録します").padding()
                 RedButtonView(buttonText: "新規登録").padding()
             }
-            
-            // 登録したらログイン後の名前登録画面に移行
-            NavigationLink(destination: DidLoginTest(environmentCurrentUserData: _environmentUserData,
-                                                     loginController: loginController,
-                                                     currentUser: environmentUserData,
-                                                     isShowLoginCheckView: $isShowLoginCheckView),
-                           isActive: $loginController.isDidLogin) {
-                EmptyView()
-            }
         }
         .padding(.horizontal, 30)
         .onAppear(perform: {
             loginController.isDidLogout = true
         })
         
+        // 登録したらログイン後の名前登録画面に移行
+        NavigationLink(destination: DidLoginTest(environmentCurrentUserData: _environmentUserData,
+                                                 loginController: loginController,
+                                                 currentUser: environmentUserData,
+                                                 isShowLoginCheckView: $isShowLoginCheckView),
+                       isActive: $loginController.isDidLogin) {
+            EmptyView()
+        }
     }
 }
 

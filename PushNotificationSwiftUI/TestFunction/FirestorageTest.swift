@@ -59,7 +59,7 @@ func getUserImageFromFirestorage(userUID: String, completion: @escaping (Data?) 
     print("\(userUID)から画像ファイルをダウンロードします")
     // downloadURLから画像ファイルをダウンロードするメソッド
     let storage = Storage.storage()
-    let imageRef = storage.reference(forURL: "gs://pushnotificationswiftui.appspot.com//images/\(userUID).jpg")
+    let imageRef = storage.reference(forURL: "gs://pushnotificationswiftui.appspot.com/images/\(userUID).jpg")
     imageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
         completion(data)
     }

@@ -23,12 +23,12 @@ struct Post: Identifiable{
     let imageURL: String?
 }
 
-// カード表示用のクラス
+// カード表示用のstruct
 struct PostForCard: Identifiable{
     let id = UUID()
-    let omiseName: String
-    let documentId: String
-    let created_at: String
+    var omiseName: String
+    var documentId: String
+    var created_at: String
     let comment: String
     let coordinate: CLLocationCoordinate2D
     let created_by: String?
@@ -36,6 +36,20 @@ struct PostForCard: Identifiable{
     let imageURL: String?
     let imageUIImage: UIImage?
     let userImageUIImage: UIImage
+}
+
+// カード表示用のクラス
+class PostForCardClass: ObservableObject{
+    var omiseName: String = ""
+    var documentId: String = ""
+    var created_at: String = ""
+    let comment: String = ""
+    let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+    let created_by: String? = ""
+    let created_by_name: String? = ""
+    let imageURL: String? = ""
+    let imageUIImage: UIImage? = UIImage(named: "SampleImage")
+    let userImageUIImage: UIImage = UIImage(named:"SampleImage")!
 }
 
 // データ処理用のクラス

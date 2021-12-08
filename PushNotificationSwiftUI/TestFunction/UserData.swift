@@ -13,6 +13,7 @@ import FirebaseFirestore
 
 class UserData: ObservableObject {
     @EnvironmentObject var isShowProgress: ShowProgress
+    @EnvironmentObject var environmentUserData: UserData
     
     @Published var uid: String = ""
     @Published var email: String = ""

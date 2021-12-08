@@ -88,7 +88,7 @@ class NotificationController: ObservableObject{
                             
                             // UIDから名前を取得
                             self.loginController.getUserNameFromUid(userUid: document.get("sendUserUid") as! String) { nameString in
-                                var senderUserName = "dummy name"
+                                var senderUserName = "ゲスト"
                                 if nameString != nil{
                                     senderUserName = nameString!
                                 }

@@ -1,30 +1,28 @@
 //
-//  PostDetailView.swift
-//  MyMap1030
+//  PostDetailViewTwo.swift
+//  PushNotificationSwiftUI
 //
-//  Created by 福田正知 on 2021/11/26.
+//  Created by 福田正知 on 2021/12/08.
 //
 
 import SwiftUI
 import MapKit
 import UIKit
 
-// Mapでアノテーション選択時に表示されるビュー
-struct PostDetailView: View {
+struct PostDetailViewTwo: View {
     @EnvironmentObject var environmentCurrentUser: UserData
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
-    @Binding var selectedPost: Post
-    @Binding var isShowingDetail: Bool
+    @State var selectedPost = Post(omiseName: "", documentId: "", created_at: "", comment: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), created_by: "", created_by_name: "", imageURL: "")
     
-    @Binding var isShowingDetailContent: Bool
+    @State var isShowingDetailContent: Bool = false
     
-    @Binding var selectedPostImageData: Data?
-    @Binding var selectedPostImageUIImage: UIImage?
-    @Binding var selectedPostUserImageUIImage: UIImage
-    @Binding var isFavoriteAddedToSelectedPost: Bool
-    @Binding var isBookmarkAddedToSelectedPost: Bool
+    @State var selectedPostImageData: Data?
+    @State var selectedPostImageUIImage: UIImage?
+    @State var selectedPostUserImageUIImage: UIImage = UIImage(named: "SampleImage")!
+    @State var isFavoriteAddedToSelectedPost: Bool = false
+    @State var isBookmarkAddedToSelectedPost: Bool = false 
     @State var selectedPostImageURLURL: URL?
     
     //
@@ -49,8 +47,6 @@ struct PostDetailView: View {
     
         ZStack{
             ScrollView{
-//            VStack(alignment: .center){
-                
                 // 投稿内容(表示データを読み込み中はローディングを表示する）
                 if isShowingDetailContent == true {
                     // URLが有効な場合、お店画像を表示する
@@ -226,6 +222,7 @@ struct PostDetailView: View {
                                 .animation(Animation.easeInOut, value: isBookmarkAddedToSelectedPost)
                             }
                             
+                            // その他ボタン
                             Button(action: {
                                 isShowActionSheet = true
                             }){
@@ -263,11 +260,7 @@ struct PostDetailView: View {
                                 }
                                 .padding(.horizontal)
                                 
-        //                        HStack {
-        //                            Image(systemName: "map.fill")
-        //                            Text(selectedPost.omiseName)
-        //                        }.font(.caption)
-                                
+                                // Google検索リンクボタン
                                 Button(action:{
                                     // URLが有効な場合Safariで開く
                                     let encodedUrlString = selectedPost.omiseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
@@ -293,24 +286,82 @@ struct PostDetailView: View {
                     } //Groupここまで
                     .opacity(viewState1 ? 1 : 0)
                     .offset(x: 0, y: viewState1 ? 0 : -25)
-                    .animation(Animation.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5).delay(0.2), value: viewState1)
+                    .animation(Animation.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5).delay(0.3), value: viewState1)
                     .onAppear {
                         withAnimation {
                             viewState1 = true
                         }
                     }
-                } else {
+                } else if isShowingDetailContent == false {
                     // isShowingDetailContent == false の場合
                 } // if isShowingDetailContent~ ここまで
-            
-                // 有効な画像URLが存在する場合下にSpacerを挿入
-//                if let tempPostImage = selectedPost.imageURL {
-//                    if let _ = URL(string: tempPostImage){
-//                        Spacer()
-//                    }
-//                }
             } //ScrollViewここまで
+            .onAppear{
+                print("PostDetailViewTwoのデータを読み込みます")
+                
+                let postData = PostData()
+                postData.getPostDetail(documentKeyID: isShowPostDetailPopover.selectedPostDocumentUID,
+                                       completion: { onePost in
+//                    // 削除するパターン分岐に備え、アノテーションを渡しておく
+//                    self.parent.selectedPostAnnotation = annotationView
+                    // 投稿者名、コメント文などが格納されたドキュメント情報を渡す
+                    selectedPost = onePost
+                    
+                    // お店画像の読み込み（登録がない場合はダミー画像を表示）
+                    let postImageURL: URL? = URL(string: onePost.imageURL ?? "")
+                    if postImageURL != nil{
+                        print("①postImageURL: \(String(describing:postImageURL))を読み込みます")
+                        do{
+                            selectedPostImageData = try Data(contentsOf: postImageURL!)
+                        } catch {
+                            print("error")
+                        }
+                    } else {
+                        print("②postImageURLがnilです")
+                        selectedPostImageData = nil
+                        selectedPostImageUIImage = nil
+                    }
+                    
+                    if selectedPostImageData != nil{
+                        print("③")
+                        selectedPostImageUIImage = UIImage(data: selectedPostImageData!)!
+                    } else {
+                        print("④Error")
+                        selectedPostImageUIImage = nil
+                    }
+                    
+                    // ファボ、ブックマークの判定
+                    print("check start")
+                    CheckFavorite(postID: onePost.documentId, currentUserID: environmentCurrentUser.uid, completion: { resultBool, foundedFavID in
+                        isFavoriteAddedToSelectedPost = resultBool
+//                        FavoriteID = foundedFavID
+                        
+                        CheckBookmark(postID: onePost.documentId, currentUserID: environmentCurrentUser.uid, completion: { resultBool, foundedBookmarkID in
+                            isBookmarkAddedToSelectedPost = resultBool
+//                            BookmarkID = foundedBookmarkID
+                            
+                            getUserImageFromFirestorage(userUID: onePost.created_by ?? "GuestUID") { data in
+                                if data != nil {
+                                    print("投稿者プロフィール画像を読み込みます：\(data!)")
+                                    selectedPostUserImageUIImage = UIImage(data: data!)!
+                                } else {
+                                    print("\(String(describing: onePost.created_by))の投稿者プロフィール画像が見つかりません")
+                                    selectedPostUserImageUIImage = UIImage(named: "SampleImage")!
+                                }
+                                
+                                // 投稿詳細内容を表示
+                                isShowingDetailContent = true
+                            }
+                        })
+                    })
+                    
+                })
+                
+                print("読み込み完了")
+//                isShowingDetailContent = true
+            }
             
+            // 報告ウィンドウ
             if isShowReportWindow {
                 VStack{
                     TextField("報告内容を入力してください", text: $inputReportText).padding()
@@ -340,47 +391,10 @@ struct PostDetailView: View {
                 .animation(Animation.easeInOut, value: isShowingDetailContent)
         } //ZStackここまで
     }
-    
-
 }
 
-//// 環境変数用クラス
-//class IsShowPostDetail: ObservableObject{
-//    @Published var showSwitch: Bool = false
+//struct PostDetailViewTwo_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PostDetailViewTwo()
+//    }
 //}
-
-struct PostDetailView_Previews: PreviewProvider {
-//    @ObservedObject var postData = PostData()
-    
-    static var previews: some View {
-        // ImageURLが存在するパターン
-        PostDetailView(selectedPost:
-                            .constant(Post(omiseName: "サンプル焼き肉店名",
-                                           documentId: "sample ID",
-                                           created_at: "2020年10月20日",
-                                           comment: "眺めが最高でした！",
-                                           coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
-                                           created_by: "sampleUserId",
-                                           created_by_name: "サンプルユーザー",
-                                           imageURL: "https://rimage.gnst.jp/rest/img/hjxxuksz0000/s_005m.jpg")),
-                       isShowingDetail: .constant(true),
-                       isShowingDetailContent: .constant(true),
-                       selectedPostImageData: .constant(try? Data(contentsOf: URL(string: "https://rimage.gnst.jp/rest/img/hjxxuksz0000/s_005m.jpg")!)),
-                       selectedPostImageUIImage: .constant(UIImage(named: "emmy")),
-                       selectedPostUserImageUIImage: .constant(UIImage(named: "emmy")!),
-                       isFavoriteAddedToSelectedPost: .constant(true),
-                       isBookmarkAddedToSelectedPost: .constant(true)
-        )
-        
-        // ImageURLが無いお店のパターン
-//        PostDetailView(selectedPost: .constant(Post(omiseName: "サンプル店名", documentId: "sample ID", created_at: "2020年10月20日", comment: "眺めが最高でした！💓", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), created_by: "sampleUserId", created_by_name: "サンプルユーザー", imageURL: "")),
-//                       selectedPostImageData: .constant(try? Data(contentsOf: URL(string: "https://rimage.gnst.jp/rest/img/hjxxuksz0000/s_005m.jpg")!)),
-//                       selectedPostImageUIImage: .constant(UIImage(named: "emmy")))
-        
-//        // ImageURLが無効なお店のパターン
-//        PostDetailView(selectedPost: .constant(Post(omiseName: "サンプル店名", documentId: "sample ID", created_at: "2020年10月20日", comment: "眺めが最高でした！💓", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), created_by: "sampleUserId", created_by_name: "サンプルユーザー", imageURL: "")),
-//                       selectedPostImageData: .constant(try? Data(contentsOf: URL(string: "https://rimage.gnst.jp/rest/img/hjxxuksz0000/s_005m.jp")!)),
-//                       selectedPostImageUIImage: .constant(UIImage(named: "emmy")))
-    }
-    
-}

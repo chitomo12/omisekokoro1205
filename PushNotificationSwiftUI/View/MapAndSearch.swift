@@ -24,6 +24,7 @@ struct MapAndSearch: View {
     //            .edgesIgnoringSafeArea(.bottom)
     //    }
     @EnvironmentObject var environmentCurrentUserData: UserData
+    @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     @EnvironmentObject var isGuestMode: IsGuestMode
     
     @ObservedObject var omiseDataList = OmiseData()
@@ -34,7 +35,7 @@ struct MapAndSearch: View {
     @Binding var searchedAddress: String
     @Binding var mapSwitch: MapSwitch
         
-    @State var isPopover: Bool = false
+    @State var isShowSearchAndPostPopover: Bool = false
     @State var isShowingAlert: Bool = false // 詳細画面にて、削除確認画面表示用のBool
     @State var commentText: String = ""
     
@@ -119,10 +120,12 @@ struct MapAndSearch: View {
                         print("Buttonが押されました")
                         if isGuestMode.guestModeSwitch == true {
                             // ゲストモードの場合
+                            isShowLoginCheckView = true 
                             isShowLoginView = true
                         } else {
+                            print("投稿画面を表示します")
                             // ログイン中の場合
-                            isPopover = true
+                            isShowSearchAndPostPopover = true
                         }
                     }) {
                         ZStack(){
@@ -154,20 +157,22 @@ struct MapAndSearch: View {
                     }.padding(25)
                     
                         // 投稿用ポップオーバー
-                        .popover(isPresented: $isPopover) {
-                            OmiseSearchAndPostView(omiseDataList: omiseDataList,
-                                                   currentUser: currentUser,
-                                            selectedTag: $temporalSelectedTag,
-                                            searchedAndSelectedOmiseLatitude: $searchedAndSelectedOmiseLatitude,
-                                            searchedAndSelectedOmiseLongitude: $searchedAndSelectedOmiseLongitude,
-                                            searchedAndSelectedOmiseName: $searchedLocationName,
-                                            searchedAndSelectedOmiseAddress: $searchedAddress,
-                                            searchedAndSelectedOmiseImageURL: $searchedAndSelectedOmiseImageURL,
-                                            mapSwitch: $mapSwitch,
-                                            isPopover: $isPopover)
+                        .popover(isPresented: $isShowSearchAndPostPopover) {
+                            OmiseSearchAndPostView(
+                                omiseDataList: omiseDataList,
+                                currentUser: currentUser,
+                                selectedTag: $temporalSelectedTag,
+                                searchedAndSelectedOmiseLatitude: $searchedAndSelectedOmiseLatitude,
+                                searchedAndSelectedOmiseLongitude: $searchedAndSelectedOmiseLongitude,
+                                searchedAndSelectedOmiseName: $searchedLocationName,
+                                searchedAndSelectedOmiseAddress: $searchedAddress,
+                                searchedAndSelectedOmiseImageURL: $searchedAndSelectedOmiseImageURL,
+                                mapSwitch: $mapSwitch,
+                                isPopover: $isShowSearchAndPostPopover)
                         } // .popoverここまで
                     
                         // アノテーション選択時の詳細表示用ポップオーバー
+//                        .popover(isPresented: $isShowPostDetailPopover.showSwitch) {
                         .popover(isPresented: $isShowingDetail) {
                             ZStack {
                                 // 背景
@@ -180,14 +185,14 @@ struct MapAndSearch: View {
                                 
                                 VStack {
                                     PostDetailView(selectedPost: $selectedPost,
+                                                   isShowingDetail: $isShowingDetail,
                                                    isShowingDetailContent: $isShowingDetailContent,
                                                    selectedPostImageData: $selectedPostImageData,
                                                    selectedPostImageUIImage: $selectedPostImageUIImage,
                                                    selectedPostUserImageUIImage: $selectedPostUserImageUIImage,
                                                    isFavoriteAddedToSelectedPost: $isFavoriteAddedToSelectedPost,
-                                                   isBookmarkAddedToSelectedPost: $isBookmarkAddedToSelectedPost,
-                                                   favDocumentID: $FavoriteID,
-                                                   bookmarkDocumentID: $BookmarkID)
+                                                   isBookmarkAddedToSelectedPost: $isBookmarkAddedToSelectedPost
+                                    )
                                     
                                     // 削除ボタン
                                     Button(action:{
@@ -211,6 +216,7 @@ struct MapAndSearch: View {
                                             map.removeAnnotation(selectedPostAnnotation.annotation!)
                                         }))
                                     }
+                                    
                                 } // popover内のVStackここまで
                             }.ignoresSafeArea() //ZStackここまで
                         } // .popover(isPresented: $isShowingDetail)ここまで
