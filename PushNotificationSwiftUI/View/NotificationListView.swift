@@ -72,6 +72,7 @@ struct NotificationListView: View {
                         Image(systemName: "arrow.triangle.2.circlepath")
                         Text("更新")
                     }
+                    .foregroundColor(Color("ColorFour"))
                 }
                 
                 VStack(alignment: .leading) {

@@ -11,4 +11,5 @@ class IsShowPostDetailPopover: ObservableObject {
     @Published var showSwitch: Bool = false
     @Published var showContent: Bool = false
     @Published var selectedPostDocumentUID: String = ""
+    @Published var selectedPostCreateUserUID: String = ""
 }

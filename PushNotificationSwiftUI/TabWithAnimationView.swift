@@ -283,27 +283,30 @@ struct TabWithAnimationView: View {
                 VStack {
                     PostDetailViewTwo()
                     
-                    // 削除ボタン
-                    Button(action:{
-                        isShowingAlert = true
-                        print("削除します")
-                    }){
-                        Text("削除")
-                    }
-                    .foregroundColor(.red)
-                    .padding()
-                    .alert(isPresented: $isShowingAlert){
-                        Alert(title: Text("本当に削除しますか？"),
-                              message: Text("元に戻すことはできません"),
-                              primaryButton: .cancel(Text("キャンセル")),
-                              secondaryButton: .destructive(Text("削除"), action: {
-                            // 削除ボタンが押されたら投稿削除を実行
-                            deleteComment(targetDocumentID: isShowPostDetailPopover.selectedPostDocumentUID)
-                            // 削除後、変数を初期化しポップオーバーを閉じる
-                            isShowPostDetailPopover.selectedPostDocumentUID = ""
-                            isShowPostDetailPopover.showSwitch = false
-//                            map.removeAnnotation(selectedPostAnnotation.annotation!)
-                        }))
+                    // ログイン中のユーザーUIDと一致する場合のみ表示
+                    if isShowPostDetailPopover.selectedPostCreateUserUID == currentUser.uid {
+                        // 削除ボタン
+                        Button(action:{
+                            isShowingAlert = true
+                            print("削除します")
+                        }){
+                            Text("投稿を削除")
+                        }
+                        .foregroundColor(.red)
+                        .padding()
+                        .alert(isPresented: $isShowingAlert){
+                            Alert(title: Text("本当に削除しますか？"),
+                                  message: Text("元に戻すことはできません"),
+                                  primaryButton: .cancel(Text("キャンセル")),
+                                  secondaryButton: .destructive(Text("削除"), action: {
+                                // 削除ボタンが押されたら投稿削除を実行
+                                deleteComment(targetDocumentID: isShowPostDetailPopover.selectedPostDocumentUID)
+                                // 削除後、変数を初期化しポップオーバーを閉じる
+                                isShowPostDetailPopover.selectedPostDocumentUID = ""
+                                isShowPostDetailPopover.showSwitch = false
+    //                            map.removeAnnotation(selectedPostAnnotation.annotation!)
+                            }))
+                        }
                     }
                     
                 } // popover内のVStackここまで

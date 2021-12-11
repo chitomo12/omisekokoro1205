@@ -173,6 +173,8 @@ struct MapView: UIViewRepresentable {
                 self.parent.selectedPostDocumentID = onePost.documentId
                 // 投稿者名、コメント文などが格納されたドキュメント情報を渡す
                 self.parent.selectedPost = onePost
+                // 投稿者名を環境変数に渡す（削除ボタンの表示判定に使用）
+                self.parent.isShowPostDetailPopover.selectedPostCreateUserUID = onePost.created_by!
                 
                 // お店画像の読み込み（登録がない場合はダミー画像を表示）
                 let postImageURL: URL? = URL(string: onePost.imageURL ?? "")
