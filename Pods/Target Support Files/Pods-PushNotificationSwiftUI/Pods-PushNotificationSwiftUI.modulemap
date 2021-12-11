@@ -1,6 +1,0 @@
-framework module Pods_PushNotificationSwiftUI {
-  umbrella header "Pods-PushNotificationSwiftUI-umbrella.h"
-
-  export *
-  module * { export * }
-}
