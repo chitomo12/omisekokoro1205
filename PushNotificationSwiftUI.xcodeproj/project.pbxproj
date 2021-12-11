@@ -125,7 +125,7 @@
 		13F9D3E9275C7D5F00D121F2 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
 		13F9D3EB275C7D5F00D121F2 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		13F9D3EC275C7D5F00D121F2 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		13F9D3EC275C7D5F00D121F2 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoQueryTest.swift; sourceTree = "<group>"; };
 		13F9D3EE275C7D5F00D121F2 /* splashLight.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splashLight.jpg; sourceTree = "<group>"; };
 		13F9D3EF275C7D5F00D121F2 /* DidLoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DidLoginTest.swift; sourceTree = "<group>"; };
