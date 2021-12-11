@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import MapKit
 import Firebase
 import FirebaseAuth
@@ -39,7 +40,22 @@ struct MyPageDesignView: View {
     @State var isMyBookmarkListInitialized = false
     
     @State var isShowLoginView = false
-    @Binding var isShowLoginCheckView: Bool 
+    @Binding var isShowLoginCheckView: Bool
+    
+    @State var isShowNameRegisterPopover = false
+    
+    @State var rectangleLocationX: CGFloat = -100
+    @State var rectangleLocationY: CGFloat = -100
+    @State var toukouFrameLocation: CGPoint = CGPoint(x: 0.0, y: 0.0)
+    @State var toukouFrameSize: CGSize = CGSize(width: 0.0, height: 0.0)
+    @State var bookmarkFrameLocation: CGPoint = CGPoint(x: 0.0, y: 0.0)
+    @State var bookmarkFrameSize: CGSize = CGSize(width: 0.0, height: 0.0)
+    
+    @State var tabsLabelTextColor = Color.white
+    @State var postTabLabelTextColor = Color("ColorThree")
+    @State var bookmarkTabLabelTextColor = Color("ColorThree")
+    
+    @State var movingRectPoint = CGPoint(x: 0.0, y: 0.0)
     
     let loginController = LoginController()
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
@@ -52,6 +68,7 @@ struct MyPageDesignView: View {
         ZStack{
             ScrollView{
             VStack {
+                // ヘッダーバー
                 Image("omisekokoro_bar")
                     .resizable()
                     .padding(.top, 0.0)
@@ -66,6 +83,8 @@ struct MyPageDesignView: View {
                         .foregroundColor(Color("ColorThree"))
                         .padding(.vertical)
                 }
+                
+                // ユーザーイメージ
                 ZStack {
                     LinearGradient(colors: [Color("ColorOne"),Color("ColorTwo")], startPoint: .bottomLeading, endPoint: .topTrailing)
                         .frame(width: screenWidth, height:100)
@@ -86,10 +105,14 @@ struct MyPageDesignView: View {
                     
                     // 編集ボタン
                     Button(action: {
-                        if isGuestMode.guestModeSwitch == false {
-                            // ログイン中は編集画面を表示
+                        print("environmentCurrentUserData.userName: \(environmentCurrentUserData.userName)")
+                        if isGuestMode.guestModeSwitch == false && environmentCurrentUserData.userName != nil {
+                            // ログイン中＆ユーザー名登録済みの場合は編集画面を表示
                             // 編集画面で表示する現在のプロフィール画像を渡す
                             isShowEditPopover = true
+                        } else if environmentCurrentUserData.userName == nil {
+                            // ユーザー名登録画面を表示
+                            isShowNameRegisterPopover = true
                         } else {
                             // ゲストモード中はログイン画面を表示
                             isShowLoginCheckView = true
@@ -110,6 +133,7 @@ struct MyPageDesignView: View {
                     }
                     .offset(x: 50, y: 40)
                     
+                    // プロフィール編集用ポップオーバー
                     .popover(isPresented: $isShowEditPopover) {
                         NavigationView {
                             VStack {
@@ -137,10 +161,11 @@ struct MyPageDesignView: View {
                                         .shadow(color: .gray, radius: 3, x: 0, y: 1)
                                 }
                                 
-                                
-                                Button("画像を選択"){
+                                Button(action: {
                                     print("画像を選択します")
                                     isShowPHPicker = true
+                                }){
+                                    RedButtonView(buttonText: "画像を選択")
                                 }
                                 
                                 // ライブラリから写真を選択ビュー
@@ -148,7 +173,7 @@ struct MyPageDesignView: View {
                                     PHPickerView(isShowPHPicker: $isShowPHPicker, selectedImage: $selectedImage)
                                 }
                                 
-                                Button("画像を保存"){
+                                Button(action: {
                                     isShowProgress.progressSwitch = true
                                     print("画像をアップロードします")
                                     if selectedImage != nil{
@@ -162,6 +187,8 @@ struct MyPageDesignView: View {
                                         print("選択された画像がありません")
                                         isShowProgress.progressSwitch = false
                                     }
+                                }){
+                                    RedButtonView(buttonText: "画像を保存")
                                 }
                                 .padding(.bottom)
                                 
@@ -178,16 +205,32 @@ struct MyPageDesignView: View {
                                 Button(action: {
                                     isShowProgress.progressSwitch = true
                                     print("保存ボタンが押されました")
-                                    if inputText != environmentCurrentUserData.userName! {
-                                        print("名前を\(environmentCurrentUserData.userName!)から\(inputText)に変更します")
+                                    
+                                    if inputText.isEmpty == false && inputText != environmentCurrentUserData.userName! {
+                                        print("ユーザー名を\(environmentCurrentUserData.userName!)から\(inputText)に変更します")
                                         // ユーザー名変更のための処理
                                         environmentCurrentUserData.ChangeUserName(userUID: environmentCurrentUserData.uid, userNewName: inputText, completion: {
                                             environmentCurrentUserData.userName = inputText
                                         })
                                     }
-                                    isShowProgress.progressSwitch = false
+                                    
+                                    print("画像をアップロードします")
+                                    if selectedImage != nil{
+                                        uploadImageToFirestorage(userUID: environmentCurrentUserData.uid, newImageUIImage: selectedImage!, completion: { _ in
+                                            print("アップロード完了")
+                                            // プロフィール画像のビューを更新
+                                            environmentCurrentUserData.profileUIImage = selectedImage!
+                                            isShowProgress.progressSwitch = false
+                                        })
+                                    } else {
+                                        print("選択された画像がありません")
+                                        isShowProgress.progressSwitch = false
+                                    }
+                                    
+//                                    isShowProgress.progressSwitch = false
                                 }) {
-                                    Text("保存")
+//                                    Text("保存")
+                                    RedButtonView(buttonText: "保存")
                                 }
                                 
                                 // ログアウトボタン
@@ -227,13 +270,21 @@ struct MyPageDesignView: View {
 //                            }
                         }
                     }
+                    
+                    // ユーザー名登録用ポップオーバー
+                    .popover(isPresented: $isShowNameRegisterPopover) {
+                        NavigationView{
+                            NameRegisterView(currentUser: environmentCurrentUserData)
+                        }
+                    }
                 }
                 
-                // Environment
+                // Welcomeテキスト
                 Text("\(environmentCurrentUserData.userName ?? "Guest")さん\nいらっしゃい🍲")
                     .fontWeight(.thin)
                     .padding()
                 
+                // ゲストモードの場合はログインボタンを表示
                 if environmentCurrentUserData.uid == "GuestUID"{
                     Button(action:{
                         print("Login")
@@ -245,60 +296,98 @@ struct MyPageDesignView: View {
                 
                 Divider()
                 
-                HStack {
-                    Spacer()
-                    Button(action:{
-                        myPageTabSelection = 0
-                    }){
-                        VStack {
-                            Text("投稿").font(.body)
+                ZStack{
+                    Rectangle()
+                        .frame(width: 120, height: 60)
+                        .cornerRadius(30)
+                        .foregroundColor(Color("ColorThree"))
+                        .position(x: rectangleLocationX, y: rectangleLocationY + 8)
+                        
+                    HStack(spacing: 0.0) {
+                        
+                        GeometryReader{ buttonOneGeo in
+                            Button(action:{
+                                // 投稿一覧を表示させる
+                                myPageTabSelection = 0
+                                withAnimation(.spring()) {
+                                    rectangleLocationX = toukouFrameLocation.x
+                                    rectangleLocationY = toukouFrameLocation.y
+                                    postTabLabelTextColor = Color.white
+                                    bookmarkTabLabelTextColor = Color("ColorThree")
+                                }
+                            }){
+                                VStack(alignment: .center) {
+                                    Image(systemName: "bubble.left.and.bubble.right.fill").font(.caption)
+                                    Text("投稿").font(.body)
+                                }
+                                .foregroundColor(postTabLabelTextColor)
+                                .frame(width: UIScreen.main.bounds.width / 2, height: 80)
+                                .task{
+                                    toukouFrameLocation = CGPoint(x: buttonOneGeo.frame(in: .local).midX, y: buttonOneGeo.frame(in: .local).midY)
+                                    toukouFrameSize = CGSize(width: buttonOneGeo.frame(in: .local).width, height: buttonOneGeo.frame(in: .local).height)
+                                    if rectangleLocationX == -100 {
+                                        postTabLabelTextColor = Color.white
+                                        // タブボタン背景のRectangleの初期値を設定
+                                        rectangleLocationX = toukouFrameLocation.x
+                                        rectangleLocationY = toukouFrameLocation.y
+                                    }
+                                }
+                            }
+//                            .frame(width:180, height: 80)
+//                            .border(Color.gray)
                         }
-                        .frame(width:180)
-                    }
-                    Spacer()
-                    Button(action: {
-                        myPageTabSelection = 1
-                    }) {
-                        VStack {
-                            Text("ブックマーク").font(.body)
+                        
+                        GeometryReader{ buttonTwoGeo in
+                            Button(action: {
+                                // ブックマーク一覧を表示させる
+                                myPageTabSelection = 1
+                                withAnimation(.spring()) {
+                                    rectangleLocationX = bookmarkFrameLocation.x + (toukouFrameSize.width + bookmarkFrameSize.width) / 2
+                                    rectangleLocationY = bookmarkFrameLocation.y
+                                    bookmarkTabLabelTextColor = Color.white
+                                    postTabLabelTextColor = Color("ColorThree")
+                                }
+                            }) {
+                                VStack(alignment: .center) {
+                                    Image(systemName: "bookmark.fill").font(.caption)
+                                    Text("ブックマーク").font(.body)
+                                }
+                                .foregroundColor(bookmarkTabLabelTextColor)
+                                .frame(width:180, height: 80)
+                            }
+                            .frame(width: UIScreen.main.bounds.width / 2, height: 80)
+                            .onAppear {
+                                bookmarkFrameLocation = CGPoint(x: buttonTwoGeo.frame(in: .local).midX, y: buttonTwoGeo.frame(in: .local).midY)
+                                bookmarkFrameSize = CGSize(width: buttonTwoGeo.frame(in: .local).width, height: buttonTwoGeo.frame(in: .local).height)
+                            }
                         }
-                        .frame(width:180)
                     }
-                    Spacer()
-                }.padding()
-                
-                Divider()
-                
+                }
+//                .border(Color.gray)
+                                
                 if isGuestMode.guestModeSwitch == true {
 //                    // ゲストモードの場合
-//                    Button {
-//                        print("ログイン画面を表示します")
-//                        isShowLoginView = true
-//                        isShowEditPopover = true
-//                    } label: {
-//                        Text("ログイン")
-//                    }
 
                 } else {
                     // ゲストモードでない場合
                     if myPageTabSelection == 0 {
-                        
+                        // 投稿タブを選択した場合
                         HStack{
                             Image(systemName: "arrow.triangle.2.circlepath")
                             Text("再読み込み")
                                 .font(.callout)
                                 .padding(.vertical)
                                 .onAppear{
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                        if isMyPostsListInitialized == false{
-                                            // ブックマーク一覧を読み込み
+                                    if isMyPostsListInitialized == false{
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                            // 投稿一覧を読み込み
                                             getUserPostedPosts(userUID: environmentCurrentUserData.uid)
                                             isMyPostsListInitialized = true
                                         }
                                     }
                                 }
                                 .onTapGesture {
-                                    // ブックマーク一覧を読み込み
+                                    // 投稿一覧を読み込み
                                     getUserPostedPosts(userUID: environmentCurrentUserData.uid)
                                 }
                         }
@@ -310,7 +399,9 @@ struct MyPageDesignView: View {
                                 PostCardViewTwo(post: $postedPostCardList[count])
                             }
                         }
+                        
                     } else if myPageTabSelection == 1 {
+                        // ブックマークタブを選択した場合
                         HStack{
                             Image(systemName: "arrow.triangle.2.circlepath")
                             Text("再読み込み")
@@ -330,15 +421,18 @@ struct MyPageDesignView: View {
                                     getUserRegisteredBookmarks(userUID: environmentCurrentUserData.uid)
                                 }
                         }
-                        LazyVStack {
+                        .foregroundColor(Color("ColorThree"))
+                        
+                        VStack {
                             ForEach(0..<bookmarkedPostCardList.count, id: \.self) { count in
-                                // 投稿をリスト化して表示
+                                // ブックマークをリスト化して表示
                                 PostCardViewTwo(post: $bookmarkedPostCardList[count])
                             }
                         }
                     }
                 }
             }
+            .frame(width: screenWidth)
         }
         }
     }

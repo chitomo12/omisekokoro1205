@@ -68,11 +68,43 @@ struct PostCardViewTwo: View {
     
     @State var loadingUserImage: Bool = true
     @State var postUserImageUIImage: UIImage = UIImage(systemName: "person")!
-    @State var postOmiseImageUIImage: UIImage = UIImage(named: "SampleImage")!
+    @State var postOmiseImageUIImage: UIImage?
     
-    @State var hasBeenInitialized = false
+    @State var hasBeenInitialized: Bool = false
     
     var viewController = ViewController()
+    
+    init(post: Binding<PostForCard>){
+        self._post = post
+////        self.hasBeenInitialized = false
+//        // 最初に表示された時にのみ実行
+//        if hasBeenInitialized == false {
+//            // CardViewが表示されたらプロフィールとお店の画像を読み込み開始。
+//
+//            // 投稿者のプロフィール画像を読み込み
+//            var tempUIImage: UIImage?
+//            getUserImageFromFirestorage(userUID: self.post.created_by ?? "GuestUID", completion: { data in
+//                if data != nil{
+//                    tempUIImage = UIImage(data: data!)!
+//                } else {
+//                    tempUIImage = UIImage(named: "SampleImage")!
+//                }
+//            })
+//            self.postUserImageUIImage = tempUIImage!
+//
+//            // お店画像の読み込み
+//            var tempOmiseUIImage: UIImage?
+//            if postOmiseImageUIImage == nil {
+//                getImageFromURL(urlString: self.post.imageURL, completion: {uiImage in
+//                    tempOmiseUIImage = uiImage
+//                })
+//            }
+//            self.postOmiseImageUIImage = tempOmiseUIImage
+//
+//
+//            self.hasBeenInitialized = true
+//        }
+    }
     
     var body: some View {
         let bounds = UIScreen.main.bounds
@@ -80,7 +112,8 @@ struct PostCardViewTwo: View {
         
         VStack(alignment: .leading) {
             HStack {
-                Image(uiImage: postUserImageUIImage)
+                Image(uiImage: post.userImageUIImage)
+//                Image(uiImage: postUserImageUIImage)
                         .resizable()
                         .scaledToFill()
                         .frame(width: 30, height: 30)
@@ -89,7 +122,8 @@ struct PostCardViewTwo: View {
             }
             .padding(EdgeInsets(top: 15, leading: 15, bottom: 0, trailing: 0))
             HStack(alignment: .top) {
-                Image(uiImage: postOmiseImageUIImage)
+                Image(uiImage: post.imageUIImage!)
+//                Image(uiImage: postOmiseImageUIImage ?? UIImage(named: "SampleImage")!)
                     .resizable()
                     .scaledToFill()
                     .frame(width: (screenWidth / 5), height: (screenWidth / 6))
@@ -120,47 +154,47 @@ struct PostCardViewTwo: View {
             if hasBeenInitialized == false {
                 // CardViewが表示されたらプロフィールとお店の画像を読み込み開始。
                 
-                // 投稿者のプロフィール画像を読み込み
-                getUserImageFromFirestorage(userUID: post.created_by ?? "GuestUID", completion: { data in
-                    if data != nil{
-                        postUserImageUIImage = UIImage(data: data!)!
-                    } else {
-                        postUserImageUIImage = UIImage(named: "SampleImage")!
-                    }
-                })
-                
-                // お店画像の読み込み
-                getImageFromURL(urlString: post.imageURL, completion: {uiImage in
-                    postOmiseImageUIImage = uiImage
-                })
+//                // 投稿者のプロフィール画像を読み込み
+//                getUserImageFromFirestorage(userUID: post.created_by ?? "GuestUID", completion: { data in
+//                    if data != nil{
+//                        postUserImageUIImage = UIImage(data: data!)!
+//                    } else {
+//                        postUserImageUIImage = UIImage(named: "SampleImage")!
+//                    }
+//                })
+//
+//                // お店画像の読み込み
+//                if postOmiseImageUIImage == nil {
+//                    getImageFromURL(urlString: post.imageURL, completion: {uiImage in
+//                        postOmiseImageUIImage = uiImage
+//                    })
+//                }
                 
                 hasBeenInitialized = true
             }
         }
         .onTapGesture {
             print("ポスト：\(post.documentId)の詳細画面を表示します")
-//            ShowPostDetail(postUID: post.documentId)
             isShowPostDetailPopover.selectedPostDocumentUID = post.documentId
             isShowPostDetailPopover.showSwitch = true
-//            viewController.ShowPostDetail(postUID: post.documentId)
         }
     }
 }
 
-struct PostCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        PostCardViewTwo(post: .constant(PostForCard(omiseName: "sampleOmiseName",
-                                          documentId: "sampleID",
-                                          created_at: "2000年11月22日",
-                                          comment: "サンプルコメント",
-                                          coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
-                                          created_by: "サンプルユーザー",
-                                          created_by_name: "sample name",
-                                          imageURL: "sample URL",
-                                          imageUIImage: UIImage(named: "emmy")!,
-                                          userImageUIImage: UIImage(systemName: "person")!)
-                                    ),
-                        postUserImageUIImage: UIImage(named: "emmy")!
-        )
-    }
-}
+//struct PostCardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PostCardViewTwo(post: .constant(PostForCard(omiseName: "sampleOmiseName",
+//                                          documentId: "sampleID",
+//                                          created_at: "2000年11月22日",
+//                                          comment: "サンプルコメント",
+//                                          coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0),
+//                                          created_by: "サンプルユーザー",
+//                                          created_by_name: "sample name",
+//                                          imageURL: "sample URL",
+//                                          imageUIImage: UIImage(named: "emmy")!,
+//                                          userImageUIImage: UIImage(systemName: "person")!)
+//                                    ),
+//                        postUserImageUIImage: UIImage(named: "emmy")!
+//        )
+//    }
+//}

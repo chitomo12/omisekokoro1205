@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 import CoreLocation
 
-struct CommentListView: View {
+struct NotificationListView: View {
     
     @EnvironmentObject var environmentCurrentUserData: UserData
     
@@ -68,7 +68,10 @@ struct CommentListView: View {
                     }
                     print("postList: \(postList)")
                 }) {
-                    Text("GetNotificationList")
+                    HStack{
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                        Text("更新")
+                    }
                 }
                 
                 VStack(alignment: .leading) {
@@ -80,6 +83,14 @@ struct CommentListView: View {
                     Spacer()
                 }
                 .padding(.horizontal)
+                .onAppear {
+                    if notificationCardList.count == 0 {
+                        notificationController.getNotificationCardList(userUID: environmentCurrentUserData.uid) { notificationCardListResult in
+                            print("notificationListを取得しました")
+                            notificationCardList = notificationCardListResult
+                        }
+                    }
+                }
                 
     //            List($notificationCardList){ notificationCard in
     //                 NotificationCardView(notificationForCard: notificationCard)
@@ -146,6 +157,6 @@ struct CommentListView: View {
 
 struct CommentListView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentListView(mapSwitch: .constant(.normal))
+        NotificationListView(mapSwitch: .constant(.normal))
     }
 }

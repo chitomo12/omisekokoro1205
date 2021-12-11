@@ -283,6 +283,7 @@ struct PostDetailViewTwo: View {
                             }
                             .padding(.all, 20)
                         }
+                        .frame(width: UIScreen.main.bounds.width)
                     } //Groupここまで
                     .opacity(viewState1 ? 1 : 0)
                     .offset(x: 0, y: viewState1 ? 0 : -25)

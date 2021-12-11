@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		131A03DE27624B1D00FC2139 /* RiyouKiyakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */; };
 		13846897275E55DB0034DC8D /* IsGuestMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13846896275E55DB0034DC8D /* IsGuestMode.swift */; };
 		13846899275F09250034DC8D /* NotificationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13846898275F09250034DC8D /* NotificationCardView.swift */; };
 		13BB3B8C2760D6E800BD5C8F /* PostDetailViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */; };
@@ -30,7 +31,7 @@
 		13F9D405275C7D6000D121F2 /* CheckBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D2275C7D5E00D121F2 /* CheckBookmark.swift */; };
 		13F9D406275C7D6000D121F2 /* MapAndSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */; };
 		13F9D407275C7D6000D121F2 /* OmiseSearchAndPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */; };
-		13F9D408275C7D6000D121F2 /* CommentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D5275C7D5E00D121F2 /* CommentListView.swift */; };
+		13F9D408275C7D6000D121F2 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D5275C7D5E00D121F2 /* NotificationListView.swift */; };
 		13F9D409275C7D6000D121F2 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */; };
 		13F9D40A275C7D6000D121F2 /* PostCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */; };
 		13F9D40B275C7D6000D121F2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D8275C7D5E00D121F2 /* MapView.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiyouKiyakuView.swift; sourceTree = "<group>"; };
 		13846896275E55DB0034DC8D /* IsGuestMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsGuestMode.swift; sourceTree = "<group>"; };
 		13846898275F09250034DC8D /* NotificationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCardView.swift; sourceTree = "<group>"; };
 		13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewTwo.swift; sourceTree = "<group>"; };
@@ -102,7 +104,7 @@
 		13F9D3D2275C7D5E00D121F2 /* CheckBookmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBookmark.swift; sourceTree = "<group>"; };
 		13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAndSearch.swift; sourceTree = "<group>"; };
 		13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmiseSearchAndPostView.swift; sourceTree = "<group>"; };
-		13F9D3D5275C7D5E00D121F2 /* CommentListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentListView.swift; sourceTree = "<group>"; };
+		13F9D3D5275C7D5E00D121F2 /* NotificationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
 		13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardView.swift; sourceTree = "<group>"; };
 		13F9D3D8275C7D5E00D121F2 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -191,11 +193,11 @@
 				13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */,
 				13F9D42F275C7E3B00D121F2 /* ViewController.swift */,
 				13F9D2F7275B995700D121F2 /* GoogleService-Info.plist */,
-				13F9D3FA275C7D5F00D121F2 /* Design */,
 				13F9D3C9275C7D5D00D121F2 /* LaunchView.swift */,
 				13F9D3FD275C7D6000D121F2 /* TabBarView.swift */,
 				13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */,
 				13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */,
+				13F9D3FA275C7D5F00D121F2 /* Design */,
 				13F9D3CB275C7D5E00D121F2 /* View */,
 				13F9D3E4275C7D5F00D121F2 /* TestFunction */,
 				13F9D2E9275B984C00D121F2 /* Assets.xcassets */,
@@ -227,7 +229,7 @@
 				13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */,
 				13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */,
 				13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */,
-				13F9D3D5275C7D5E00D121F2 /* CommentListView.swift */,
+				13F9D3D5275C7D5E00D121F2 /* NotificationListView.swift */,
 				13846898275F09250034DC8D /* NotificationCardView.swift */,
 				13F9D435275C9DA400D121F2 /* PushNotificationSender.swift */,
 				13F9D3CF275C7D5E00D121F2 /* Bookmark */,
@@ -274,6 +276,7 @@
 				13F9D3E9275C7D5F00D121F2 /* LoginController.swift */,
 				13F9D3F1275C7D5F00D121F2 /* AuthTest.swift */,
 				13F31540275DC2B6005F60D9 /* RegisterView.swift */,
+				131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */,
 				13F9D3E7275C7D5F00D121F2 /* NameRegisterView.swift */,
 				13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */,
 				13F9D3EF275C7D5F00D121F2 /* DidLoginTest.swift */,
@@ -438,11 +441,12 @@
 				13F9D40C275C7D6000D121F2 /* AddFavorite.swift in Sources */,
 				13F9D410275C7D6000D121F2 /* MyPageDesignView.swift in Sources */,
 				13F9D40E275C7D6000D121F2 /* CheckFavorite.swift in Sources */,
+				131A03DE27624B1D00FC2139 /* RiyouKiyakuView.swift in Sources */,
 				13F9D42A275C7D6000D121F2 /* FeatureViewDesign.swift in Sources */,
 				13F9D429275C7D6000D121F2 /* HelloUser.swift in Sources */,
 				13F9D425275C7D6000D121F2 /* LocationManager.swift in Sources */,
 				13F9D2FC275B9B6100D121F2 /* SceneDelegate.swift in Sources */,
-				13F9D408275C7D6000D121F2 /* CommentListView.swift in Sources */,
+				13F9D408275C7D6000D121F2 /* NotificationListView.swift in Sources */,
 				13F9D400275C7D6000D121F2 /* MapSwitch.swift in Sources */,
 				13F9D430275C7E3B00D121F2 /* ViewController.swift in Sources */,
 				13F9D412275C7D6000D121F2 /* OmiseData.swift in Sources */,

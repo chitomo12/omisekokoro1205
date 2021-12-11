@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NameRegisterView: View {
+    @EnvironmentObject var isGuestMode: IsGuestMode
+    
     @ObservedObject var currentUser: UserData
     
     @ObservedObject var loginController = LoginController()
@@ -40,7 +42,11 @@ struct NameRegisterView: View {
                         .cornerRadius(20)
                         .padding()
                 }
-            }.padding(.horizontal)
+            }
+            .padding(.horizontal)
+            .onAppear {
+                // 名前を登録していない場合はポップオーバーを名前登録画面にする
+            }
             
             if loginController.isLoading == true {
                 // ローディングアニメーション
