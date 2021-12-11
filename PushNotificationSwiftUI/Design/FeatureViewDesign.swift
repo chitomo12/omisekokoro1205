@@ -45,6 +45,11 @@ struct FeatureViewDesign: View {
 //                        PostCardView(post: $postCardList[count])
                         PostCardViewTwo(post: $postCardList[count])
                     }
+                    Button(action: {
+                        print("さらに読み込みます")
+                    }) {
+                        Text("さらに読み込む").padding()
+                    }
                 }
                 .onAppear(){
                     if postCardList.count >= 1 {
@@ -92,33 +97,43 @@ struct FeatureViewDesign: View {
                     let postLatitude = document.get("latitude") as! Double
                     let postLongitude = document.get("longitude") as! Double
                     
-                    // カード用の構造体postCardListにデータを格納（試験）
+                    // カード用の構造体postCardListにデータを格納
                     //   Postのリストとの違いはUIImageのプロパティがあること。
-                    var postImageUIImage: UIImage? = UIImage(named: "emmy")
-                    // imageURLのnilチェック
+                    var postImageUIImage: UIImage? = UIImage(named: "SampleImage")
+//                    // imageURLのnilチェック
 //                    if let tempImageURL: String = document.get("imageURL") as! String? {
 //                        print("post.imageURL: \(tempImageURL)")
-//                        // オプショナルバインディング
-//                        if let tempImageURLURL = URL(string: tempImageURL){
-//                            print("tempImageDataURLURL: \(tempImageURLURL)")
-//                            if let tempImageData = try? Data(contentsOf: tempImageURLURL) {
+                    
+                    // オプショナルバインディング
+                    if let tempImageURL = URL(string: document.get("imageURL") as! String){
+                        print("次のURLから画像を読み込みます: \(tempImageURL)")
+                        do {
+                            let tempImageData = try Data(contentsOf: tempImageURL)
+                            postImageUIImage = UIImage(data: tempImageData)
+//                            if let tempImageData = try Data(contentsOf: tempImageURL) {
 //                                postImageUIImage = UIImage(data: tempImageData)!
 //                            }
-//                        } else {
-//                            print("tempImageDataURLURL is nil")
-//                        }
+                            print("画像を読み込みました")
+                        } catch {
+                            print("画像の読み込みに失敗")
+                        }
+                    } else {
+                        print("tempImageDataURLURL is nil")
+                    }
+                    
 //                    } else {
-//                        print("post.imageURL is nil")
+//                        print("お店画像URLがないため読み込みません")
 //                    }
+                    
                     // 投稿者のプロフィール画像を取得
                     var userImageUIImage = UIImage(systemName: "person")
-//                    getUserImageFromFirestorage(userUID: document.get("postUserUID") as! String) { data in
-//                        if data != nil {
-//                            print("投稿者画像を読み込みました：\(data!)")
-//                            userImageUIImage = UIImage(data: data!)
-//                        } else {
-//                            print("投稿者画像が見つかりません")
-//                        }
+                    getUserImageFromFirestorage(userUID: document.get("postUserUID") as! String) { data in
+                        if data != nil {
+                            print("投稿者画像を読み込みました：\(data!)")
+                            userImageUIImage = UIImage(data: data!)
+                        } else {
+                            print("投稿者画像が見つかりません")
+                        }
                         postCardList.append(
                             PostForCard(omiseName: postName,
                                  documentId: document.documentID,
@@ -138,7 +153,7 @@ struct FeatureViewDesign: View {
                         postCardList = postCardList.sorted(by: { (a,b) -> Bool in
                             return a.created_at > b.created_at
                         })
-//                    }
+                    }
                 }
                 if error != nil {
                     print("error: \(String(describing: error))")

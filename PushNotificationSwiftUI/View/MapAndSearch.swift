@@ -82,6 +82,7 @@ struct MapAndSearch: View {
     @State var isShowLoginCheckView = true
     @State var isShowNameRegisterView = false
     @State var isShowLoginView = false
+    @State var isShowNameRegisterPopover = false
     
     var viewController = ViewController()
     
@@ -122,6 +123,9 @@ struct MapAndSearch: View {
                             // ゲストモードの場合
                             isShowLoginCheckView = true 
                             isShowLoginView = true
+                        } else if isGuestMode.guestModeSwitch == false && environmentCurrentUserData.userName == nil {
+                            // ログイン中＆ユーザー名未登録の場合
+                            isShowNameRegisterPopover = true
                         } else {
                             print("投稿画面を表示します")
                             // ログイン中の場合
@@ -268,19 +272,14 @@ struct MapAndSearch: View {
                                             }
                                         }
                                     })
-                            
-//                            } else if isShowNameRegisterView == true {
-//                                // ログイン中＆ユーザー名が存在しない場合
-//                                NameRegisterView(currentUser: environmentCurrentUserData)
-//                            } else {
-//                                // ログアウト中は新規登録＆ログイン画面へ
-//                                AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
-//                            }
                         }.opacity(0.95) // popoverここまで
                     
-//                        .popover(isPresented: $isShowLoginView) {
-//                            AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
-//                        }
+                    // ユーザー名登録用ポップオーバー
+                    .popover(isPresented: $isShowNameRegisterPopover) {
+                        NavigationView{
+                            NameRegisterView(currentUser: environmentCurrentUserData)
+                        }
+                    }
                 } // ZStack(alignment: .bottomTrailing)ここまで
                 
                 // ロード中表示のビュー（コメント読み込み後に非表示）

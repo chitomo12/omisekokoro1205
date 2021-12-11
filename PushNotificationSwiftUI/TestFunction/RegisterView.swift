@@ -20,6 +20,8 @@ struct RegisterView: View {
     
     @State var errorText: String? = ""
     
+    @State var isShowRiyouKiyaku = false
+    
     var body: some View {
         // ログインしていない場合、ログインまたは新規登録のビューを表示する
         VStack{
@@ -39,9 +41,16 @@ struct RegisterView: View {
             
             Divider()
         
-            Toggle(isOn: $agreement) {
-                Text("利用規約に合意する")
-            }.padding()
+            VStack{
+                Toggle(isOn: $agreement) {
+                    Text("利用規約に合意する")
+                }.padding()
+                
+                Text("利用規約")
+                    .onTapGesture {
+                        isShowRiyouKiyaku = true
+                    }
+            }
             
             // エラーメッセージ
             if errorText != nil {
@@ -81,6 +90,12 @@ struct RegisterView: View {
                        isActive: $loginController.isDidLogin) {
             EmptyView()
         }
+        
+                       .sheet(isPresented: $isShowRiyouKiyaku) {
+                           NavigationView{
+                               RiyouKiyakuView()
+                           }
+                       }
     }
 }
 

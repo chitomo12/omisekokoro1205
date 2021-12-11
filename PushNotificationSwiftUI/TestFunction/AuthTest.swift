@@ -44,7 +44,7 @@ struct AuthTest: View {
                         .padding(.top, 80)
                     
                     // ログインしている場合、ログイン中のユーザー情報を表示
-                    if let authCurrentUser = Auth.auth().currentUser {
+                    if let authCurrentUser = Auth.auth().currentUser, environmentUserData.userName != nil {
                         VStack{
                             // ログイン中のユーザー情報(Environment)
                             Text("\(environmentUserData.userName!)でログイン中").padding()

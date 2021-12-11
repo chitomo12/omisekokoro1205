@@ -8,6 +8,7 @@
 import SwiftUI
 
 func getImageFromURL(urlString: String?, completion: @escaping (UIImage) -> () ){
+    print("func getImageFromURLを実行")
     var url: URL?
     if let temp = urlString {
         print("urlStringは \(temp) です。")

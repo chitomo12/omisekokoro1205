@@ -98,7 +98,7 @@ struct TabWithAnimationView: View {
                     MyPageDesignView(currentUser: currentUser, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)
                         .tabItem{}.tag(3)
                     
-                    CommentListView(mapSwitch: $mapSwitch)
+                    NotificationListView(mapSwitch: $mapSwitch)
                         .tabItem{}.tag(4)
                 }
                 .tabViewStyle(PageTabViewStyle())
