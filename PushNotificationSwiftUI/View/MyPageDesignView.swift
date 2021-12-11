@@ -438,7 +438,7 @@ struct MyPageDesignView: View {
     }
     
     public func getUserPostedPosts(userUID: String){
-        print("\(userUID)の投稿を探します")
+        print("\(userUID)による投稿を取得します")
         isShowProgress.progressSwitch = true
 
         // リストを初期化
@@ -470,7 +470,7 @@ struct MyPageDesignView: View {
                         let postLatitude = document.get("latitude") as! Double
                         let postLongitude = document.get("longitude") as! Double
                         
-                        // カード用の構造体postCardListにデータを格納（試験）
+                        // カード用の構造体postCardListにデータを格納
                         //   Postのリストとの違いはUIImageのプロパティがあること。
                         var postImageUIImage: UIImage? = UIImage(named: "emmy")
                         // imageURLのnilチェック
@@ -489,7 +489,7 @@ struct MyPageDesignView: View {
                             print("post.imageURL is nil")
                         }
                         // 投稿者のプロフィール画像を取得
-                        var userImageUIImage = UIImage(systemName: "person")
+                        var userImageUIImage = UIImage(named: "SampleImage")
                         getUserImageFromFirestorage(userUID: document.get("postUserUID") as! String) { data in
                             if data != nil {
                                 print("投稿者画像を読み込みました：\(data!)")
@@ -572,9 +572,9 @@ struct MyPageDesignView: View {
                                     let postLatitude = documentSnapshot!.get("latitude") as! Double
                                     let postLongitude = documentSnapshot!.get("longitude") as! Double
                                     
-                                    // カード用の構造体postCardListにデータを格納（試験）
-                                    //   Postのリストとの違いはUIImageのプロパティがあること。
-                                    var postImageUIImage: UIImage? = UIImage(named: "emmy")
+                                    // カード用の構造体postCardListにデータを格納
+                                    // お店の画像を取得
+                                    var postImageUIImage: UIImage? = UIImage(named: "SampleImage")
                                     // imageURLのnilチェック
                                     if let tempImageURL: String = documentSnapshot!.get("imageURL") as! String? {
                                         print("post.imageURL: \(tempImageURL)")
@@ -591,7 +591,7 @@ struct MyPageDesignView: View {
                                     }
                                     
                                     // 投稿者のプロフィール画像を取得
-                                    var userImageUIImage = UIImage(systemName: "person")
+                                    var userImageUIImage = UIImage(named: "SampleImage")
                                     getUserImageFromFirestorage(userUID: documentSnapshot!.get("postUserUID") as? String ?? "GuestUID") { data in
                                         if data != nil {
                                             print("投稿者画像を読み込みました：\(data!)")

@@ -198,80 +198,79 @@ struct MapAndSearch: View {
                                                    isBookmarkAddedToSelectedPost: $isBookmarkAddedToSelectedPost
                                     )
                                     
-                                    // 削除ボタン
-                                    Button(action:{
-                                        isShowingAlert = true
-                                        print("削除します")
-                                    }){
-                                        Text("削除")
+                                    if isShowPostDetailPopover.selectedPostCreateUserUID == environmentCurrentUserData.uid{
+                                        // 削除ボタン
+                                        Button(action:{
+                                            isShowingAlert = true
+                                            print("削除します")
+                                        }){
+                                            Text("削除")
+                                        }
+                                        .foregroundColor(.red)
+                                        .padding()
+                                        .alert(isPresented: $isShowingAlert){
+                                            Alert(title: Text("本当に削除しますか？"),
+                                                  message: Text("元に戻すことはできません"),
+                                                  primaryButton: .cancel(Text("キャンセル")),
+                                                  secondaryButton: .destructive(Text("削除"), action: {
+                                                // 削除ボタンが押されたらコメント削除を実行
+                                                deleteComment(targetDocumentID: selectedPostDocumentID!)
+                                                // 削除後、変数を初期化しポップオーバーを閉じる
+                                                selectedPostDocumentID = ""
+                                                isShowingDetail = false
+                                                map.removeAnnotation(selectedPostAnnotation.annotation!)
+                                            }))
+                                        }
                                     }
-                                    .foregroundColor(.red)
-                                    .padding()
-                                    .alert(isPresented: $isShowingAlert){
-                                        Alert(title: Text("本当に削除しますか？"),
-                                              message: Text("元に戻すことはできません"),
-                                              primaryButton: .cancel(Text("キャンセル")),
-                                              secondaryButton: .destructive(Text("削除"), action: {
-                                            // 削除ボタンが押されたらコメント削除を実行
-                                            deleteComment(targetDocumentID: selectedPostDocumentID!)
-                                            // 削除後、変数を初期化しポップオーバーを閉じる
-                                            selectedPostDocumentID = ""
-                                            isShowingDetail = false
-                                            map.removeAnnotation(selectedPostAnnotation.annotation!)
-                                        }))
-                                    }
-                                    
                                 } // popover内のVStackここまで
                             }.ignoresSafeArea() //ZStackここまで
                         } // .popover(isPresented: $isShowingDetail)ここまで
                     
                         // 起動時に表示し、ログイン状態をチェックするポップオーバー
                         .popover(isPresented: $isShowLoginCheckView){
-//                            if isShowLoginView == false,
-//                               let loggedInUserName = environmentCurrentUserData.userName {
-                                // ログイン中＆ユーザー名が存在する場合
-                                VStack{
-                                    if isCheckingLoginStatus == true {
-                                        Image("omisekokoroLogo")
-                                            .resizable()
-                                            .frame(width: 300, height: 300, alignment: .center)
-                                            .scaledToFill()
-                                        Text("🥘いらっしゃい！")
-                                        ProgressView()
-                                    }
-                                    if isShowLoginView == true {
-                                        AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
-                                    }
-                                    if isShowNameRegisterView == true {
-                                        NameRegisterView(currentUser: environmentCurrentUserData)
+                            // ログイン中＆ユーザー名が存在する場合
+                            VStack{
+                                if isCheckingLoginStatus == true {
+                                    Image("omisekokoroLogo")
+                                        .resizable()
+                                        .frame(width: 300, height: 300, alignment: .center)
+                                        .scaledToFill()
+                                    Text("🥘いらっしゃい！")
+                                    ProgressView()
+                                }
+                                if isShowLoginView == true {
+                                    AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
+                                }
+                                if isShowNameRegisterView == true {
+                                    NameRegisterView(currentUser: environmentCurrentUserData)
+                                }
+                            }
+                            .onAppear(perform: {
+                                // ログイン情報を確認
+                                environmentCurrentUserData.CheckIfUserLoggedIn { isLoggedIn in
+                                    if isLoggedIn == true,
+                                       let loggedInUserName = environmentCurrentUserData.userName {
+                                        // ログイン中＆名前が存在する場合 → そのままポップオーバーを閉じメイン画面へ
+                                        print("\(loggedInUserName)さんこんにちは！")
+                                        isGuestMode.guestModeSwitch = false
+                                        isCheckingLoginStatus = false
+                                        isShowLoginCheckView = false
+                                    } else if environmentCurrentUserData.userName == nil {
+                                        // ログイン中＆名前が存在しない場合
+                                        print("ユーザー名登録画面を表示します")
+                                        isGuestMode.guestModeSwitch = false
+                                        isCheckingLoginStatus = false
+                                        isShowNameRegisterView = true
+                                    } else {
+                                        // ログアウト中
+                                        print("ログイン画面を表示します")
+//                                                isShowLoginCheckView = false
+                                        isGuestMode.guestModeSwitch = true
+                                        isCheckingLoginStatus = false
+                                        isShowLoginView = true
                                     }
                                 }
-                                    .onAppear(perform: {
-                                        // ログイン情報を確認
-                                        environmentCurrentUserData.CheckIfUserLoggedIn { isLoggedIn in
-                                            if isLoggedIn == true,
-                                               let loggedInUserName = environmentCurrentUserData.userName {
-                                                // ログイン中＆名前が存在する場合 → そのままポップオーバーを閉じメイン画面へ
-                                                print("\(loggedInUserName)さんこんにちは！")
-                                                isGuestMode.guestModeSwitch = false
-                                                isCheckingLoginStatus = false
-                                                isShowLoginCheckView = false
-                                            } else if environmentCurrentUserData.userName == nil {
-                                                // ログイン中＆名前が存在しない場合
-                                                print("ユーザー名登録画面を表示します")
-                                                isGuestMode.guestModeSwitch = false
-                                                isCheckingLoginStatus = false
-                                                isShowNameRegisterView = true
-                                            } else {
-                                                // ログアウト中
-                                                print("ログイン画面を表示します")
-//                                                isShowLoginCheckView = false
-                                                isGuestMode.guestModeSwitch = true
-                                                isCheckingLoginStatus = false
-                                                isShowLoginView = true
-                                            }
-                                        }
-                                    })
+                            })
                         }.opacity(0.95) // popoverここまで
                     
                     // ユーザー名登録用ポップオーバー

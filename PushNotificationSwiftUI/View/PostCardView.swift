@@ -67,7 +67,7 @@ struct PostCardViewTwo: View {
     @Binding var post: PostForCard
     
     @State var loadingUserImage: Bool = true
-    @State var postUserImageUIImage: UIImage = UIImage(systemName: "person")!
+    @State var postUserImageUIImage: UIImage = UIImage(named: "SampleImage")!
     @State var postOmiseImageUIImage: UIImage?
     
     @State var hasBeenInitialized: Bool = false

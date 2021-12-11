@@ -303,10 +303,11 @@ struct PostDetailViewTwo: View {
                 let postData = PostData()
                 postData.getPostDetail(documentKeyID: isShowPostDetailPopover.selectedPostDocumentUID,
                                        completion: { onePost in
-//                    // 削除するパターン分岐に備え、アノテーションを渡しておく
+                    // 削除するパターン分岐に備え、アノテーションを渡しておく（Mapから選択ではないのでコメントアウト）
 //                    self.parent.selectedPostAnnotation = annotationView
                     // 投稿者名、コメント文などが格納されたドキュメント情報を渡す
                     selectedPost = onePost
+                    isShowPostDetailPopover.selectedPostCreateUserUID = onePost.created_by!
                     
                     // お店画像の読み込み（登録がない場合はダミー画像を表示）
                     let postImageURL: URL? = URL(string: onePost.imageURL ?? "")

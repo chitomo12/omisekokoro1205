@@ -55,26 +55,26 @@ struct PostDetailView: View {
                 if isShowingDetailContent == true {
                     // URLが有効な場合、お店画像を表示する
                     if selectedPostImageUIImage != nil{
-                                    ZStack{
-                                        Image(uiImage: selectedPostImageUIImage!)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .frame(height: 250)
-                                            .clipped()
-                                            .border(Color.white, width: 10)
-                                            .shadow(color: .gray.opacity(0.3), radius: 3, x: 0, y: 3)
-                                            .ignoresSafeArea()
-                                    }
-                                    .rotationEffect(.degrees(showPhoto ? 9 : -90), anchor: .center)
-                                    .offset(x: 0, y: showPhoto ? 70 : -400)
-                                    .animation(Animation.easeInOut(duration: 0.5), value: showPhoto)
-                                    .onAppear{
-                                        showPhoto = true
-                                    }
-                                    .onDisappear{
-                                        showPhoto = false
-                                    }
-                                    Spacer(minLength: 50.0)
+                        ZStack{
+                            Image(uiImage: selectedPostImageUIImage!)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(height: 250)
+                                .clipped()
+                                .border(Color.white, width: 10)
+                                .shadow(color: .gray.opacity(0.3), radius: 3, x: 0, y: 3)
+                                .ignoresSafeArea()
+                        }
+                        .rotationEffect(.degrees(showPhoto ? 9 : -90), anchor: .center)
+                        .offset(x: 0, y: showPhoto ? 70 : -400)
+                        .animation(Animation.easeInOut(duration: 0.5), value: showPhoto)
+                        .onAppear{
+                            showPhoto = true
+                        }
+                        .onDisappear{
+                            showPhoto = false
+                        }
+                        Spacer(minLength: 50.0)
                     } else {
                         Spacer(minLength: 200)
                     } // if selectedPostImageUIImage ~~ ここまで
@@ -263,11 +263,6 @@ struct PostDetailView: View {
                                 }
                                 .padding(.horizontal)
                                 
-        //                        HStack {
-        //                            Image(systemName: "map.fill")
-        //                            Text(selectedPost.omiseName)
-        //                        }.font(.caption)
-                                
                                 Button(action:{
                                     // URLが有効な場合Safariで開く
                                     let encodedUrlString = selectedPost.omiseName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
@@ -303,13 +298,7 @@ struct PostDetailView: View {
                 } else {
                     // isShowingDetailContent == false の場合
                 } // if isShowingDetailContent~ ここまで
-            
-                // 有効な画像URLが存在する場合下にSpacerを挿入
-//                if let tempPostImage = selectedPost.imageURL {
-//                    if let _ = URL(string: tempPostImage){
-//                        Spacer()
-//                    }
-//                }
+                
             } //ScrollViewここまで
             
             if isShowReportWindow {
@@ -341,14 +330,7 @@ struct PostDetailView: View {
                 .animation(Animation.easeInOut, value: isShowingDetailContent)
         } //ZStackここまで
     }
-    
-
 }
-
-//// 環境変数用クラス
-//class IsShowPostDetail: ObservableObject{
-//    @Published var showSwitch: Bool = false
-//}
 
 struct PostDetailView_Previews: PreviewProvider {
 //    @ObservedObject var postData = PostData()
