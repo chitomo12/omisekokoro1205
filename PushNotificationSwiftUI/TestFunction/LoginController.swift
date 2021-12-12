@@ -19,6 +19,7 @@ class LoginController: ObservableObject {
     
     @Published var errorMessage: String = ""
     @Published var isCreatingFailed: Bool = false
+    @Published var isSentVerificationEmail: Bool = false 
     @Published var isLoginSuccessed: Bool = false
     
     // ログインしたかどうかの判定
@@ -42,8 +43,6 @@ class LoginController: ObservableObject {
     var db: Firestore!
     let settings = FirestoreSettings()
     init(){
-//        FirebaseApp.configure()
-
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
     }
@@ -63,48 +62,90 @@ class LoginController: ObservableObject {
                 completion(error!)
             } else {
                 print("成功：\(String(describing: authResult))")
-                self.isDidLogin = true 
+                print("認証用メールを送ります")
+                let user = authResult?.user
+                user?.sendEmailVerification(completion: { error in
+                    print("エラー：\(String(describing: error))")
+                    if error == nil {
+                        print("認証用メールを送信しました。")
+                        self.isSentVerificationEmail = true
+                        // 認証用メールを送ったらFirebaseにメール、UID、ユーザー名を登録
+                        self.RegisterUserName(registeringUser: UserData(uid: user?.uid as! String,
+                                                                        email: user?.email as! String,
+                                                                        userName: "userName"),
+                                              registeringName: "userName",
+                                              completion: {
+                            print("ユーザー名を登録しました")
+                        })
+                        // メールの送信に成功したらログアウトする
+                        self.logoutUser()
+                    }
+                })
+//                self.isDidLogin = true
             }
         }
     }
     
     // ログインのためのメソッド
     func authLoginUser(email: String, password: String, deviceToken: String) {
+        print("authLoginUserを実行")
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            guard let strongSelf = self else { return }
-            print("strongSelf: \(strongSelf)")
             if error != nil {
-                print("ログインエラー：\(String(describing: error))")
-                self?.isLoading = false
-            } else {
-                print("ログイン成功")
-                if let user = Auth.auth().currentUser {
-                    
-                    // FCMトークンを発行＆登録
-//                    print("LoginControllerから参照したFCMトークン：\(self!.appDelegate.fcmToken)")
-                    if let authCurrentUser = Auth.auth().currentUser{
-                        self!.setFcmTokenToFirestore(
-                            userUid: authCurrentUser.uid,
-                            fcmToken: deviceToken) {
-                                print("FCMトークンを更新しました")
-                            }
+                print("error: \(String(describing: error))")
+            } else if let user = authResult?.user {
+                if user.isEmailVerified == false {
+                    // メール認証が完了していない場合
+                    self?.errorMessage = "メール認証が完了していません。\n認証メールを再送します。"
+                    user.sendEmailVerification { error in
+                        if error == nil {
+                            print("認証用メールを送信しました。")
+                            // メールの送信に成功したらログアウトする
+                            self?.logoutUser()
+                        } else {
+                            print("認証メール送信中にエラーが発生しました")
+                        }
                     }
-                    
-                    print("user.uid: \(user.uid), user.email: \(user.email ?? "")")
-                    self!.loggedInUserUID = user.uid
-                    self!.loggedInUserEmail = user.email ?? ""
-                    
-                    // ユーザーの名前がFirestoreに登録されているかどうかを判定
-                    self!.CheckIfUserNameRegistered(userUid: user.uid, completion: { isRegistered in
-                        print("result: \(isRegistered)")
-                        self!.isUserNameRegistered = isRegistered
-                        // resultに関わらず、ログイン完了判定をプロパティに格納する
-                        self!.isLoginSuccessed = true
-                        self!.isDidLogin = true
-                        self!.isDidLogout = false
-                    })
+                    self?.isLoading = false
+                } else {
+                    print("email認証済みです")
+                    guard let strongSelf = self else { return }
+                    print("strongSelf: \(strongSelf)")
+                    if error != nil {
+                        print("ログインエラー：\(String(describing: error))")
+                        self?.isLoading = false
+                    } else {
+                        print("ログイン成功")
+                        if let user = Auth.auth().currentUser {
+                            
+                            // FCMトークンを発行＆登録
+                            if let authCurrentUser = Auth.auth().currentUser{
+                                self!.setFcmTokenToFirestore(
+                                    userUid: authCurrentUser.uid,
+                                    fcmToken: deviceToken) {
+                                        print("FCMトークンを更新しました")
+                                    }
+                            }
+                            
+                            print("user.uid: \(user.uid), user.email: \(user.email ?? "")")
+                            self!.loggedInUserUID = user.uid
+                            self!.loggedInUserEmail = user.email ?? ""
+                            
+                            // ユーザーの名前がFirestoreに登録されているかどうかを判定
+                            self!.CheckIfUserNameRegistered(userUid: user.uid, completion: { isRegistered in
+                                print("check if user name registered: result -> \(isRegistered)")
+                                self!.isUserNameRegistered = isRegistered
+                                // resultに関わらず、ログイン完了判定をプロパティに格納する
+                                self!.isLoginSuccessed = true
+                                self!.isDidLogin = true
+                                self!.isDidLogout = false
+                            })
+                        }
+                        self?.isLoading = false
+                    }
                 }
-                self?.isLoading = false 
+            } else {
+                print("some error")
+                self?.isLoading = false
             }
         }
     }
@@ -134,12 +175,6 @@ class LoginController: ObservableObject {
     func CheckIfUserNameRegistered(userUid: String, completion: @escaping(Bool) -> Void) {
         print(#function)
         print("Uid:\(userUid)さんの名前が登録されているか確認します。")
-        
-//        // Firestoreのセッティング
-//        var db: Firestore!
-//        let settings = FirestoreSettings()
-//        Firestore.firestore().settings = settings
-//        db = Firestore.firestore()
         
         db.collection("userCollection")
             .document("userDocument")

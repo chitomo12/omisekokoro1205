@@ -38,21 +38,33 @@ class UserData: ObservableObject {
         print("ユーザーのログイン状態を確認します")
         if let loggedInUser = Auth.auth().currentUser {
             print("ログイン中です")
-            self.uid = loggedInUser.uid
-            self.email = loggedInUser.email!
-            loginController.getUserNameFromUid(userUid: loggedInUser.uid, completion: { userName in
-                self.userName = userName
-                getUserImageFromFirestorage(userUID: loggedInUser.uid, completion: { data in
-                    if data != nil {
-                        print("プロフィール画像を読み込みます：\(data!)")
-                        self.profileUIImage = UIImage(data: data!)
-                    } else {
-                        print("プロフィール画像が見つかりません")
-                        self.profileUIImage = UIImage(named: "SampleImage")
-                    }
-                    completion(true)
+            print("メール認証のステータスを確認します")
+            if loggedInUser.isEmailVerified == false {
+                print("メール認証が済んでいないためログアウトします。")
+                loginController.logoutUser()
+                self.uid = "GuestUID"
+                self.email = "guest@email"
+                self.userName = "Guest"
+                self.profileUIImage = UIImage(named: "SampleImage")
+                completion(false)
+            } else {
+                print("メール認証済みです。")
+                self.uid = loggedInUser.uid
+                self.email = loggedInUser.email!
+                loginController.getUserNameFromUid(userUid: loggedInUser.uid, completion: { userName in
+                    self.userName = userName
+                    getUserImageFromFirestorage(userUID: loggedInUser.uid, completion: { data in
+                        if data != nil {
+                            print("プロフィール画像を読み込みます：\(data!)")
+                            self.profileUIImage = UIImage(data: data!)
+                        } else {
+                            print("プロフィール画像が見つかりません")
+                            self.profileUIImage = UIImage(named: "SampleImage")
+                        }
+                        completion(true)
+                    })
                 })
-            })
+            }
         } else {
             print("ログアウト中です")
             self.uid = "GuestUID"

@@ -53,13 +53,6 @@ struct AuthTest: View {
                                 isShowLoginCheckView = false
                             }){
                                 RedButtonView(buttonText: "メインページへ")
-//                                Text("メインページへ")
-//                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-//                                    .foregroundColor(.white)
-//                                    .frame(width: 200, height: 40, alignment: .center)
-//                                    .background(linearGradientForButton)
-//                                    .cornerRadius(20)
-//                                    .padding()
                             }
                             
                             // ログアウトボタン
@@ -69,12 +62,6 @@ struct AuthTest: View {
                                 currentUser.email = ""
                             }) {
                                 RedButtonView(buttonText: "ログアウトする")
-//                                Text("ログアウトする")
-//                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-//                                    .foregroundColor(.white)
-//                                    .frame(width: 200, height: 40, alignment: .center)
-//                                    .background(linearGradientForButton)
-//                                    .cornerRadius(20)
                             }
                         }
                         .onAppear{
@@ -115,51 +102,14 @@ struct AuthTest: View {
                         // 新規登録画面へ
                         NavigationLink(destination: RegisterView(loginController: loginController), label: {
                             RedButtonView(buttonText: "新規登録")
-//                            Text("新規登録")
                         })
                         
-//                        VStack{
-//                            Text("新規登録").font(.title2).fontWeight(.ultraLight).padding()
-//                            Text("メールアドレス").fontWeight(.ultraLight)
-//                            TextField("email", text: $createUserEmail, prompt:
-//                                Text("emailを入力してください")
-//                            ).autocapitalization(.none)
-//                            Text("パスワード").fontWeight(.ultraLight)
-//                            TextField("パスワード", text: $createUserPassword, prompt:
-//                                Text("パスワードを入力してください")
-//                            ).autocapitalization(.none)
-//                            Divider()
-//                        }
-//                        .padding(.horizontal)
-//                        .onAppear(perform: {
-//                            loginController.isDidLogout = true
-//                        })
-//                        Button(action: {
-//                            print("新規登録する")
-//                            loginController.authCreateUser(email: createUserEmail, password: createUserPassword)
-//                        }) {
-//                            Text("新規登録します").padding()
-//                        }
-//                        if loginController.isCreatingFailed == true {
-//                            Text("新規登録に失敗しました。").foregroundColor(.red)
-//                        }
                         
                         NavigationLink(destination: LoginTest(currentUser: currentUser, isShowLoginCheckView: $isShowLoginCheckView) ){
                             RedButtonView(buttonText: "ログイン")
 //                            Text("ログイン").padding()
                         }
                         
-//                        NavigationLink(destination: TabWithAnimationView(currentUser: UserData(uid: "Guest UID", email: "Guest@email.com", userName: "Guest Name")).navigationBarHidden(true), isActive: $isStartGuestMode){
-//                            Text("ゲストモードでログイン")
-//                                .padding()
-//                                .onTapGesture{
-////                                    environmentUserData.uid = "Guest UID"
-////                                    environmentUserData.email = "guest@email"
-////                                    environmentUserData.userName = "Guest"
-////                                    print("environmentUserData: \(environmentUserData)")
-//                                    isStartGuestMode = true
-//                                }
-//                        }
                         
                         Button(action: {
                             environmentUserData.uid = "Guest UID"

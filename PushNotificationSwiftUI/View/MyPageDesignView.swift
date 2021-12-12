@@ -472,7 +472,7 @@ struct MyPageDesignView: View {
                         
                         // カード用の構造体postCardListにデータを格納
                         //   Postのリストとの違いはUIImageのプロパティがあること。
-                        var postImageUIImage: UIImage? = UIImage(named: "emmy")
+                        var postImageUIImage: UIImage? = UIImage(named: "SampleImage")
                         // imageURLのnilチェック
                         if let tempImageURL: String = document.get("imageURL") as! String? {
                             print("post.imageURL: \(tempImageURL)")

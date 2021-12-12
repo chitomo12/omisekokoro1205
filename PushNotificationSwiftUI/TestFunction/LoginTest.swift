@@ -22,16 +22,23 @@ struct LoginTest: View {
     var body: some View {
         ZStack{
             VStack{
-                Text("ログイン").padding(.horizontal)
-                Text("メールアドレス").fontWeight(.ultraLight)
-                TextField("email", text: $loginUserEmail, prompt:
-                    Text("emailを入力してください")
-                ).autocapitalization(.none)
-                Text("パスワード").fontWeight(.ultraLight)
-                TextField("パスワード", text: $loginUserPassword, prompt:
-                    Text("パスワードを入力してください")
-                ).autocapitalization(.none)
-                Divider()
+                Text("ログイン").padding(.all)
+                
+                Group{
+                    Text("メールアドレス").fontWeight(.ultraLight)
+                    TextField("email", text: $loginUserEmail, prompt:
+                        Text("emailを入力してください")
+                    ).autocapitalization(.none)
+                }
+                
+                Group{
+                    Text("パスワード").fontWeight(.ultraLight)
+                    TextField("パスワード", text: $loginUserPassword, prompt:
+                        Text("パスワードを入力してください")
+                    ).autocapitalization(.none)
+                    Divider()
+                }
+                
                 Button(action: {
                     loginController.isLoading = true
                     print("ログインします")
@@ -43,6 +50,9 @@ struct LoginTest: View {
                 }
                 if loginController.isCreatingFailed == true {
                     Text("ログインに失敗しました。").foregroundColor(.red)
+                }
+                if loginController.errorMessage.isEmpty == false {
+                    Text("\(loginController.errorMessage)").foregroundColor(.red)
                 }
             }
             .padding(.horizontal, 30)
