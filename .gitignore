@@ -90,7 +90,7 @@ fastlane/test_output
 iOSInjectionProject/
 
 # Application Customize
-PushNotificationSwiftUI/GoogleService-Info.plist
+*/GoogleService-Info.plist
 
 # For gitignore Test
 password¥.txt

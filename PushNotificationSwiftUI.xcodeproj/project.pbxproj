@@ -14,7 +14,6 @@
 		13D0959E27658CC50048314E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13D0959D27658CC50048314E /* .gitignore */; };
 		13D095A0276591C40048314E /* password¥.txt in Sources */ = {isa = PBXBuildFile; fileRef = 13D0959F276591C40048314E /* password¥.txt */; };
 		13D095A2276592630048314E /* password¥2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13D095A1276592630048314E /* password¥2.txt */; };
-		13D095A427659A550048314E /* password3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13D095A327659A550048314E /* password3.txt */; };
 		13F13A2F275FA7E600C40B17 /* RedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A2E275FA7E600C40B17 /* RedButtonView.swift */; };
 		13F13A31276065D400C40B17 /* IsShowPostDetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */; };
 		13F3153F275D07B2005F60D9 /* NotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3153E275D07B2005F60D9 /* NotificationData.swift */; };
@@ -87,7 +86,6 @@
 		13D0959D27658CC50048314E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		13D0959F276591C40048314E /* password¥.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "password¥.txt"; sourceTree = "<group>"; };
 		13D095A1276592630048314E /* password¥2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "password¥2.txt"; sourceTree = "<group>"; };
-		13D095A327659A550048314E /* password3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = password3.txt; sourceTree = "<group>"; };
 		13F13A2E275FA7E600C40B17 /* RedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedButtonView.swift; sourceTree = "<group>"; };
 		13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsShowPostDetailPopover.swift; sourceTree = "<group>"; };
 		13F3153E275D07B2005F60D9 /* NotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationData.swift; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 				13D0959D27658CC50048314E /* .gitignore */,
 				13D0959F276591C40048314E /* password¥.txt */,
 				13D095A1276592630048314E /* password¥2.txt */,
-				13D095A327659A550048314E /* password3.txt */,
 				13F9D2E4275B984A00D121F2 /* PushNotificationSwiftUI */,
 				13F9D2E3275B984A00D121F2 /* Products */,
 				73EC672B59C7E7F2E2209948 /* Pods */,
@@ -397,7 +394,6 @@
 				13D0959E27658CC50048314E /* .gitignore in Resources */,
 				13F9D2ED275B984C00D121F2 /* Preview Assets.xcassets in Resources */,
 				13D095A2276592630048314E /* password¥2.txt in Resources */,
-				13D095A427659A550048314E /* password3.txt in Resources */,
 				13F9D41E275C7D6000D121F2 /* splashLight.jpg in Resources */,
 				13F9D2EA275B984C00D121F2 /* Assets.xcassets in Resources */,
 				13F9D2F8275B995700D121F2 /* GoogleService-Info.plist in Resources */,
