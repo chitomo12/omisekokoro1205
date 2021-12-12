@@ -91,3 +91,7 @@ iOSInjectionProject/
 
 # Application Customize
 PushNotificationSwiftUI/GoogleService-Info.plist
+
+# For gitignore Test
+password¥.txt
+password¥2.txt
