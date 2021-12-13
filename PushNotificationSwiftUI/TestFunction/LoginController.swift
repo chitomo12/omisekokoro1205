@@ -39,6 +39,8 @@ class LoginController: ObservableObject {
     // 何らかのロード処理
     @Published var isLoading: Bool = false
     
+    @Published var isSentVerificationEmailMessage: String = ""
+    
     // Firestoreのセッティング
     var db: Firestore!
     let settings = FirestoreSettings()
@@ -68,30 +70,36 @@ class LoginController: ObservableObject {
                     print("エラー：\(String(describing: error))")
                     if error == nil {
                         print("認証用メールを送信しました。")
-                        self.isSentVerificationEmail = true
                         // 認証用メールを送ったらFirebaseにメール、UID、ユーザー名を登録
                         self.RegisterUserName(registeringUser: UserData(uid: user?.uid as! String,
                                                                         email: user?.email as! String,
-                                                                        userName: "userName"),
-                                              registeringName: "userName",
+                                                                        userName: "userName1"),
+                                              registeringName: "userName2",
                                               completion: {
                             print("ユーザー名を登録しました")
+                            // メールの送信に成功したらログアウトする
+                            self.logoutUser(completion: {
+                                print("サインアウトしました")
+                                self.isSentVerificationEmailMessage = "認証メールを送信しました"
+                                self.isSentVerificationEmail = true
+//                                self.isGuestMode.guestModeSwitch = true
+                            })
                         })
-                        // メールの送信に成功したらログアウトする
-                        self.logoutUser()
                     }
                 })
-//                self.isDidLogin = true
             }
         }
     }
     
     // ログインのためのメソッド
     func authLoginUser(email: String, password: String, deviceToken: String) {
+        self.errorMessage = ""
         print("authLoginUserを実行")
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if error != nil {
                 print("error: \(String(describing: error))")
+                self?.errorMessage = "ログインに失敗しました"
+                self?.isLoading = false 
             } else if let user = authResult?.user {
                 if user.isEmailVerified == false {
                     // メール認証が完了していない場合
@@ -100,7 +108,9 @@ class LoginController: ObservableObject {
                         if error == nil {
                             print("認証用メールを送信しました。")
                             // メールの送信に成功したらログアウトする
-                            self?.logoutUser()
+                            self?.logoutUser(completion: {
+                                print("サインアウトしました")
+                            })
                         } else {
                             print("認証メール送信中にエラーが発生しました")
                         }
@@ -150,7 +160,7 @@ class LoginController: ObservableObject {
         }
     }
     
-    func logoutUser(){
+    func logoutUser(completion: @escaping () -> () ){
         // プッシュ通知が誤送されないよう、ログアウト前にfcmTokenをリセットする
         if let authCurrentUser = Auth.auth().currentUser{
             let targetUserUID = authCurrentUser.uid
@@ -165,6 +175,7 @@ class LoginController: ObservableObject {
                         try Auth.auth().signOut()
                         self.isDidLogout = true
                         print("サインアウトしました")
+                        completion()
                     } catch let signOutError as NSError {
                         print("サインアウト中にエラーが発生しました：\(signOutError)")
                     }
@@ -203,13 +214,13 @@ class LoginController: ObservableObject {
     // 名前を登録する
     func RegisterUserName(registeringUser: UserData, registeringName: String, completion: @escaping () -> Void) {
         self.isLoading = true 
-        print("名前：\(registeringName)を\(registeringUser.uid)に登録します")
+        print("名前：\(registeringUser.userName)を\(registeringUser.uid)に登録します")
         
         // サブコレを使ってFirebaseにデータを追加
         db.collection("userCollection").document("userDocument").collection("subUserCollection").document(registeringUser.uid).setData([
             "userId": registeringUser.uid,
             "userEmail": registeringUser.email,
-            "userName": registeringName,
+            "userName": registeringUser.userName,
             "created_at": Timestamp(date: Date())
         ]){ err in
             if err != nil {
@@ -218,12 +229,12 @@ class LoginController: ObservableObject {
                 print("新規ユーザー名を登録しました！")
                 print("userId: \(registeringUser.uid)")
                 print("userEmail: \(registeringUser.email)")
-                print("userName: \(registeringName)")
+                print("userName: \(registeringUser.userName)")
                 print("created_at: \(Timestamp(date: Date()))")
                 
-                self.isGuestMode.guestModeSwitch = false 
+                self.isGuestMode.guestModeSwitch = false
                 
-                // プッシュ通知用トークンを取得し、環境変数に格納する。
+                // プッシュ通知用FCMトークンを取得し、環境変数に格納する。
                 Messaging.messaging().token { token, error in
                   if let error = error {
                     print("Error fetching FCM registration token: \(error)")

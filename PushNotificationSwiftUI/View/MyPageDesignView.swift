@@ -19,6 +19,8 @@ struct MyPageDesignView: View {
     
     @ObservedObject var currentUser: UserData
     
+    @Binding var notificationCardList: [NotificationCardData]
+    
     @Binding var mapSwitch: MapSwitch
     
     // 編集ボタン
@@ -56,6 +58,9 @@ struct MyPageDesignView: View {
     @State var bookmarkTabLabelTextColor = Color("ColorThree")
     
     @State var movingRectPoint = CGPoint(x: 0.0, y: 0.0)
+    
+    @State var isSavingNewName: Bool = false
+    @State var isSavingNewPhoto: Bool = false
     
     let loginController = LoginController()
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
@@ -136,130 +141,160 @@ struct MyPageDesignView: View {
                     // プロフィール編集用ポップオーバー
                     .popover(isPresented: $isShowEditPopover) {
                         NavigationView {
-                            VStack {
-                                Text("プロフィールを編集")
-                                    .font(.title)
-                                    .fontWeight(.light)
-                                    .padding()
-                                
-                                Text("プロフィール画像")
-                                // 最初は現在のプロフィール画像を読み込んで表示する。
-                                // PHPickerで写真を選択後は選択した画像を表示する。
-                                if selectedImage != nil{
-                                    Image(uiImage: selectedImage!)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 100, height: 100, alignment: .center)
-                                        .cornerRadius(10)
-                                        .shadow(color: .gray, radius: 3, x: 0, y: 1)
-                                } else {
-                                    Image(uiImage: environmentCurrentUserData.profileUIImage!)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 100, height: 100, alignment: .center)
-                                        .cornerRadius(10)
-                                        .shadow(color: .gray, radius: 3, x: 0, y: 1)
-                                }
-                                
-                                Button(action: {
-                                    print("画像を選択します")
-                                    isShowPHPicker = true
-                                }){
-                                    RedButtonView(buttonText: "画像を選択")
-                                }
-                                
-                                // ライブラリから写真を選択ビュー
-                                .sheet(isPresented: $isShowPHPicker){
-                                    PHPickerView(isShowPHPicker: $isShowPHPicker, selectedImage: $selectedImage)
-                                }
-                                
-                                Button(action: {
-                                    isShowProgress.progressSwitch = true
-                                    print("画像をアップロードします")
-                                    if selectedImage != nil{
-                                        uploadImageToFirestorage(userUID: environmentCurrentUserData.uid, newImageUIImage: selectedImage!, completion: { _ in
-                                            print("アップロード完了")
-                                            // プロフィール画像のビューを更新
-                                            environmentCurrentUserData.profileUIImage = selectedImage!
-                                            isShowProgress.progressSwitch = false
-                                        })
-                                    } else {
-                                        print("選択された画像がありません")
-                                        isShowProgress.progressSwitch = false
-                                    }
-                                }){
-                                    RedButtonView(buttonText: "画像を保存")
-                                }
-                                .padding(.bottom)
-                                
-                                Text("ユーザー名")
-                                TextField("ユーザー名",
-                                          text: $inputText,
-                                          prompt: Text("ユーザー名を入力してください")
-                                )
-                                    .padding(.horizontal)
-                                    .onAppear{
-                                        inputText = environmentCurrentUserData.userName!
-                                    }
-                                Divider()
-                                Button(action: {
-                                    isShowProgress.progressSwitch = true
-                                    print("保存ボタンが押されました")
-                                    
-                                    if inputText.isEmpty == false && inputText != environmentCurrentUserData.userName! {
-                                        print("ユーザー名を\(environmentCurrentUserData.userName!)から\(inputText)に変更します")
-                                        // ユーザー名変更のための処理
-                                        environmentCurrentUserData.ChangeUserName(userUID: environmentCurrentUserData.uid, userNewName: inputText, completion: {
-                                            environmentCurrentUserData.userName = inputText
-                                        })
-                                    }
-                                    
-                                    print("画像をアップロードします")
-                                    if selectedImage != nil{
-                                        uploadImageToFirestorage(userUID: environmentCurrentUserData.uid, newImageUIImage: selectedImage!, completion: { _ in
-                                            print("アップロード完了")
-                                            // プロフィール画像のビューを更新
-                                            environmentCurrentUserData.profileUIImage = selectedImage!
-                                            isShowProgress.progressSwitch = false
-                                        })
-                                    } else {
-                                        print("選択された画像がありません")
-                                        isShowProgress.progressSwitch = false
-                                    }
-                                    
-//                                    isShowProgress.progressSwitch = false
-                                }) {
-//                                    Text("保存")
-                                    RedButtonView(buttonText: "保存")
-                                }
-                                
-                                // ログアウトボタン
-                                Button(action: {
-                                    loginController.logoutUser()
-                                    // ユーザー情報をゲスト用に更新
-                                    environmentCurrentUserData.uid = "GuestUID"
-                                    environmentCurrentUserData.email = "guest@email"
-                                    environmentCurrentUserData.userName = "Guest"
-                                    environmentCurrentUserData.profileUIImage = UIImage(named: "SampleImage")
-                                    // 読み込んだリストを初期化
-                                    postedPostCardList = []
-                                    bookmarkedPostCardList = []
-                                    
-                                    // ゲストモードをtrueに
-                                    isGuestMode.guestModeSwitch = true
-                                    
-                                    // 編集画面を閉じる
-                                    isShowEditPopover = false
-//                                    // ログイン画面へ
-//                                    isShowLoginView = true
-                                }) {
-                                    Text("ログアウトする")
-                                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                                        .foregroundColor(.white)
-                                        .frame(width: 180, height: 40, alignment: .center)
-                                        .background(linearGradientForButton)
-                                        .cornerRadius(20)
+                            ZStack {
+                                VStack {
+                                    Text("プロフィールを編集")
+                                        .font(.title)
+                                        .fontWeight(.light)
                                         .padding()
+                                    
+                                    Text("プロフィール画像")
+                                    // 最初は現在のプロフィール画像を読み込んで表示する。
+                                    // PHPickerで写真を選択後は選択した画像を表示する。
+                                    if selectedImage != nil{
+                                        Image(uiImage: selectedImage!)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100, alignment: .center)
+                                            .cornerRadius(10)
+                                            .shadow(color: .gray, radius: 3, x: 0, y: 1)
+                                    } else {
+                                        Image(uiImage: environmentCurrentUserData.profileUIImage!)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 100, height: 100, alignment: .center)
+                                            .cornerRadius(10)
+                                            .shadow(color: .gray, radius: 3, x: 0, y: 1)
+                                    }
+                                    
+                                    Button(action: {
+                                        print("画像を選択します")
+                                        isShowPHPicker = true
+                                    }){
+                                        RedButtonView(buttonText: "画像を選択")
+                                    }
+                                    .padding(.bottom)
+                                    
+                                    // ライブラリから写真を選択ビュー
+                                    .sheet(isPresented: $isShowPHPicker){
+                                        PHPickerView(isShowPHPicker: $isShowPHPicker, selectedImage: $selectedImage)
+                                    }
+                                    
+    //                                Button(action: {
+    //                                    isShowProgress.progressSwitch = true
+    //                                    print("画像をアップロードします")
+    //                                    if selectedImage != nil{
+    //                                        uploadImageToFirestorage(userUID: environmentCurrentUserData.uid, newImageUIImage: selectedImage!, completion: { _ in
+    //                                            print("アップロード完了")
+    //                                            // プロフィール画像のビューを更新
+    //                                            environmentCurrentUserData.profileUIImage = selectedImage!
+    //                                            isShowProgress.progressSwitch = false
+    //                                        })
+    //                                    } else {
+    //                                        print("選択された画像がありません")
+    //                                        isShowProgress.progressSwitch = false
+    //                                    }
+    //                                }){
+    //                                    RedButtonView(buttonText: "画像を保存")
+    //                                }
+    //                                .padding(.bottom)
+                                    
+                                    Text("ユーザー名")
+                                    TextField("ユーザー名",
+                                              text: $inputText,
+                                              prompt: Text("ユーザー名を入力してください")
+                                    )
+                                        .padding(.horizontal)
+                                        .onAppear{
+                                            inputText = environmentCurrentUserData.userName!
+                                        }
+                                    Divider()
+                                        .padding(.bottom)
+                                    
+                                    Button(action: {
+                                        isShowProgress.progressSwitch = true
+                                        isSavingNewName = true
+                                        isSavingNewPhoto = true
+                                        print("保存ボタンが押されました")
+                                        
+    //                                    if inputText.isEmpty == true && selectedImage == nil{
+    //                                        isShowProgress.progressSwitch = false
+    //                                    } else if inputText.isEmpty == false && inputText != environmentCurrentUserData.userName! {
+    //
+    //                                    }
+                                        
+                                        // ユーザー名の保存
+                                        if inputText.isEmpty == false && inputText != environmentCurrentUserData.userName! {
+                                            print("ユーザー名を\(environmentCurrentUserData.userName!)から\(inputText)に変更します")
+                                            // ユーザー名変更のための処理
+                                            environmentCurrentUserData.ChangeUserName(userUID: environmentCurrentUserData.uid, userNewName: inputText, completion: {
+                                                environmentCurrentUserData.userName = inputText
+                                                isSavingNewName = false
+                                            })
+                                        } else {
+                                            isSavingNewName = false
+                                        }
+                                        
+                                        // プロフィール画像の保存
+                                        print("画像をアップロードします")
+                                        if selectedImage != nil{
+                                            uploadImageToFirestorage(userUID: environmentCurrentUserData.uid, newImageUIImage: selectedImage!, completion: { _ in
+                                                print("アップロード完了")
+                                                // プロフィール画像のビューを更新
+                                                environmentCurrentUserData.profileUIImage = selectedImage!
+                                                isShowProgress.progressSwitch = false
+                                                isSavingNewPhoto = false
+                                            })
+                                        } else {
+                                            print("選択された画像がありません")
+                                            isShowProgress.progressSwitch = false
+                                            isSavingNewPhoto = false
+                                        }
+                                    }) {
+                                        RedButtonView(buttonText: "保存")
+                                    }
+                                    
+                                    // ログアウトボタン
+                                    Button(action: {
+                                        loginController.logoutUser(completion: {
+                                            // ユーザー情報をゲスト用に更新
+                                            environmentCurrentUserData.uid = "GuestUID"
+                                            environmentCurrentUserData.email = "guest@email"
+                                            environmentCurrentUserData.userName = "Guest"
+                                            environmentCurrentUserData.profileUIImage = UIImage(named: "SampleImage")
+                                            // 読み込んだリストを初期化
+                                            postedPostCardList = []
+                                            bookmarkedPostCardList = []
+                                            notificationCardList = []
+                                            
+                                            // ゲストモードをtrueに
+                                            isGuestMode.guestModeSwitch = true
+                                            
+                                            // 編集画面を閉じる
+                                            isShowEditPopover = false
+                                        })
+                                    }) {
+                                        Text("ログアウトする")
+                                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                                            .foregroundColor(.white)
+                                            .frame(width: 180, height: 40, alignment: .center)
+                                            .background(linearGradientForButton)
+                                            .cornerRadius(20)
+                                            .padding()
+                                    }
+                                }
+                                
+                                // 保存中のProgress
+                                if isSavingNewName == true || isSavingNewPhoto == true {
+                                    ProgressView("Loading")
+                                        .frame(width:100, height:120, alignment: .center)
+                                        .background(Color.white)
+                                        .cornerRadius(10)
+                                        .opacity(0.95)
+                                        .onDisappear {
+                                            // Progress非表示とともに編集画面も閉じる
+                                            isShowEditPopover = false
+                                        }
                                 }
                             }
 //                            NavigationLink(destination: AuthTest(loginController: loginController,
@@ -296,6 +331,7 @@ struct MyPageDesignView: View {
                 
                 Divider()
                 
+                // 投稿タブ、ブックマークタブボタン
                 ZStack{
                     Rectangle()
                         .frame(width: 120, height: 60)
@@ -630,9 +666,9 @@ struct MyPageDesignView: View {
     }
 }
 
-struct MyPageDesignView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyPageDesignView(currentUser: UserData(uid: "sample", email: "sample@email.com", userName: "user name"),
-                         mapSwitch: .constant(.normal), isShowLoginCheckView: .constant(false))
-    }
-}
+//struct MyPageDesignView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyPageDesignView(currentUser: UserData(uid: "sample", email: "sample@email.com", userName: "user name"),
+//                         mapSwitch: .constant(.normal), isShowLoginCheckView: .constant(false), notificationCardList: <#Binding<[NotificationCardData]>#>)
+//    }
+//}

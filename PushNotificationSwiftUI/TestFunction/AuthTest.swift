@@ -57,7 +57,9 @@ struct AuthTest: View {
                             
                             // ログアウトボタン
                             Button(action: {
-                                loginController.logoutUser()
+                                loginController.logoutUser(completion: {
+                                    print("サインアウトしました")
+                                })
                                 currentUser.uid = ""
                                 currentUser.email = ""
                             }) {
@@ -98,7 +100,14 @@ struct AuthTest: View {
                             isGuestMode.guestModeSwitch = false
                         }
                     } else {
+                        
                         // ログインしていない場合、ログインまたは新規登録のビューを表示する
+                        
+                        // 認証メール送信後はメッセージを表示
+//                        if loginController.isSentVerificationEmailMessage.isEmpty == false {
+                            Text("\(loginController.isSentVerificationEmailMessage)")
+//                        }
+                        
                         // 新規登録画面へ
                         NavigationLink(destination: RegisterView(loginController: loginController), label: {
                             RedButtonView(buttonText: "新規登録")
@@ -107,7 +116,6 @@ struct AuthTest: View {
                         
                         NavigationLink(destination: LoginTest(currentUser: currentUser, isShowLoginCheckView: $isShowLoginCheckView) ){
                             RedButtonView(buttonText: "ログイン")
-//                            Text("ログイン").padding()
                         }
                         
                         

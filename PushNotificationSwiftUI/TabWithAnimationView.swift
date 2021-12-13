@@ -75,7 +75,10 @@ struct TabWithAnimationView: View {
     @State var isShowingDetailContent = false
     @State var selectedPostDocumentUID: String = ""
     @State var isShowingAlert = false
-        
+    
+    // カード表示用のリスト
+    @State var notificationCardList: [NotificationCardData] = []
+    
     init(currentUser: UserData){
         self.currentUser = currentUser
 //        self.environmentFcmToken.fcmTokenString = appDelegate.fcmToken
@@ -95,10 +98,10 @@ struct TabWithAnimationView: View {
                     FeatureViewDesign()
                         .tabItem{}.tag(2)
                     
-                    MyPageDesignView(currentUser: currentUser, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)
+                    MyPageDesignView(currentUser: currentUser, notificationCardList: $notificationCardList, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)
                         .tabItem{}.tag(3)
                     
-                    NotificationListView(mapSwitch: $mapSwitch)
+                    NotificationListView(mapSwitch: $mapSwitch, notificationCardList: $notificationCardList)
                         .tabItem{}.tag(4)
                 }
                 .tabViewStyle(PageTabViewStyle())

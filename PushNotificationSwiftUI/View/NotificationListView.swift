@@ -20,7 +20,7 @@ struct NotificationListView: View {
     @State var notificationList: [NotificationData] = []
     
     // カード表示用のリスト
-    @State var notificationCardList: [NotificationCardData] = []
+    @Binding var notificationCardList: [NotificationCardData]
     
     let linearGradientForButton = LinearGradient(colors: [Color("ColorTwo"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
     
@@ -124,8 +124,8 @@ struct NotificationListView: View {
 
 
 
-struct CommentListView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationListView(mapSwitch: .constant(.normal))
-    }
-}
+//struct CommentListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NotificationListView(mapSwitch: .constant(.normal))
+//    }
+//}

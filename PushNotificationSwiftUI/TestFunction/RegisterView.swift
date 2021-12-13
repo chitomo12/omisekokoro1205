@@ -23,6 +23,8 @@ struct RegisterView: View {
     
     @State var isShowRiyouKiyaku = false
     
+    @State var isAlertPresented = false
+    
     var body: some View {
         // ログインしていない場合、ログインまたは新規登録のビューを表示する
         VStack{
@@ -65,6 +67,12 @@ struct RegisterView: View {
                     .onTapGesture {
                         isShowRiyouKiyaku = true
                     }
+                
+                Button(action: {
+                    isAlertPresented = true
+                }, label: {
+                    RedButtonView(buttonText: "試験ボタン")
+                })
             }
             
             // エラーメッセージ
@@ -74,6 +82,7 @@ struct RegisterView: View {
             
             if loginController.isSentVerificationEmail == false {
                 Button(action: {
+                    errorText = ""
                     print("新規登録します")
                     if agreement == false {
                         errorText = "利用規約への合意が必要です"
@@ -87,6 +96,16 @@ struct RegisterView: View {
                                 errorText = "メールアドレスが入力されていません"
                             } else if error.localizedDescription == "The email address is badly formatted." {
                                 errorText = "メールアドレスの形式が正しくありません"
+                            } else if error.localizedDescription == "The email address is already in use by another account." {
+                                errorText = "メールアドレスが既に登録済みです"
+                            } else if error.localizedDescription.isEmpty == false {
+                                errorText = "\(error.localizedDescription)"
+                            }
+                            
+                            if error.localizedDescription.isEmpty == true {
+                                isAlertPresented = true
+                            } else {
+                                print("error.localizedDescription.isEmpty: \(error.localizedDescription.isEmpty)")
                             }
                         }
                     }
@@ -95,7 +114,7 @@ struct RegisterView: View {
                 }
             } else {
                 // 認証メール送信後
-                Text("認証メールを送りました")
+                Text("認証メールを送ります")
                     .foregroundColor(Color.blue)
             }
         }
@@ -125,6 +144,10 @@ struct RegisterView: View {
                            NavigationView{
                                RiyouKiyakuView()
                            }
+                       }
+        
+                       .alert(isPresented: $isAlertPresented) {
+                           Alert(title: Text("認証メールを送信しました"))
                        }
     }
 }

@@ -57,7 +57,9 @@ struct DidLoginTest: View {
                 }
                 
                 Button(action: {
-                    loginController.logoutUser()
+                    loginController.logoutUser(completion: {
+                        print("サインアウトしました")
+                    })
                 }) {
                     Text("ログアウトする")
                 }

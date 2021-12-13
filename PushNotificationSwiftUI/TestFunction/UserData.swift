@@ -41,7 +41,9 @@ class UserData: ObservableObject {
             print("メール認証のステータスを確認します")
             if loggedInUser.isEmailVerified == false {
                 print("メール認証が済んでいないためログアウトします。")
-                loginController.logoutUser()
+                loginController.logoutUser(completion: {
+                    print("サインアウトしました")
+                })
                 self.uid = "GuestUID"
                 self.email = "guest@email"
                 self.userName = "Guest"

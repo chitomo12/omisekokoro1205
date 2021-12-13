@@ -54,6 +54,10 @@ struct LoginTest: View {
                 if loginController.errorMessage.isEmpty == false {
                     Text("\(loginController.errorMessage)").foregroundColor(.red)
                 }
+                
+                NavigationLink(destination: ResetPasswordView()){
+                    Text("パスワードを忘れた")
+                }
             }
             .padding(.horizontal, 30)
 
