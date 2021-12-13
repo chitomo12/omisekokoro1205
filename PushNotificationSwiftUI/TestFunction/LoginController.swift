@@ -64,12 +64,14 @@ class LoginController: ObservableObject {
                 completion(error!)
             } else {
                 print("成功：\(String(describing: authResult))")
+                
                 print("認証用メールを送ります")
                 let user = authResult?.user
                 user?.sendEmailVerification(completion: { error in
                     print("エラー：\(String(describing: error))")
                     if error == nil {
                         print("認証用メールを送信しました。")
+                        self.isSentVerificationEmail = true 
                         // 認証用メールを送ったらFirebaseにメール、UID、ユーザー名を登録
                         self.RegisterUserName(registeringUser: UserData(uid: user?.uid as! String,
                                                                         email: user?.email as! String,

@@ -68,11 +68,6 @@ struct RegisterView: View {
                         isShowRiyouKiyaku = true
                     }
                 
-                Button(action: {
-                    isAlertPresented = true
-                }, label: {
-                    RedButtonView(buttonText: "試験ボタン")
-                })
             }
             
             // エラーメッセージ
@@ -102,11 +97,11 @@ struct RegisterView: View {
                                 errorText = "\(error.localizedDescription)"
                             }
                             
-                            if error.localizedDescription.isEmpty == true {
-                                isAlertPresented = true
-                            } else {
-                                print("error.localizedDescription.isEmpty: \(error.localizedDescription.isEmpty)")
-                            }
+//                            if error.localizedDescription.isEmpty == true {
+//                                isAlertPresented = true
+//                            } else {
+//                                print("error.localizedDescription.isEmpty: \(error.localizedDescription.isEmpty)")
+//                            }
                         }
                     }
                 }) {
@@ -114,8 +109,8 @@ struct RegisterView: View {
                 }
             } else {
                 // 認証メール送信後
-                Text("認証メールを送ります")
-                    .foregroundColor(Color.blue)
+                Text("認証メールを送りました。\nメール内のURLから認証を完了してください。")
+                    .foregroundColor(Color("ColorOne"))
             }
         }
         .padding(.horizontal, 30)
