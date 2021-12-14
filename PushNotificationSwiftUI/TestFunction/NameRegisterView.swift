@@ -29,7 +29,7 @@ struct NameRegisterView: View {
                 Button(action:{
                     loginController.isLoading = true
                     print("名前を登録します")
-                    loginController.RegisterUserName(registeringUser: currentUser, registeringName: inputText, completion: {
+                    loginController.RegisterUserName(registeringUser: currentUser, completion: {
                         print("HelloUserビューに移ります")
                         isNavigatedToMainPage = true 
                     })

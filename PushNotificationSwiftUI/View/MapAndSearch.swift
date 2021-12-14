@@ -207,7 +207,7 @@ struct MapAndSearch: View {
                                             Text("削除")
                                         }
                                         .foregroundColor(.red)
-                                        .padding()
+                                        .padding(.bottom, 50)
                                         .alert(isPresented: $isShowingAlert){
                                             Alert(title: Text("本当に削除しますか？"),
                                                   message: Text("元に戻すことはできません"),

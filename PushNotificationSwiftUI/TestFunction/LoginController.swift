@@ -39,7 +39,10 @@ class LoginController: ObservableObject {
     // 何らかのロード処理
     @Published var isLoading: Bool = false
     
+    @Published var newRegisteredUserName: String = ""
+    
     @Published var isSentVerificationEmailMessage: String = ""
+    @Published var isNavigateToLoginView: Bool = false
     
     // Firestoreのセッティング
     var db: Firestore!
@@ -50,18 +53,19 @@ class LoginController: ObservableObject {
     }
     
     // ユーザー新規登録のためのメソッド
-    func authCreateUser(email: String, password: String, completion: @escaping (Error) -> ()) {
-        _ = Auth.auth().addStateDidChangeListener{ auth, user in
-            print("auth: \(auth)")
-            print("user: \(String(describing: user))")
-        }
+    func authCreateUser(email: String, password: String, completion: @escaping (Error) -> ()) async {
+//        _ = Auth.auth().addStateDidChangeListener{ auth, user in
+//            print("auth: \(auth)")
+//            print("user: \(String(describing: user))")
+//        }
         
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        await Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
                 print("エラー：\(String(describing: error))")
                 self.isCreatingFailed = true
                 self.errorMessage = String(describing: error!)
                 completion(error!)
+                self.isLoading = false
             } else {
                 print("成功：\(String(describing: authResult))")
                 
@@ -71,22 +75,25 @@ class LoginController: ObservableObject {
                     print("エラー：\(String(describing: error))")
                     if error == nil {
                         print("認証用メールを送信しました。")
-                        self.isSentVerificationEmail = true 
+                        self.isSentVerificationEmail = true
                         // 認証用メールを送ったらFirebaseにメール、UID、ユーザー名を登録
                         self.RegisterUserName(registeringUser: UserData(uid: user?.uid as! String,
                                                                         email: user?.email as! String,
-                                                                        userName: "userName1"),
-                                              registeringName: "userName2",
+                                                                        userName: self.newRegisteredUserName),
                                               completion: {
                             print("ユーザー名を登録しました")
                             // メールの送信に成功したらログアウトする
                             self.logoutUser(completion: {
                                 print("サインアウトしました")
-                                self.isSentVerificationEmailMessage = "認証メールを送信しました"
+//                                self.isSentVerificationEmailMessage = "認証メールを送信しました"
                                 self.isSentVerificationEmail = true
 //                                self.isGuestMode.guestModeSwitch = true
+                                self.isNavigateToLoginView = true
+                                self.isLoading = false
                             })
                         })
+                    } else {
+                        self.isLoading = false
                     }
                 })
             }
@@ -214,7 +221,7 @@ class LoginController: ObservableObject {
     }
     
     // 名前を登録する
-    func RegisterUserName(registeringUser: UserData, registeringName: String, completion: @escaping () -> Void) {
+    func RegisterUserName(registeringUser: UserData, completion: @escaping () -> Void) {
         self.isLoading = true 
         print("名前：\(registeringUser.userName)を\(registeringUser.uid)に登録します")
         

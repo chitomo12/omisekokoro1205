@@ -56,7 +56,7 @@ struct LoginTest: View {
                 }
                 
                 NavigationLink(destination: ResetPasswordView()){
-                    Text("パスワードを忘れた")
+                    Text("パスワードを忘れた").padding()
                 }
             }
             .padding(.horizontal, 30)
@@ -68,6 +68,7 @@ struct LoginTest: View {
                     .opacity(0.9)
             }
         }
+        
         NavigationLink(destination: DidLoginTest(loginController: loginController,
                                                  currentUser: currentUser,
                                                  isShowLoginCheckView: $isShowLoginCheckView).navigationBarHidden(true),

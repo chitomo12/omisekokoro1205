@@ -309,6 +309,7 @@ struct PostDetailView: View {
                         postData.sendReportText(postUID: selectedPost.documentId, reporterUID: environmentCurrentUser.uid, reportText: inputReportText)
                         isShowReportWindow = false
                     }
+                    .padding()
                     Button("キャンセル"){
                         isShowReportWindow = false
                         inputReportText = ""

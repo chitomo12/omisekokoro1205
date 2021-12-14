@@ -171,7 +171,8 @@ struct MyPageDesignView: View {
                                         print("画像を選択します")
                                         isShowPHPicker = true
                                     }){
-                                        RedButtonView(buttonText: "画像を選択")
+                                        Text("画像を選択")
+//                                        RedButtonView(buttonText: "画像を選択")
                                     }
                                     .padding(.bottom)
                                     
@@ -180,26 +181,9 @@ struct MyPageDesignView: View {
                                         PHPickerView(isShowPHPicker: $isShowPHPicker, selectedImage: $selectedImage)
                                     }
                                     
-    //                                Button(action: {
-    //                                    isShowProgress.progressSwitch = true
-    //                                    print("画像をアップロードします")
-    //                                    if selectedImage != nil{
-    //                                        uploadImageToFirestorage(userUID: environmentCurrentUserData.uid, newImageUIImage: selectedImage!, completion: { _ in
-    //                                            print("アップロード完了")
-    //                                            // プロフィール画像のビューを更新
-    //                                            environmentCurrentUserData.profileUIImage = selectedImage!
-    //                                            isShowProgress.progressSwitch = false
-    //                                        })
-    //                                    } else {
-    //                                        print("選択された画像がありません")
-    //                                        isShowProgress.progressSwitch = false
-    //                                    }
-    //                                }){
-    //                                    RedButtonView(buttonText: "画像を保存")
-    //                                }
-    //                                .padding(.bottom)
-                                    
                                     Text("ユーザー名")
+                                        .padding(.horizontal)
+                                    
                                     TextField("ユーザー名",
                                               text: $inputText,
                                               prompt: Text("ユーザー名を入力してください")
@@ -216,12 +200,6 @@ struct MyPageDesignView: View {
                                         isSavingNewName = true
                                         isSavingNewPhoto = true
                                         print("保存ボタンが押されました")
-                                        
-    //                                    if inputText.isEmpty == true && selectedImage == nil{
-    //                                        isShowProgress.progressSwitch = false
-    //                                    } else if inputText.isEmpty == false && inputText != environmentCurrentUserData.userName! {
-    //
-    //                                    }
                                         
                                         // ユーザー名の保存
                                         if inputText.isEmpty == false && inputText != environmentCurrentUserData.userName! {
@@ -274,13 +252,15 @@ struct MyPageDesignView: View {
                                             isShowEditPopover = false
                                         })
                                     }) {
-                                        Text("ログアウトする")
-                                            .font(.system(size: 15, weight: .bold, design: .rounded))
-                                            .foregroundColor(.white)
-                                            .frame(width: 180, height: 40, alignment: .center)
-                                            .background(linearGradientForButton)
-                                            .cornerRadius(20)
+                                        Text("サインアウト")
                                             .padding()
+//                                        Text("ログアウトする")
+//                                            .font(.system(size: 15, weight: .bold, design: .rounded))
+//                                            .foregroundColor(.white)
+//                                            .frame(width: 180, height: 40, alignment: .center)
+//                                            .background(linearGradientForButton)
+//                                            .cornerRadius(20)
+//                                            .padding()
                                     }
                                 }
                                 
