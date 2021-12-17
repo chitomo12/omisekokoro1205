@@ -11,7 +11,7 @@ import FirebaseFirestore
 import MapKit
 
 // 最新の投稿リストを表示するビュー
-struct FeatureViewDesign: View {
+struct LatestPostsListView: View {
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
@@ -318,6 +318,6 @@ struct FeatureViewDesign: View {
 
 struct FeatureView_Previews: PreviewProvider {
     static var previews: some View {
-        FeatureViewDesign()
+        LatestPostsListView()
     }
 }

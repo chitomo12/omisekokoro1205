@@ -62,9 +62,6 @@ struct MapView: UIViewRepresentable {
     
     //表示したViewが更新されるたびに実行
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        //CLGeocoderインスタンスを取得（使わず）
-//        let geocoder = CLGeocoder()
-        
         print("mapSwitch: \(mapSwitch) の処理を行います")
         switch mapSwitch{
         // 初回起動時の挙動
@@ -246,10 +243,10 @@ struct MapView: UIViewRepresentable {
             let kilometerPerLongitude: Double = 40000 / 360
             print("現在のマップ表示幅：\(mapRegion.span.longitudeDelta * kilometerPerLongitude) km")
             
-            //現在の表示幅(LongitudeDelta：LD)を基準に、表示幅の半分(LD/2)だけ移動したらコメントを再読み込みする。
-            //最後に取得を行なった地点(lastLoadingPoint)を地点Aとし、地点Aと移動後の画面中心(lastStoppingPoint)の地点Bとの距離Distanceを測り、
-            //Distanceが表示幅の半分(LD/2)を超えていた場合に再取得を実行する。
-            //実行後、再取得を行なった地点を地点Aとして設定し、最初に戻る。
+            // 現在の表示幅(LongitudeDelta：LD)を基準に、表示幅の半分(LD/2)だけ移動したらコメントを再読み込みする。
+            // 最後に取得を行なった地点(lastLoadingPoint)を地点Aとし、地点Aと移動後の画面中心(lastStoppingPoint)の地点Bとの距離Distanceを測り、
+            // Distanceが表示幅の半分(LD/2)を超えていた場合に再取得を実行する。
+            // 実行後、再取得を行なった地点を地点Aとして設定し、最初に戻る。
             let lastStoppingPoint = CLLocation(latitude: mapCenter.latitude, longitude: mapCenter.longitude)
             let dist = lastLoadingPoint.distance(from: lastStoppingPoint)
             let threshold = 1000 * mapRegion.span.longitudeDelta * kilometerPerLongitude / 2  // 閾値
@@ -271,10 +268,6 @@ struct MapView: UIViewRepresentable {
                         // コメントはannotationのsubtitleプロパティに渡す
                         annotation.subtitle = completionPost.comment
                         mapView.addAnnotation(annotation)
-//                        self.lastAddingAnnotations.append(annotation)
-//                        mapView.selectedAnnotations = self.lastAddingAnnotations
-                    
-                    
                     }
                 )
                 self.parent.isLoadingAnnotationViews = false
@@ -285,5 +278,4 @@ struct MapView: UIViewRepresentable {
             }
         } // 領域変更時のfunc mapViewここまで
     } // class Coordinatorここまで
-
 }

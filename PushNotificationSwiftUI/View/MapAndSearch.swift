@@ -236,6 +236,8 @@ struct MapAndSearch: View {
                                         .frame(width: 300, height: 300, alignment: .center)
                                         .scaledToFill()
                                     Text("🥘いらっしゃい！")
+                                        .font(.title)
+                                        .fontWeight(.ultraLight)
                                     ProgressView()
                                 }
                                 if isShowLoginView == true {

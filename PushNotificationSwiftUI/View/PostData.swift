@@ -76,16 +76,8 @@ class PostData: ObservableObject {
     func getPostDetail(documentKeyID: String, completion: @escaping(Post) -> Void) {
         print("\(documentKeyID)の詳細を取得します")
         // 日付表記のフォーマット
-//        let formatter = DateFormatter()
         self.formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
         
-        // Firestoreのセッティング
-//        var db: Firestore!
-//        let settings = FirestoreSettings()
-//        Firestore.firestore().settings = settings
-//        db = Firestore.firestore()
-        
-        print("db.collection(\"locationCollection\").document(\"locationDocument\").collection(\"subLocCollection\").document(\(documentKeyID))")
         db.collection("locationCollection")
             .document("locationDocument")
             .collection("subLocCollection")
@@ -95,7 +87,7 @@ class PostData: ObservableObject {
                         let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                         print("Document data: \(dataDescription)")
                     } else {
-                        print("Document does not exist")
+                        print("\(documentKeyID)のDocumentが存在しません")
                     }
                 let postName = String(describing: document!.get("name") ?? "" )
                 let postCreatedAt = document!.get("created_at") as! Timestamp
@@ -124,12 +116,6 @@ class PostData: ObservableObject {
     //  第１引数 givenCenter：中心座標（CLLocationCoordinate2D）
     //  第２引数 radius：半径（Double）
     func getPostListAround(givenCenter center: CLLocationCoordinate2D, radius radiusInM: Double, completion: @escaping (Post) -> Void){
-        
-//        // Firestoreのセッティング
-//        var db: Firestore!
-//        let settings = FirestoreSettings()
-//        Firestore.firestore().settings = settings
-//        db = Firestore.firestore()
 
         // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
         // a separate query for each pair. There can be up to 9 pairs of bounds
@@ -148,7 +134,7 @@ class PostData: ObservableObject {
         }
         
         // マッチしたドキュメント用の変数（使ってない）
-        var matchingDocs = [QueryDocumentSnapshot]()
+//        var matchingDocs = [QueryDocumentSnapshot]()
         
         // After all callbacks have executed, matchingDocs contains the result. Note that this
         // sample does not demonstrate how to wait on all callbacks to complete.
@@ -165,16 +151,17 @@ class PostData: ObservableObject {
             }
             
             for document in documents {
-                let lat = document.data()["lat"] as? Double ?? 0
-                let lng = document.data()["lng"] as? Double ?? 0
-                let coordinates = CLLocation(latitude: lat, longitude: lng)
-                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
-
-                // We have to filter out a few false positives due to GeoHash accuracy, but most will match
-                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
-                if distance <= radiusInM {
-                    matchingDocs.append(document)
-                }
+                
+//                // We have to filter out a few false positives due to GeoHash accuracy, but most will match
+//                // 読み込む範囲を距離から正確に計算し、指定したい場合。
+//                let lat = document.data()["lat"] as? Double ?? 0
+//                let lng = document.data()["lng"] as? Double ?? 0
+//                let coordinates = CLLocation(latitude: lat, longitude: lng)
+//                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+//                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+//                if distance <= radiusInM {
+//                    matchingDocs.append(document)
+//                }
                 
                 let postName = String(describing: document.get("name")!)
                 let postComment = String(describing: document.get("comment")!)
@@ -194,12 +181,52 @@ class PostData: ObservableObject {
                 postList = [] // 初期化
                 postList.append(aPost)
                 print("append: \(postName)")
-                // addAnnotationを追加？（未実装）
+                // addAnnotationを追加
                 completion(aPost)
             } // for document in documentsここまで
         } // func getDocumentsCompletionここまで
         print("postList: \(postList)")
     }  // func getPostListAroundTokyo()ここまで
+    
+    // コメントを投稿する
+    public func addPostDataFromModel(currentUser: UserData, _ name: String, _ latitude: Double, _ longitude: Double, commentText comment: String, omiseImageURL: String?, searchedAndSelectedOmiseUid: String?, searchedAndSelectedOmiseItem: OmiseItem, completion: @escaping () -> ()) {
+        // Firestoreのセッティング
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        db = Firestore.firestore()
+                
+        print("ジオハッシュをイニシャライズします")
+        let locationForGeoHash = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let hash = GFUtils.geoHash(forLocation: locationForGeoHash)
+        
+        // サブコレを使ってFirebaseにデータを追加
+        db.collection("locationCollection").document("locationDocument").collection("subLocCollection").addDocument(data: [
+            "id": "\(Timestamp(date: Date())), \(name)",
+            "name": name,
+            "latitude": latitude,
+            "longitude": longitude,
+            "coordinate": GeoPoint(latitude: latitude, longitude: longitude),
+            "geohash": hash,
+            "created_at": Timestamp(date: Date()),
+            "comment": comment,
+            "imageURL": omiseImageURL ?? "",
+            "postUserUID": currentUser.uid,
+            "postUserName": currentUser.userName ?? "",
+            "omiseUID": searchedAndSelectedOmiseUid ?? "",
+            "omiseSiteURL": "https:/sample"
+        ]){ err in
+            if err != nil {
+                print("エラー: \(String(describing: err))")
+            } else {
+                print("ロケーションを追加しました！")
+                print("name: \(name)")
+                print("latitude: \(latitude)")
+                print("longitude: \(longitude)")
+                // 完了後の処理
+                completion()
+            }
+        }
+    } // addLocationDataここまで
     
     // 報告用メソッド
     func sendReportText(postUID: String, reporterUID: String, reportText: String){

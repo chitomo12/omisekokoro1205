@@ -95,7 +95,7 @@ struct TabWithAnimationView: View {
                                  mapSwitch: $mapSwitch)
                         .tabItem{}.tag(1)
                     
-                    FeatureViewDesign()
+                    LatestPostsListView()
                         .tabItem{}.tag(2)
                     
                     MyPageDesignView(currentUser: currentUser, notificationCardList: $notificationCardList, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)

@@ -43,6 +43,8 @@ struct OmiseSearchAndPostView: View {
     @State var isListLoading: Bool = false
     @State var listOpacity = 0.0
     
+    @State var postData = PostData()
+    
     // ViewControllerからFirebase保存の処理を呼び出す
     var viewController = ViewController()
     
@@ -197,15 +199,24 @@ struct OmiseSearchAndPostView: View {
                         Button(action: {
                             if inputComment.trimmingCharacters(in: .whitespaces).isEmpty != true {
                                 print("コメントを送信します")
-                                viewController.addPostData(currentUser: currentUserData,
-                                                           searchedAndSelectedOmiseItem.name,
-                                                           searchedAndSelectedOmiseLatitude,
-                                                           searchedAndSelectedOmiseLongitude,
-                                                           commentText: inputComment,
-                                                           omiseImageURL: searchedAndSelectedOmiseImageURL ?? "",
-                                                           searchedAndSelectedOmiseUid: searchedAndSelectedOmiseUid ?? "",
-                                                           searchedAndSelectedOmiseItem: searchedAndSelectedOmiseItem,
-                                                           completion: { isPopover = false })
+//                                viewController.addPostData(currentUser: currentUserData,
+//                                                           searchedAndSelectedOmiseItem.name,
+//                                                           searchedAndSelectedOmiseLatitude,
+//                                                           searchedAndSelectedOmiseLongitude,
+//                                                           commentText: inputComment,
+//                                                           omiseImageURL: searchedAndSelectedOmiseImageURL ?? "",
+//                                                           searchedAndSelectedOmiseUid: searchedAndSelectedOmiseUid ?? "",
+//                                                           searchedAndSelectedOmiseItem: searchedAndSelectedOmiseItem,
+//                                                           completion: { isPopover = false })
+                                postData.addPostDataFromModel(currentUser: currentUserData,
+                                                              searchedAndSelectedOmiseItem.name,
+                                                              searchedAndSelectedOmiseLatitude,
+                                                              searchedAndSelectedOmiseLongitude,
+                                                              commentText: inputComment,
+                                                              omiseImageURL: searchedAndSelectedOmiseImageURL ?? "",
+                                                              searchedAndSelectedOmiseUid: searchedAndSelectedOmiseUid ?? "",
+                                                              searchedAndSelectedOmiseItem: searchedAndSelectedOmiseItem,
+                                                              completion: { isPopover = false })
                             } else {
                                 print("空文字では送信できません")
                             }

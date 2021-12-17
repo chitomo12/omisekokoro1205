@@ -64,9 +64,9 @@ class ViewController: UIViewController {
         }
     } // addLocationDataここまで
     
-    public func completion(_ postList: [Post]){
-        print(postList)
-        
-    }
+//    public func completion(_ postList: [Post]){
+//        print(postList)
+//
+//    }
     
 }
