@@ -10,7 +10,6 @@ import FirebaseMessaging
 import FirebaseAuth
 import UserNotifications
 import UIKit
-import SwiftUI
 
 //@main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
@@ -21,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
@@ -47,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                 return
             }
             print("（AppDelegate内）トークン: \(token)")
-//            self.fcmToken = token
             // ログイン中のユーザーがいれば、当該ユーザーのデータベースにFCMトークンを追加する。
             if let authCurrentUser = Auth.auth().currentUser {
                 self.loginController.setFcmTokenToFirestore(
@@ -79,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
 }
 
 // MARK: - AppDelegate Push Notification
+// プッシュ通知のためのextension
 extension AppDelegate {
    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
        if let messageID = userInfo["gcm.message_id"] {

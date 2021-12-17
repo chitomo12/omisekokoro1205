@@ -12,15 +12,13 @@ import UIKit
 import GeoFire
 
 class ViewController: UIViewController {
-    @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
-    @EnvironmentObject var envPostForCardClass: PostForCardClass
-    
     @State var isShowingDetailContent: Bool = false
     
     var db: Firestore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
