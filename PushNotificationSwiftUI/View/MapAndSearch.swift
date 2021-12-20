@@ -84,7 +84,7 @@ struct MapAndSearch: View {
     @State var isShowLoginView = false
     @State var isShowNameRegisterPopover = false
     
-    var viewController = ViewController()
+//    var viewController = ViewController()
     
     var body: some View {
         let bounds = UIScreen.main.bounds

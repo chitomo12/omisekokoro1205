@@ -130,7 +130,7 @@ class PostData: ObservableObject {
                 .order(by: "created_at",descending: false)
                 .start(at: [bound.startValue])
                 .end(at: [bound.endValue])
-                .limit(to: 4)
+                .limit(to: 6)
         }
         
         // マッチしたドキュメント用の変数（使ってない）
@@ -139,12 +139,14 @@ class PostData: ObservableObject {
         // After all callbacks have executed, matchingDocs contains the result. Note that this
         // sample does not demonstrate how to wait on all callbacks to complete.
         for query in queries {
+            print(">for query in queries")
             query.getDocuments(completion: getDocumentsCompletion)
         }
         
         // Collect all the query results together into a single list
         // 全クエリの結果をリストに格納
         func getDocumentsCompletion(snapshot: QuerySnapshot?, error: Error?) -> () {
+            print(">func getDocumentsCompletion")
             guard let documents = snapshot?.documents else {
                 print("Unable to fetch snapshot data. \(String(describing: error))")
                 return
@@ -180,12 +182,11 @@ class PostData: ObservableObject {
                             )
                 postList = [] // 初期化
                 postList.append(aPost)
-                print("append: \(postName)")
+                print("append: \(postName), comment: \(postComment)")
                 // addAnnotationを追加
                 completion(aPost)
             } // for document in documentsここまで
         } // func getDocumentsCompletionここまで
-        print("postList: \(postList)")
     }  // func getPostListAroundTokyo()ここまで
     
     // コメントを投稿する

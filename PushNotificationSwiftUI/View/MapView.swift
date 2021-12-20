@@ -267,6 +267,7 @@ struct MapView: UIViewRepresentable {
                         annotation.title = completionPost.documentId
                         // コメントはannotationのsubtitleプロパティに渡す
                         annotation.subtitle = completionPost.comment
+                        print("アノテーション「\(annotation.subtitle)」を追加しました")
                         mapView.addAnnotation(annotation)
                     }
                 )

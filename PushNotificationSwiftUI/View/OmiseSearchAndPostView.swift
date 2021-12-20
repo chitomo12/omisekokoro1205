@@ -21,7 +21,9 @@ struct OmiseSearchAndPostView: View {
     @Binding var searchedAndSelectedOmiseName: String
     @Binding var searchedAndSelectedOmiseAddress: String
     @Binding var searchedAndSelectedOmiseImageURL: String?
+    @State var searchedAndSelectedOmiseImage: UIImage? = UIImage(named: "SampleImage")
     @State var searchedAndSelectedOmiseUid: String?
+    @State var isSomeOmiseSelected: Bool = false
     @Binding var mapSwitch: MapSwitch
     @Binding var isPopover: Bool
     
@@ -45,10 +47,15 @@ struct OmiseSearchAndPostView: View {
     
     @State var postData = PostData()
     
+    @State var isShowingAlert: Bool = false
+    @State var alertMessage: String = ""
+    
     // ViewControllerからFirebase保存の処理を呼び出す
     var viewController = ViewController()
     
     var body: some View {
+        let bounds = UIScreen.main.bounds
+        
         ZStack {
             // 背景
             LinearGradient(colors: [Color("LightYellow"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
@@ -132,7 +139,9 @@ struct OmiseSearchAndPostView: View {
                                 searchedAndSelectedOmiseLatitude = Double(omiseLatitudeString)!
                                 searchedAndSelectedOmiseLongitude = Double(omiseLongitudeString)!
                                 searchedAndSelectedOmiseImageURL = omise.omiseImageURL
+                                searchedAndSelectedOmiseImage = omise.omiseImage
                                 searchedAndSelectedOmiseUid = omise.omiseUid
+                                isSomeOmiseSelected = true
                                 // タップ後にリストを初期化
                                 withAnimation(springAnimation) {
                                     omiseDataList.omiseList = []
@@ -160,25 +169,36 @@ struct OmiseSearchAndPostView: View {
                         }
                     }
                     
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .center, spacing: 8) {
                         Text("選択中").font(.caption).fontWeight(.bold)
                         HStack{
-                            Image(systemName: "house.fill")
-                                .font(.caption)
-                                .frame(width: 20, height: 10, alignment: .center)
-                            Text("\(searchedAndSelectedOmiseItem.name)")
-                                .font(.caption)
-                        }
-                        HStack{
-                            Image(systemName: "map.fill")
-                                .font(.caption)
-                                .frame(width: 20, height: 10, alignment: .center)
-                            Text("\(searchedAndSelectedOmiseItem.address)")
-                                .font(.caption2)
+                            Image(uiImage: searchedAndSelectedOmiseImage!)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 64, height: 48, alignment: .center)
+                                .clipped()
+                                .cornerRadius(10)
+                            
+                            VStack(alignment: .leading) {
+                                HStack{
+                                    Image(systemName: "house.fill")
+                                        .font(.caption)
+                                        .frame(width: 20, height: 10, alignment: .center)
+                                    Text("\(searchedAndSelectedOmiseItem.name)")
+                                        .font(.caption)
+                                }
+                                HStack{
+                                    Image(systemName: "map.fill")
+                                        .font(.caption)
+                                        .frame(width: 20, height: 10, alignment: .center)
+                                    Text("\(searchedAndSelectedOmiseItem.address)")
+                                        .font(.caption2)
+                                }
+                            }
                         }
                     }
-                    .padding(EdgeInsets(top:15,leading: 35,bottom:0,trailing: 35))
-                    .opacity(0.8)
+                    .padding(EdgeInsets(top:15,leading: 0,bottom:0,trailing: 0))
+                    .frame(width: bounds.width - 120 )
                     
                     HStack{
                         Image(systemName: "bubble.left.fill")
@@ -197,17 +217,18 @@ struct OmiseSearchAndPostView: View {
                     HStack(alignment: .center) {
                         Spacer()
                         Button(action: {
-                            if inputComment.trimmingCharacters(in: .whitespaces).isEmpty != true {
+                            if isSomeOmiseSelected == false {
+                                alertMessage = "お店を未選択、または空文字では送信できません"
+                                isShowingAlert = true
+                            } else if inputComment.trimmingCharacters(in: .whitespaces).isEmpty == true {
+                                alertMessage = "投稿文がありません"
+                                isShowingAlert = true
+                            } else if inputComment.trimmingCharacters(in: .whitespaces).count >= 100 {
+                                alertMessage = "投稿文の文字制限は100文字までです"
+                                isShowingAlert = true
+                            } else {
+                                // エラーがなければ
                                 print("コメントを送信します")
-//                                viewController.addPostData(currentUser: currentUserData,
-//                                                           searchedAndSelectedOmiseItem.name,
-//                                                           searchedAndSelectedOmiseLatitude,
-//                                                           searchedAndSelectedOmiseLongitude,
-//                                                           commentText: inputComment,
-//                                                           omiseImageURL: searchedAndSelectedOmiseImageURL ?? "",
-//                                                           searchedAndSelectedOmiseUid: searchedAndSelectedOmiseUid ?? "",
-//                                                           searchedAndSelectedOmiseItem: searchedAndSelectedOmiseItem,
-//                                                           completion: { isPopover = false })
                                 postData.addPostDataFromModel(currentUser: currentUserData,
                                                               searchedAndSelectedOmiseItem.name,
                                                               searchedAndSelectedOmiseLatitude,
@@ -216,12 +237,14 @@ struct OmiseSearchAndPostView: View {
                                                               omiseImageURL: searchedAndSelectedOmiseImageURL ?? "",
                                                               searchedAndSelectedOmiseUid: searchedAndSelectedOmiseUid ?? "",
                                                               searchedAndSelectedOmiseItem: searchedAndSelectedOmiseItem,
-                                                              completion: { isPopover = false })
-                            } else {
-                                print("空文字では送信できません")
+                                                              completion: {
+                                    alertMessage = "投稿しました"
+                                    isShowingAlert = true
+                                    isPopover = false
+                                })
+//                                isShowingAlert = true
                             }
                             // 成功したら成功のポップアップを表示（未実装）
-                            
                         }) {
                             Text("投稿する")
                                 .font(.system(.body, design: .rounded))
@@ -232,8 +255,14 @@ struct OmiseSearchAndPostView: View {
                                 .cornerRadius(25)
                                 .padding()
                         }.padding()
-                        
                         Spacer()
+                        
+                        // アラート
+                            .alert("確認", isPresented: $isShowingAlert) {
+                                Button("OK"){  }
+                            } message: {
+                                Text(alertMessage)
+                            }
                     }
                 }
                 .padding(.horizontal, 40)

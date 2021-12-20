@@ -10,7 +10,7 @@ import MapKit
 import UIKit
 
 struct PostDetailViewTwo: View {
-    @EnvironmentObject var environmentCurrentUser: UserData
+    @EnvironmentObject var environmentCurrentUserData: UserData
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
@@ -39,6 +39,8 @@ struct PostDetailViewTwo: View {
     
     @State var pushNotificationSender = PushNotificationSender()
     @State var notificationController = NotificationController()
+    
+    @State var isShowingAlert: Bool = false
     
     var body: some View {
 //        let bounds = UIScreen.main.bounds
@@ -120,17 +122,17 @@ struct PostDetailViewTwo: View {
                                 if isFavoriteAddedToSelectedPost == false{
                                     // お気に入りされてない場合の処理
                                     // お気に入りに追加
-                                    AddFavorite(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
+                                    AddFavorite(postID: selectedPost.documentId, userID: environmentCurrentUserData.uid, completion: {
                                         isFavoriteAddedToSelectedPost.toggle()
                                         
                                         // 投稿者のFCMトークンを取得
                                         var posterFcmToken: String = "dummy"
-                                        environmentCurrentUser.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
+                                        environmentCurrentUserData.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
                                             posterFcmToken = result
                                             print("posterFcmToken: \(posterFcmToken)")
                                             // 取得したFCMトークンを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
-                                                                      userId: environmentCurrentUser.uid,
+                                                                      userId: environmentCurrentUserData.uid,
                                                                       title: "❤️が送られました",
                                                                       body: "\(selectedPost.comment)",
                                                                       completion: {
@@ -139,7 +141,7 @@ struct PostDetailViewTwo: View {
                                             
                                             // お知らせ一覧に追加する
                                             notificationController.addNotificationList(
-                                                notificationData: NotificationData(sendUserUid: environmentCurrentUser.uid,
+                                                notificationData: NotificationData(sendUserUid: environmentCurrentUserData.uid,
                                                                                    receiveUserUid: selectedPost.created_by,
                                                                                    relatedPostUid: selectedPost.documentId,
                                                                                    title: "❤️が送られました",
@@ -150,7 +152,7 @@ struct PostDetailViewTwo: View {
                                    )
                                 } else {
                                     // お気に入りがある場合の処理
-                                    RemoveFavorite(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
+                                    RemoveFavorite(postID: selectedPost.documentId, userID: environmentCurrentUserData.uid, completion: {
                                         isFavoriteAddedToSelectedPost.toggle()
                                     })
                                 }
@@ -174,17 +176,17 @@ struct PostDetailViewTwo: View {
                             Button(action:{
                                 if isBookmarkAddedToSelectedPost == false{
                                     // ブックマークされてない場合の処理
-                                    AddBookmark(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
+                                    AddBookmark(postID: selectedPost.documentId, userID: environmentCurrentUserData.uid, completion: {
                                         isBookmarkAddedToSelectedPost.toggle()
                                         
                                         // 投稿者のFCMトークンを取得
                                         var posterFcmToken: String = "dummy"
-                                        environmentCurrentUser.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
+                                        environmentCurrentUserData.getFcmTokenFromUserUID(userUID: selectedPost.created_by!) { result in
                                             posterFcmToken = result
                                             print("posterFcmToken: \(posterFcmToken)")
                                             // 取得したFCMを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
-                                                                      userId: environmentCurrentUser.uid,
+                                                                      userId: environmentCurrentUserData.uid,
                                                                       title: "🔖投稿がブックマークされました",
                                                                       body: "\(selectedPost.comment)",
                                                                       completion: {
@@ -192,7 +194,7 @@ struct PostDetailViewTwo: View {
                                                 })
                                             // お知らせ一覧に追加する
                                             notificationController.addNotificationList(
-                                                notificationData: NotificationData(sendUserUid: environmentCurrentUser.uid,
+                                                notificationData: NotificationData(sendUserUid: environmentCurrentUserData.uid,
                                                                                    receiveUserUid: selectedPost.created_by,
                                                                                    relatedPostUid: selectedPost.documentId,
                                                                                    title: "🔖投稿がブックマークされました",
@@ -202,7 +204,7 @@ struct PostDetailViewTwo: View {
                                     })
                                 } else {
                                     // ブックマークがある場合の処理
-                                    RemoveBookmark(postID: selectedPost.documentId, userID: environmentCurrentUser.uid, completion: {
+                                    RemoveBookmark(postID: selectedPost.documentId, userID: environmentCurrentUserData.uid, completion: {
                                         isBookmarkAddedToSelectedPost.toggle()
                                     })
                                 }
@@ -284,6 +286,33 @@ struct PostDetailViewTwo: View {
                             .padding(.all, 20)
                         }
                         .frame(width: UIScreen.main.bounds.width)
+                        
+                        // 削除ボタン
+                        if isShowPostDetailPopover.selectedPostCreateUserUID == environmentCurrentUserData.uid{
+                            Button(action:{
+                                isShowingAlert = true
+                                print("削除します")
+                            }){
+                                Text("削除")
+                            }
+                            .foregroundColor(.red)
+                            .padding(.bottom, 50)
+                            .alert(isPresented: $isShowingAlert){
+                                Alert(title: Text("本当に削除しますか？"),
+                                      message: Text("元に戻すことはできません"),
+                                      primaryButton: .cancel(Text("キャンセル")),
+                                      secondaryButton: .destructive(Text("削除"), action: {
+                                    // 削除ボタンが押されたらコメント削除を実行
+                                    deleteComment(targetDocumentID: selectedPost.documentId)
+                                    // 削除後、変数を初期化しポップオーバーを閉じる
+//                                    selectedPostDocumentID = ""
+                                    isShowPostDetailPopover.selectedPostDocumentUID = ""
+                                    isShowPostDetailPopover.showSwitch = false 
+//                                    isShowingDetail = false
+//                                    map.removeAnnotation(selectedPostAnnotation.annotation!)
+                                }))
+                            }
+                        }
                     } //Groupここまで
                     .opacity(viewState1 ? 1 : 0)
                     .offset(x: 0, y: viewState1 ? 0 : -25)
@@ -303,8 +332,6 @@ struct PostDetailViewTwo: View {
                 let postData = PostData()
                 postData.getPostDetail(documentKeyID: isShowPostDetailPopover.selectedPostDocumentUID,
                                        completion: { onePost in
-                    // 削除するパターン分岐に備え、アノテーションを渡しておく（Mapから選択ではないのでコメントアウト）
-//                    self.parent.selectedPostAnnotation = annotationView
                     // 投稿者名、コメント文などが格納されたドキュメント情報を渡す
                     selectedPost = onePost
                     isShowPostDetailPopover.selectedPostCreateUserUID = onePost.created_by!
@@ -334,11 +361,10 @@ struct PostDetailViewTwo: View {
                     
                     // ファボ、ブックマークの判定
                     print("check start")
-                    CheckFavorite(postID: onePost.documentId, currentUserID: environmentCurrentUser.uid, completion: { resultBool, foundedFavID in
+                    CheckFavorite(postID: onePost.documentId, currentUserID: environmentCurrentUserData.uid, completion: { resultBool, foundedFavID in
                         isFavoriteAddedToSelectedPost = resultBool
-//                        FavoriteID = foundedFavID
                         
-                        CheckBookmark(postID: onePost.documentId, currentUserID: environmentCurrentUser.uid, completion: { resultBool, foundedBookmarkID in
+                        CheckBookmark(postID: onePost.documentId, currentUserID: environmentCurrentUserData.uid, completion: { resultBool, foundedBookmarkID in
                             isBookmarkAddedToSelectedPost = resultBool
 //                            BookmarkID = foundedBookmarkID
                             
@@ -369,7 +395,7 @@ struct PostDetailViewTwo: View {
                     TextField("報告内容を入力してください", text: $inputReportText).padding()
                     Button("送信"){
                         print("送信します")
-                        postData.sendReportText(postUID: selectedPost.documentId, reporterUID: environmentCurrentUser.uid, reportText: inputReportText)
+                        postData.sendReportText(postUID: selectedPost.documentId, reporterUID: environmentCurrentUserData.uid, reportText: inputReportText)
                         isShowReportWindow = false
                     }
                     Button("キャンセル"){
