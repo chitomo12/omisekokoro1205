@@ -172,7 +172,8 @@ struct MapAndSearch: View {
                                 searchedAndSelectedOmiseAddress: $searchedAddress,
                                 searchedAndSelectedOmiseImageURL: $searchedAndSelectedOmiseImageURL,
                                 mapSwitch: $mapSwitch,
-                                isPopover: $isShowSearchAndPostPopover)
+                                isPopover: $isShowSearchAndPostPopover,
+                                mkMapView: $map)
                         } // .popoverここまで
                     
                         // アノテーション選択時の詳細表示用ポップオーバー

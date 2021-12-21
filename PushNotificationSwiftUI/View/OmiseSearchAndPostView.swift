@@ -26,6 +26,7 @@ struct OmiseSearchAndPostView: View {
     @State var isSomeOmiseSelected: Bool = false
     @Binding var mapSwitch: MapSwitch
     @Binding var isPopover: Bool
+    @Binding var mkMapView: MKMapView
     
     @State var searchedAndSelectedOmiseItem: OmiseItem = OmiseItem(name: "選択されていません", coordinates: "", address: "", omiseImage: UIImage(systemName: "house"), omiseImageURL: "", omiseUid: "")
     
@@ -49,6 +50,8 @@ struct OmiseSearchAndPostView: View {
     
     @State var isShowingAlert: Bool = false
     @State var alertMessage: String = ""
+    
+    @State var postedOmiseCoordinate: CLLocationCoordinate2D?
     
     // ViewControllerからFirebase保存の処理を呼び出す
     var viewController = ViewController()
@@ -229,6 +232,7 @@ struct OmiseSearchAndPostView: View {
                             } else {
                                 // エラーがなければ
                                 print("コメントを送信します")
+                                
                                 postData.addPostDataFromModel(currentUser: currentUserData,
                                                               searchedAndSelectedOmiseItem.name,
                                                               searchedAndSelectedOmiseLatitude,
@@ -240,7 +244,7 @@ struct OmiseSearchAndPostView: View {
                                                               completion: {
                                     alertMessage = "投稿しました"
                                     isShowingAlert = true
-                                    isPopover = false
+                                    // 投稿完了後、MapViewのフォーカスを投稿した吹き出しの座標に移す
                                 })
 //                                isShowingAlert = true
                             }
@@ -259,7 +263,19 @@ struct OmiseSearchAndPostView: View {
                         
                         // アラート
                             .alert("確認", isPresented: $isShowingAlert) {
-                                Button("OK"){  }
+                                Button("OK"){
+                                    if alertMessage == "投稿しました"{
+                                        // 投稿完了の場合、投稿画面を閉じてフォーカスを移す
+                                        moveFocus(
+                                            mapView: mkMapView,
+                                            targetCoordinate: CLLocationCoordinate2D(
+                                                latitude: searchedAndSelectedOmiseLatitude,
+                                                longitude: searchedAndSelectedOmiseLongitude
+                                            )
+                                        )
+                                        isPopover = false
+                                    }
+                                }
                             } message: {
                                 Text(alertMessage)
                             }
@@ -269,7 +285,6 @@ struct OmiseSearchAndPostView: View {
                 .edgesIgnoringSafeArea(.all)
             
         }
-            
     }
     
     // リストを閉じる関数
@@ -282,6 +297,14 @@ struct OmiseSearchAndPostView: View {
             }
         }
     }
+}
+
+// mapViewのフォーカスを移動させる関数
+func moveFocus(mapView: MKMapView, targetCoordinate: CLLocationCoordinate2D) {
+    print("次の座標に焦点を移します : \(targetCoordinate)")
+    mapView.setRegion(MKCoordinateRegion(center: targetCoordinate,
+                                         span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)),
+                        animated: false)
 }
 
 extension UIApplication {
@@ -305,6 +328,7 @@ struct OmiseSearchAndPostView_Previews: PreviewProvider {
                                searchedAndSelectedOmiseAddress: .constant("sample address"),
                                searchedAndSelectedOmiseImageURL: .constant("sample url"),
                                mapSwitch: .constant(.normal),
-                               isPopover: .constant(true))
+                               isPopover: .constant(true),
+                               mkMapView: .constant(MKMapView()))
     }
 }
