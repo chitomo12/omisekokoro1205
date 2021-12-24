@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                 return
             }
             print("（AppDelegate内）トークン: \(token)")
-            // ログイン中のユーザーがいれば、当該ユーザーのデータベースにFCMトークンを追加する。
+            // ログイン中のユーザーがいれば、データベースに当該ユーザーのFCMトークンを追加する。
             if let authCurrentUser = Auth.auth().currentUser {
                 self.loginController.setFcmTokenToFirestore(
                     userUid: authCurrentUser.uid,
@@ -54,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
                     }
             }
         }
-        print("messaging: \(messaging)")
     }
 
     

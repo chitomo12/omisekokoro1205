@@ -13,12 +13,12 @@ struct OmiseSearchAndPostView: View {
     @EnvironmentObject var currentUserData: UserData
     
     @ObservedObject var omiseDataList: OmiseData
-    @ObservedObject var currentUser: UserData 
+//    @ObservedObject var currentUser: UserData
     
     @Binding var selectedTag: Int
     @Binding var searchedAndSelectedOmiseLatitude: Double
     @Binding var searchedAndSelectedOmiseLongitude: Double
-    @Binding var searchedAndSelectedOmiseName: String
+//    @Binding var searchedAndSelectedOmiseName: String
     @Binding var searchedAndSelectedOmiseAddress: String
     @Binding var searchedAndSelectedOmiseImageURL: String?
     @State var searchedAndSelectedOmiseImage: UIImage? = UIImage(named: "SampleImage")
@@ -64,7 +64,7 @@ struct OmiseSearchAndPostView: View {
             LinearGradient(colors: [Color("LightYellow"), Color("ColorThree")], startPoint: .bottomLeading, endPoint: .topTrailing)
                 .ignoresSafeArea()
             
-            // キーボードを閉じるためのタップ範囲設定
+            // キーボードを閉じるためのタップ領域設定
             Color.white
                 .opacity(0.9)
                 .contentShape(RoundedRectangle(cornerRadius: 0))  // タップ検出範囲を広げる
@@ -208,7 +208,7 @@ struct OmiseSearchAndPostView: View {
                         Text("どんなお店？").font(.body).fontWeight(.light)
                     }.padding()
                     
-                    TextField("コメントを入力", text: $inputComment)
+                    TextField("コメントを入力（100文字以内）", text: $inputComment)
                         .onTapGesture(perform: {
                             closeList()
                         })
@@ -248,7 +248,6 @@ struct OmiseSearchAndPostView: View {
                                 })
 //                                isShowingAlert = true
                             }
-                            // 成功したら成功のポップアップを表示（未実装）
                         }) {
                             Text("投稿する")
                                 .font(.system(.body, design: .rounded))
@@ -303,7 +302,7 @@ struct OmiseSearchAndPostView: View {
 func moveFocus(mapView: MKMapView, targetCoordinate: CLLocationCoordinate2D) {
     print("次の座標に焦点を移します : \(targetCoordinate)")
     mapView.setRegion(MKCoordinateRegion(center: targetCoordinate,
-                                         span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)),
+                                         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)),
                         animated: false)
 }
 
@@ -318,13 +317,9 @@ struct OmiseSearchAndPostView_Previews: PreviewProvider {
     
     static var previews: some View {
         OmiseSearchAndPostView(omiseDataList: OmiseData(),
-                               currentUser: UserData(uid: "sampleuid",
-                                                     email: "sample@email",
-                                                     userName: "sampleName"),
                                selectedTag: .constant(1),
                                searchedAndSelectedOmiseLatitude: .constant(0.0),
                                searchedAndSelectedOmiseLongitude: .constant(0.0),
-                               searchedAndSelectedOmiseName: .constant("location sample"),
                                searchedAndSelectedOmiseAddress: .constant("sample address"),
                                searchedAndSelectedOmiseImageURL: .constant("sample url"),
                                mapSwitch: .constant(.normal),

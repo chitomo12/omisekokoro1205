@@ -31,7 +31,7 @@ struct MapAndSearch: View {
     @ObservedObject var currentUser: UserData
     
     // 選択中の緯度経度
-    @Binding var searchedLocationName: String
+//    @Binding var searchedLocationName: String
     @Binding var searchedAddress: String
     @Binding var mapSwitch: MapSwitch
         
@@ -97,8 +97,7 @@ struct MapAndSearch: View {
             
             ZStack(alignment: .center) {
                 ZStack(alignment: .bottomTrailing) {
-                    MapView(searchedLocationName: $searchedLocationName,
-                            searchedAddress: $searchedAddress,
+                    MapView(
                             mapSwitch: $mapSwitch,
                             map: $map,
                             isShowingDetailPopover: $isShowingDetail,
@@ -164,11 +163,10 @@ struct MapAndSearch: View {
                         .popover(isPresented: $isShowSearchAndPostPopover) {
                             OmiseSearchAndPostView(
                                 omiseDataList: omiseDataList,
-                                currentUser: currentUser,
                                 selectedTag: $temporalSelectedTag,
                                 searchedAndSelectedOmiseLatitude: $searchedAndSelectedOmiseLatitude,
                                 searchedAndSelectedOmiseLongitude: $searchedAndSelectedOmiseLongitude,
-                                searchedAndSelectedOmiseName: $searchedLocationName,
+//                                searchedAndSelectedOmiseName: $searchedLocationName,
                                 searchedAndSelectedOmiseAddress: $searchedAddress,
                                 searchedAndSelectedOmiseImageURL: $searchedAndSelectedOmiseImageURL,
                                 mapSwitch: $mapSwitch,
@@ -177,7 +175,6 @@ struct MapAndSearch: View {
                         } // .popoverここまで
                     
                         // アノテーション選択時の詳細表示用ポップオーバー
-//                        .popover(isPresented: $isShowPostDetailPopover.showSwitch) {
                         .popover(isPresented: $isShowingDetail) {
                             ZStack {
                                 // 背景
@@ -236,9 +233,7 @@ struct MapAndSearch: View {
                                         .resizable()
                                         .frame(width: 300, height: 300, alignment: .center)
                                         .scaledToFill()
-                                    Text("🥘いらっしゃい！")
-                                        .font(.title)
-                                        .fontWeight(.ultraLight)
+                                    Text("🥘いらっしゃい！").font(.title).fontWeight(.ultraLight)
                                     ProgressView()
                                 }
                                 if isShowLoginView == true {
@@ -267,7 +262,6 @@ struct MapAndSearch: View {
                                     } else {
                                         // ログアウト中
                                         print("ログイン画面を表示します")
-//                                                isShowLoginCheckView = false
                                         isGuestMode.guestModeSwitch = true
                                         isCheckingLoginStatus = false
                                         isShowLoginView = true

@@ -17,8 +17,6 @@ struct MapView: UIViewRepresentable {
     
     @ObservedObject var postData = PostData()
     
-    @Binding var searchedLocationName: String  // 検索画面で選択した店舗の名前
-    @Binding var searchedAddress: String  // 検索画面で選択した店舗の名前
     @Binding var mapSwitch: MapSwitch
     
     @Binding var map: MKMapView
@@ -47,7 +45,7 @@ struct MapView: UIViewRepresentable {
     // 初回起動時の座標
     @State var targetCoordinate = CLLocationCoordinate2D(latitude: 35.3931, longitude: 139.4444)
         
-    var viewController = ViewController()
+//    var viewController = ViewController()
     
     // 表示するViewを作成する時に実行
     func makeUIView(context:Context) -> MKMapView {
@@ -142,7 +140,7 @@ struct MapView: UIViewRepresentable {
             annotationView.glyphTintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
             annotationView.animatesWhenAdded = true
             annotationView.centerOffset = CGPoint(x: 0, y: -50)
-            annotationView.clusteringIdentifier = annotation.title as! String
+//            annotationView.clusteringIdentifier = annotation.title as! String
             
             // String型のデータ（annotation.comment）を与えることで動的に生成されたUIImageを返す（仮実装）
             annotationView.image = self.generateImageViewController.setup(commentText: (annotation.subtitle ?? "") ?? "")
@@ -155,7 +153,6 @@ struct MapView: UIViewRepresentable {
             print("アノテーションがタップされました: \(annotationView.annotation!.title!!)")
             // ポップオーバーを表示（コンテンツはローディング表示）
             self.parent.isShowingDetailPopover = true
-//            self.parent.isShowPostDetailPopover.showSwitch = true
             
             // コンテンツはローディング表示
             self.parent.isShowingDetailContent = false
@@ -267,7 +264,7 @@ struct MapView: UIViewRepresentable {
                         annotation.title = completionPost.documentId
                         // コメントはannotationのsubtitleプロパティに渡す
                         annotation.subtitle = completionPost.comment
-                        print("アノテーション「\(annotation.subtitle)」を追加しました")
+                        print("アノテーション「\(String(describing: annotation.subtitle))」を追加しました")
                         mapView.addAnnotation(annotation)
                     }
                 )

@@ -38,20 +38,6 @@ struct PostForCard: Identifiable{
     let userImageUIImage: UIImage
 }
 
-// カード表示用のクラス
-class PostForCardClass: ObservableObject{
-    var omiseName: String = ""
-    var documentId: String = ""
-    var created_at: String = ""
-    let comment: String = ""
-    let coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-    let created_by: String? = ""
-    let created_by_name: String? = ""
-    let imageURL: String? = ""
-    let imageUIImage: UIImage? = UIImage(named: "SampleImage")
-    let userImageUIImage: UIImage = UIImage(named:"SampleImage")!
-}
-
 // データ処理用のクラス
 class PostData: ObservableObject {
     @Published var postList: [Post] = []
@@ -109,8 +95,9 @@ class PostData: ObservableObject {
                     )
                 )
             }
-        
     }
+    
+    // 最新の投稿１０件を読み込む
     
     // 周囲50kmの投稿を取得する
     //  第１引数 givenCenter：中心座標（CLLocationCoordinate2D）
@@ -154,8 +141,8 @@ class PostData: ObservableObject {
             
             for document in documents {
                 
-//                // We have to filter out a few false positives due to GeoHash accuracy, but most will match
-//                // 読み込む範囲を距離から正確に計算し、指定したい場合。
+                // We have to filter out a few false positives due to GeoHash accuracy, but most will match
+                // 読み込む範囲を距離から正確に計算し、指定したい場合。
 //                let lat = document.data()["lat"] as? Double ?? 0
 //                let lng = document.data()["lng"] as? Double ?? 0
 //                let coordinates = CLLocation(latitude: lat, longitude: lng)

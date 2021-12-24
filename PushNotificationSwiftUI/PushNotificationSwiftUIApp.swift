@@ -13,7 +13,7 @@ struct PushNotificationSwiftUIApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
         
     @State var isShowLoginCheckView = false
-    @State var fcmToken = "aaa"
+    @State var fcmToken = "default"
     
     init(){
         FirebaseApp.configure()
@@ -21,7 +21,7 @@ struct PushNotificationSwiftUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            // Last Goal
+            // 初期画面
             TabWithAnimationView(currentUser: UserData(uid: "sample",
                                                        email: "sample@email.com",
                                                        userName: "sampleName"))
@@ -31,16 +31,6 @@ struct PushNotificationSwiftUIApp: App {
                 .environmentObject(FcmToken())
                 .environmentObject(IsGuestMode())
                 .environmentObject(IsShowPostDetailPopover())
-                .environmentObject(PostForCardClass())
-            
-            //            ContentView()
-            
-//            AuthTest(isShowLoginCheckView: $isShowLoginCheckView,
-//                     currentUser: UserData(uid: "sample", email: "sample@email.com", userName: "sampleName"))
-//
-//                .environmentObject(UserData(uid: "", email: "", userName: ""))
-//                .environmentObject(SelectedPost())
-//                .environmentObject(ShowProgress())
         }
     }
 }
