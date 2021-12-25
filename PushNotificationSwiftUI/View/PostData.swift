@@ -41,6 +41,10 @@ struct PostForCard: Identifiable{
 // データ処理用のクラス
 class PostData: ObservableObject {
     @Published var postList: [Post] = []
+    @Published var postForCardList: [PostForCard] = []
+    
+    // 最後に取得した投稿の投稿日時を格納
+    var lastAddedPostTimestamp: Timestamp
     
     // 日付表記のフォーマット
     let formatter = DateFormatter()
@@ -53,6 +57,10 @@ class PostData: ObservableObject {
         // Firestoreのセッティング②
         Firestore.firestore().settings = settings
         db = Firestore.firestore()
+        
+        // 日付表記のフォーマット設定
+        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        lastAddedPostTimestamp = Timestamp(date: Date())
     }
     
     // １ドキュメントの詳細を読み込む
@@ -98,6 +106,117 @@ class PostData: ObservableObject {
     }
     
     // 最新の投稿１０件を読み込む
+    public func getTenPostsFromAll(completion: @escaping (PostForCard, Timestamp) -> Void ){
+        db.collection("locationCollection")
+            .document("locationDocument")
+            .collection("subLocCollection")
+            .order(by: "created_at", descending: true)  // 日付降順で取得
+            .limit(to: 10)
+            .getDocuments() { (querySnapshot, error) in
+                self.addTenPostsToPostCardList(querySnapshot: querySnapshot, error: error, completion: completion)
+            }
+    } // getPostListFromAllここまで
+    
+    // 全投稿からさらに追加10件を取得する
+    public func getTenMorePosts(lastAddedPostTimestamp: Timestamp, completion: @escaping (PostForCard, Timestamp) -> Void){
+        print("lastAddedPostTimestamp: \(self.lastAddedPostTimestamp) 以前の投稿を取得します")
+        
+        db.collection("locationCollection")
+            .document("locationDocument")
+            .collection("subLocCollection")
+            .order(by: "created_at", descending: true)  // 日付降順で取得
+            .whereField("created_at", isLessThan: lastAddedPostTimestamp)
+            .limit(to: 10)
+            .getDocuments() { (querySnapshot, error) in
+                self.addTenPostsToPostCardList(querySnapshot: querySnapshot, error: error, completion: completion)
+            }
+    } // getPostListFromAllここまで
+    
+    // QuerySnapshotからカード表示用structを生成する
+    public func addTenPostsToPostCardList(querySnapshot: QuerySnapshot?, error: Error?, completion: @escaping (PostForCard, Timestamp) -> Void ) {
+        for document in querySnapshot!.documents {
+            let postName = String(describing: document.get("name")! )
+            let postCreatedAt = document.get("created_at") as! Timestamp
+            // 前回取得した投稿の投稿日時
+            self.lastAddedPostTimestamp = postCreatedAt
+            print("lastAddedPostTimestamp: \(lastAddedPostTimestamp) を格納")
+            
+            let postCreatedAtDate = postCreatedAt.dateValue()
+            let postCreatedAtString = formatter.string(from: postCreatedAtDate)
+            let postComment = String(describing: document.get("comment")! )
+//            let postLatitude = document.get("latitude") as! Double
+//            let postLongitude = document.get("longitude") as! Double
+            
+            // カード用の構造体postCardListにデータを格納
+            //   Postのリストとの違いはUIImageのプロパティがあること。
+            var postImageUIImage: UIImage? = UIImage(named: "SampleImage")
+            
+            // オプショナルバインディング
+            if let tempImageURL = URL(string: document.get("imageURL") as! String){
+                do {
+                    let tempImageData = try Data(contentsOf: tempImageURL)
+                    postImageUIImage = UIImage(data: tempImageData)
+                    print("画像を読み込みました")
+                } catch {
+                    print("画像の読み込みに失敗")
+                }
+            } else {
+                print("tempImageDataURLURL is nil")
+            }
+            
+            // 投稿者のプロフィール画像を取得
+            var userImageUIImage = UIImage(named: "SampleImage")
+            getUserImageFromFirestorage(userUID: document.get("postUserUID") as! String) { data in
+                if data != nil {
+                    print("投稿者画像を読み込みました：\(data!)")
+                    userImageUIImage = UIImage(data: data!)
+                } else {
+                    print("投稿者画像が見つかりません")
+                }
+                
+//                self.postForCardList.append(
+//                    PostForCard(omiseName: postName,
+//                         documentId: document.documentID,
+//                         created_at: postCreatedAtString,
+//                         comment: postComment,
+//                         coordinate: CLLocationCoordinate2D(latitude: document.get("latitude") as! Double,
+//                                                            longitude: document.get("longitude") as! Double),
+//                         created_by: document.get("postUserUID") as! String?,
+//                         created_by_name: document.get("postUserName") as! String?,
+//                         imageURL: document.get("imageURL") as! String?,
+//                         imageUIImage: postImageUIImage,
+//                         userImageUIImage: userImageUIImage!
+//                        )
+//                )
+//                print("latestPosts.postForCardList.count: \(self.postForCardList.count)")
+                completion(
+                    PostForCard(omiseName: postName,
+                               documentId: document.documentID,
+                               created_at: postCreatedAtString,
+                               comment: postComment,
+                               coordinate: CLLocationCoordinate2D(latitude: document.get("latitude") as! Double,
+                                                                  longitude: document.get("longitude") as! Double),
+                               created_by: document.get("postUserUID") as! String?,
+                               created_by_name: document.get("postUserName") as! String?,
+                               imageURL: document.get("imageURL") as! String?,
+                               imageUIImage: postImageUIImage,
+                               userImageUIImage: userImageUIImage!
+                              ),
+                    self.lastAddedPostTimestamp
+                )
+                
+                print("ドキュメントを追加しました")
+                // 非同期で順次読み込まれるため、リストに要素を追加するごとに並び替えを行う
+                self.postForCardList = self.postForCardList.sorted(by: { (a,b) -> Bool in
+                    return a.created_at > b.created_at
+                })
+            }
+        }
+        if error != nil {
+            print("error: \(String(describing: error))")
+        }
+        
+    }
     
     // 周囲50kmの投稿を取得する
     //  第１引数 givenCenter：中心座標（CLLocationCoordinate2D）

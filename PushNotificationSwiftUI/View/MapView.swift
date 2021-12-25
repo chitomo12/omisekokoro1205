@@ -15,7 +15,7 @@ struct MapView: UIViewRepresentable {
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
-    @ObservedObject var postData = PostData()
+//    @ObservedObject var postData = PostData()
     
     @Binding var mapSwitch: MapSwitch
     
@@ -255,7 +255,9 @@ struct MapView: UIViewRepresentable {
                 
                 //現在地点を中心に、周囲50km圏内のコメントを取得する（仮実装）
                 print("中心: \(mapCenter)、半径: \(mapRegion.span.longitudeDelta * kilometerPerLongitude / 2) km領域内のコメントを読み込みます。")
-                parent.postData.getPostListAround(givenCenter: mapCenter,
+                let postData = PostData()
+                postData.getPostListAround(givenCenter: mapCenter,
+//                parent.postData.getPostListAround(givenCenter: mapCenter,
                                                   radius: 1000 * mapRegion.span.longitudeDelta * kilometerPerLongitude / 2,
                                                   completion: { completionPost in
                         // 非同期的に、読み込み終了後にピンを追加するクロージャ

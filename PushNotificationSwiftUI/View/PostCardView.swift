@@ -72,38 +72,10 @@ struct PostCardViewTwo: View {
     
     @State var hasBeenInitialized: Bool = false
     
-    var viewController = ViewController()
+//    var viewController = ViewController()
     
     init(post: Binding<PostForCard>){
         self._post = post
-////        self.hasBeenInitialized = false
-//        // 最初に表示された時にのみ実行
-//        if hasBeenInitialized == false {
-//            // CardViewが表示されたらプロフィールとお店の画像を読み込み開始。
-//
-//            // 投稿者のプロフィール画像を読み込み
-//            var tempUIImage: UIImage?
-//            getUserImageFromFirestorage(userUID: self.post.created_by ?? "GuestUID", completion: { data in
-//                if data != nil{
-//                    tempUIImage = UIImage(data: data!)!
-//                } else {
-//                    tempUIImage = UIImage(named: "SampleImage")!
-//                }
-//            })
-//            self.postUserImageUIImage = tempUIImage!
-//
-//            // お店画像の読み込み
-//            var tempOmiseUIImage: UIImage?
-//            if postOmiseImageUIImage == nil {
-//                getImageFromURL(urlString: self.post.imageURL, completion: {uiImage in
-//                    tempOmiseUIImage = uiImage
-//                })
-//            }
-//            self.postOmiseImageUIImage = tempOmiseUIImage
-//
-//
-//            self.hasBeenInitialized = true
-//        }
     }
     
     var body: some View {
@@ -152,24 +124,6 @@ struct PostCardViewTwo: View {
         .onAppear {
             // 最初に表示された時にのみ実行
             if hasBeenInitialized == false {
-                // CardViewが表示されたらプロフィールとお店の画像を読み込み開始。
-                
-//                // 投稿者のプロフィール画像を読み込み
-//                getUserImageFromFirestorage(userUID: post.created_by ?? "GuestUID", completion: { data in
-//                    if data != nil{
-//                        postUserImageUIImage = UIImage(data: data!)!
-//                    } else {
-//                        postUserImageUIImage = UIImage(named: "SampleImage")!
-//                    }
-//                })
-//
-//                // お店画像の読み込み
-//                if postOmiseImageUIImage == nil {
-//                    getImageFromURL(urlString: post.imageURL, completion: {uiImage in
-//                        postOmiseImageUIImage = uiImage
-//                    })
-//                }
-                
                 hasBeenInitialized = true
             }
         }
