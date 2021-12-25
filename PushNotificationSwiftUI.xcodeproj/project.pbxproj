@@ -45,7 +45,6 @@
 		13F9D40E275C7D6000D121F2 /* CheckFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DC275C7D5E00D121F2 /* CheckFavorite.swift */; };
 		13F9D40F275C7D6000D121F2 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */; };
 		13F9D410275C7D6000D121F2 /* MyPageDesignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */; };
-		13F9D411275C7D6000D121F2 /* EnvFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DF275C7D5E00D121F2 /* EnvFirebase.swift */; };
 		13F9D412275C7D6000D121F2 /* OmiseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */; };
 		13F9D413275C7D6000D121F2 /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E1275C7D5E00D121F2 /* PostData.swift */; };
 		13F9D414275C7D6000D121F2 /* CommentsInRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E2275C7D5E00D121F2 /* CommentsInRangeView.swift */; };
@@ -123,7 +122,6 @@
 		13F9D3DC275C7D5E00D121F2 /* CheckFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckFavorite.swift; sourceTree = "<group>"; };
 		13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageDesignView.swift; sourceTree = "<group>"; };
-		13F9D3DF275C7D5E00D121F2 /* EnvFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvFirebase.swift; sourceTree = "<group>"; };
 		13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmiseData.swift; sourceTree = "<group>"; };
 		13F9D3E1275C7D5E00D121F2 /* PostData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
 		13F9D3E2275C7D5E00D121F2 /* CommentsInRangeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsInRangeView.swift; sourceTree = "<group>"; };
@@ -255,7 +253,6 @@
 				13F9D3D9275C7D5E00D121F2 /* Favorite */,
 				13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */,
 				13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */,
-				13F9D3DF275C7D5E00D121F2 /* EnvFirebase.swift */,
 				13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */,
 				13F9D3E1275C7D5E00D121F2 /* PostData.swift */,
 				13F3153E275D07B2005F60D9 /* NotificationData.swift */,
@@ -514,7 +511,6 @@
 				13F9D427275C7D6000D121F2 /* FirestorageTest.swift in Sources */,
 				13F9D404275C7D6000D121F2 /* RemoveBookmark.swift in Sources */,
 				13F9D417275C7D6000D121F2 /* postComment.swift in Sources */,
-				13F9D411275C7D6000D121F2 /* EnvFirebase.swift in Sources */,
 				13F9D41D275C7D6000D121F2 /* GeoQueryTest.swift in Sources */,
 				13F9D406275C7D6000D121F2 /* MapAndSearch.swift in Sources */,
 				13F13A31276065D400C40B17 /* IsShowPostDetailPopover.swift in Sources */,
