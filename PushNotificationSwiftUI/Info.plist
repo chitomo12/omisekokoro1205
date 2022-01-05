@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>アプリがユーザーの地理情報を取得することを許可しますか？</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>chitomo12.PushNotificationSwiftUI</string>
@@ -14,10 +12,6 @@
 		<false/>
 	</dict>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>processing</string>
-		<string>remote-notification</string>
-	</array>
+	<array/>
 </dict>
 </plist>

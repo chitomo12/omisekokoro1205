@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 import Photos
  
+// 写真選択画面のビュー
 struct PHPickerView: UIViewControllerRepresentable {
     // sheetが表示されているか
     @Binding var isShowPHPicker: Bool

@@ -14,6 +14,7 @@ target 'PushNotificationSwiftUI' do
   
   # For Push Notifications
   pod 'Firebase/Core'
-  pod 'Firebase/Messaging', '~> 8.9.1'
-
+  # pod 'Firebase/Messaging', '~> 8.9.1'
+  pod 'Firebase/Messaging'
+  
 end

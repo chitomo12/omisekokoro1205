@@ -239,9 +239,6 @@ class PostData: ObservableObject {
                 .limit(to: 6)
         }
         
-        // マッチしたドキュメント用の変数（使ってない）
-//        var matchingDocs = [QueryDocumentSnapshot]()
-        
         // After all callbacks have executed, matchingDocs contains the result. Note that this
         // sample does not demonstrate how to wait on all callbacks to complete.
         for query in queries {
@@ -259,18 +256,6 @@ class PostData: ObservableObject {
             }
             
             for document in documents {
-                
-                // We have to filter out a few false positives due to GeoHash accuracy, but most will match
-                // 読み込む範囲を距離から正確に計算し、指定したい場合。
-//                let lat = document.data()["lat"] as? Double ?? 0
-//                let lng = document.data()["lng"] as? Double ?? 0
-//                let coordinates = CLLocation(latitude: lat, longitude: lng)
-//                let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
-//                let distance = GFUtils.distance(from: centerPoint, to: coordinates)
-//                if distance <= radiusInM {
-//                    matchingDocs.append(document)
-//                }
-                
                 let postName = String(describing: document.get("name")!)
                 let postComment = String(describing: document.get("comment")!)
                 let postCreatedAt = document.get("created_at") as! Timestamp
@@ -297,10 +282,6 @@ class PostData: ObservableObject {
     
     // コメントを投稿する
     public func addPostDataFromModel(currentUser: UserData, _ name: String, _ latitude: Double, _ longitude: Double, commentText comment: String, omiseImageURL: String?, searchedAndSelectedOmiseUid: String?, searchedAndSelectedOmiseItem: OmiseItem, completion: @escaping () -> ()) {
-        // Firestoreのセッティング
-        let settings = FirestoreSettings()
-        Firestore.firestore().settings = settings
-        db = Firestore.firestore()
                 
         print("ジオハッシュをイニシャライズします")
         let locationForGeoHash = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

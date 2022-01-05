@@ -17,7 +17,7 @@ struct MyPageDesignView: View {
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var isGuestMode: IsGuestMode
     
-    @ObservedObject var currentUser: UserData
+//    @ObservedObject var currentUser: UserData
     
     @Binding var notificationCardList: [NotificationCardData]
     
@@ -110,7 +110,7 @@ struct MyPageDesignView: View {
                     
                     // 編集ボタン
                     Button(action: {
-                        print("environmentCurrentUserData.userName: \(environmentCurrentUserData.userName)")
+//                        print("environmentCurrentUserData.userName: \(environmentCurrentUserData.userName)")
                         if isGuestMode.guestModeSwitch == false && environmentCurrentUserData.userName != nil {
                             // ログイン中＆ユーザー名登録済みの場合は編集画面を表示
                             // 編集画面で表示する現在のプロフィール画像を渡す
@@ -122,6 +122,40 @@ struct MyPageDesignView: View {
                             // ゲストモード中はログイン画面を表示
                             isShowLoginCheckView = true
                         }
+                        
+                        // テスト用(本番公開前に必ず削除する)  ~~~~~~~~~~
+                        var token = "dI4f20qZnUi2vglilQoyoc:APA91bG3hEXbj3IG5rqQWiwtL_AelOE6w2ExcdcIgBGlfLpp4O4iwQkeQl7_mUBXzV1_f_KeeCe-ruSiC2a2tWRTDHmjuPQ-AmCRreC2oe8jihvW7GNquLOVjLd8m_2aIwi-cOyOGFr4"
+                        let FCM_ServerKey = "AAAAsofxVLA:APA91bHVQmxbtr5P_VO5IHs_Heid91_dJwyuiBVUtn77bdczL6H3lQVgayEsHL84LKYuoDodKDN65yv1E-kecLs8twoBPbEfqxB8oWkYSar82fZmAHRNUHvX7o1BLX6joM67ciiuX560"
+                        let endpoint = "https://fcm.googleapis.com/fcm/send"
+                        
+                        // 指定したデバイスにプッシュ通知を送信するメソッド
+                        let serverKey = FCM_ServerKey
+                        guard let url = URL(string: endpoint) else { return }
+                        print("Send to -> \(token)")
+                        let paramString: [String: Any] = ["to": token,
+                                                          "notification": ["title": "SampleTitle", "body": "testBody"],
+                                                          "data": ["userId": "sampleUserId"]]
+                        var request = URLRequest(url: url)
+                        request.httpMethod = "POST"
+                        request.httpBody = try? JSONSerialization.data(withJSONObject: paramString, options: [.prettyPrinted])
+                        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        request.setValue("key=\(serverKey)", forHTTPHeaderField: "Authorization")
+                        request.setValue("766784918704", forHTTPHeaderField: "project_id")
+                        print("request.httpBody: \(String(data:request.httpBody!, encoding: .utf8))")
+                        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+                            do {
+                                if let jsonData = data {
+                                    if let jsonDataDict = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: AnyObject] {
+                                        print("Received data: \(jsonDataDict)")
+                                    }
+                                }
+                            } catch let err as NSError {
+                                print(err.debugDescription)
+                            }
+                        }
+                        task.resume()
+                        // ここまでテスト用  ~~~~~~~~~~
+                        
                     }) {
                         ZStack{
                             Circle()
@@ -254,13 +288,6 @@ struct MyPageDesignView: View {
                                     }) {
                                         Text("サインアウト")
                                             .padding()
-//                                        Text("ログアウトする")
-//                                            .font(.system(size: 15, weight: .bold, design: .rounded))
-//                                            .foregroundColor(.white)
-//                                            .frame(width: 180, height: 40, alignment: .center)
-//                                            .background(linearGradientForButton)
-//                                            .cornerRadius(20)
-//                                            .padding()
                                     }
                                 }
                                 
@@ -277,19 +304,6 @@ struct MyPageDesignView: View {
                                         }
                                 }
                             }
-//                            NavigationLink(destination: AuthTest(loginController: loginController,
-//                                                                 isShowLoginCheckView: $isShowLoginCheckView,
-//                                                                 currentUser: currentUser).navigationBarHidden(true),
-//                                           isActive: $isShowLoginView) {
-//                                EmptyView()
-//                            }
-                        }
-                    }
-                    
-                    // ユーザー名登録用ポップオーバー
-                    .popover(isPresented: $isShowNameRegisterPopover) {
-                        NavigationView{
-                            NameRegisterView(currentUser: environmentCurrentUserData)
                         }
                     }
                 }
@@ -577,7 +591,7 @@ struct MyPageDesignView: View {
                             .getDocument { documentSnapshot, error in
                                 // 削除されているならスキップする
                                 if documentSnapshot!.get("name") != nil {
-                                    print("documentID: \(documentSnapshot?.documentID)")
+//                                    print("documentID: \(documentSnapshot?.documentID)")
                                     // ドキュメントごとの処理を行う
                                     // bookmarkedPostCardListに追加する
                                     let postName = String(describing: documentSnapshot!.get("name") as! String)

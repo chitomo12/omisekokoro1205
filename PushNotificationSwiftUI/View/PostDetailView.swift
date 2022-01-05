@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import UIKit
 
-// Mapでアノテーション選択時に表示されるビュー
+// Mapでアノテーション選択時に表示されるビュー（旧）
 struct PostDetailView: View {
     @EnvironmentObject var environmentCurrentUser: UserData
     @EnvironmentObject var isShowProgress: ShowProgress
@@ -135,10 +135,10 @@ struct PostDetailView: View {
                                             // 取得したFCMトークンを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
                                                                       userId: environmentCurrentUser.uid,
-                                                                      title: "❤️が送られました",
+                                                                      title: "\(environmentCurrentUser.userName!)さんから❤️が送られました",
                                                                       body: "\(selectedPost.comment)",
                                                                       completion: {
-                                                    print("プッシュ通知を送りました")
+                                                    print("プッシュ通知を送りました -> \(environmentCurrentUser.userName!)さんから❤️が送られました")
                                                 })
                                             
                                             // お知らせ一覧に追加する
@@ -189,10 +189,10 @@ struct PostDetailView: View {
                                             // 取得したFCMを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
                                                                       userId: environmentCurrentUser.uid,
-                                                                      title: "🔖投稿がブックマークされました",
+                                                                      title: "\(environmentCurrentUser.userName!)さんが🔖投稿をブックマークしました",
                                                                       body: "\(selectedPost.comment)",
                                                                       completion: {
-                                                    print("プッシュ通知を送りました")
+                                                    print("プッシュ通知を送りました -> \( environmentCurrentUser.userName!)さんが🔖投稿をブックマークしました")
                                                 })
                                             // お知らせ一覧に追加する
                                             notificationController.addNotificationList(

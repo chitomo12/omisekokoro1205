@@ -88,17 +88,21 @@ struct TabWithAnimationView: View {
             VStack{
                 // コンテンツ表示コーナー
                 TabView(selection: $selectedTag) {
+                    // 地図画面のタブ
                     MapAndSearch(currentUser: currentUser,
                                  searchedAddress: $searchedAddress,
                                  mapSwitch: $mapSwitch)
                         .tabItem{}.tag(1)
                     
+                    // 最新の投稿一覧のタブ
                     LatestPostsListView()
                         .tabItem{}.tag(2)
                     
-                    MyPageDesignView(currentUser: currentUser, notificationCardList: $notificationCardList, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)
+                    // マイページのタブ
+                    MyPageDesignView(notificationCardList: $notificationCardList, mapSwitch: $mapSwitch, isShowLoginCheckView: $isShowLoginCheckView)
                         .tabItem{}.tag(3)
                     
+                    // お知らせページのタブ
                     NotificationListView(mapSwitch: $mapSwitch, notificationCardList: $notificationCardList)
                         .tabItem{}.tag(4)
                 }
@@ -106,23 +110,24 @@ struct TabWithAnimationView: View {
                 .animation(.default, value: selectedTag)
                 .edgesIgnoringSafeArea(.top)
                 .onAppear {
-                    // プッシュ通知用トークンを取得し、環境変数に格納する。
+                    // 起動時にプッシュ通知用トークンを取得し、環境変数に格納する。
                     Messaging.messaging().token { token, error in
                       if let error = error {
                         print("Error fetching FCM registration token: \(error)")
                       } else if let token = token {
                         print("FCMトークンを取得しました: \(token)")
-//                        self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
-                          environmentFcmToken.fcmTokenString = token
+                        environmentFcmToken.fcmTokenString = token
                       }
                     }
+                    // バッジの数をゼロにする
+                    UIApplication.shared.applicationIconBadgeNumber = 0
+                    
                 }
                 
                 // タブ選択コーナー
                 ZStack (alignment: .center){
                     // アイコン間を動く円
                     GeometryReader { geo in
-                        
                         Circle()
                             .frame(width: circleRadius * 2, height: circleRadius * 2)
                             .shadow(color: circleColors[selectedTag], radius:2,x:0,y:3)
@@ -137,7 +142,6 @@ struct TabWithAnimationView: View {
                                     }
                                 }
                             }
-                        
                     }
                     .frame(maxWidth:.infinity, maxHeight: .infinity)
                     

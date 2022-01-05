@@ -16,28 +16,14 @@ struct NotificationCardData: Identifiable {
     let created_at: String 
 }
 
-
-//struct PostForCard: Identifiable{
-//    let id = UUID()
-//    let omiseName: String
-//    let documentId: String
-//    let created_at: String
-//    let comment: String
-//    let coordinate: CLLocationCoordinate2D
-//    let created_by: String?
-//    let created_by_name: String?
-//    let imageURL: String?
-//    let imageUIImage: UIImage?
-//    let userImageUIImage: UIImage
-//}
-
 struct NotificationCardView: View {
     @Binding var notificationForCard: NotificationCardData
     @State var userUIImage = UIImage(named: "SampleImage")
     
     var body: some View {
-        let bounds = UIScreen.main.bounds
-        let screenWidth = bounds.width
+//        let bounds = UIScreen.main.bounds
+//        let screenWidth = bounds.width
+        
         // Card表示用のビュー
         VStack(alignment: .leading){
                 HStack(alignment: .top){

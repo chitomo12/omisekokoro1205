@@ -270,12 +270,12 @@ struct MapAndSearch: View {
                             })
                         }.opacity(0.95) // popoverここまで
                     
-                    // ユーザー名登録用ポップオーバー
-                    .popover(isPresented: $isShowNameRegisterPopover) {
-                        NavigationView{
-                            NameRegisterView(currentUser: environmentCurrentUserData)
-                        }
-                    }
+//                    // ユーザー名登録用ポップオーバー（登録時に名前を必須にしたため廃止）
+//                    .popover(isPresented: $isShowNameRegisterPopover) {
+//                        NavigationView{
+//                            NameRegisterView(currentUser: environmentCurrentUserData)
+//                        }
+//                    }
                 } // ZStack(alignment: .bottomTrailing)ここまで
                 
                 // ロード中表示のビュー（コメント読み込み後に非表示）

@@ -133,7 +133,7 @@ struct PostDetailViewTwo: View {
                                             // 取得したFCMトークンを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
                                                                       userId: environmentCurrentUserData.uid,
-                                                                      title: "❤️が送られました",
+                                                                      title: "\(environmentCurrentUserData.userName!)さんから❤️が送られました",
                                                                       body: "\(selectedPost.comment)",
                                                                       completion: {
                                                     print("プッシュ通知を送りました")
@@ -187,7 +187,7 @@ struct PostDetailViewTwo: View {
                                             // 取得したFCMを使いプッシュ通知を送る
                                             pushNotificationSender.sendPushNotification(to: posterFcmToken,
                                                                       userId: environmentCurrentUserData.uid,
-                                                                      title: "🔖投稿がブックマークされました",
+                                                                      title: "\(environmentCurrentUserData.userName!)さんが投稿をブックマークしました🔖",
                                                                       body: "\(selectedPost.comment)",
                                                                       completion: {
                                                     print("プッシュ通知を送りました")
