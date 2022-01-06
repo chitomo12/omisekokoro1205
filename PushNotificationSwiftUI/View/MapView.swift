@@ -135,12 +135,11 @@ struct MapView: UIViewRepresentable {
             
             annotationView.titleVisibility = .hidden
             annotationView.subtitleVisibility = .hidden
-            // なぜかTintとGlyphが重なって表示されるため、透明にすることで応急処置
+            // TintとGlyphが重なって表示されるため、透明にすることで応急処置
             annotationView.markerTintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
             annotationView.glyphTintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.0)
             annotationView.animatesWhenAdded = true
             annotationView.centerOffset = CGPoint(x: 0, y: -50)
-//            annotationView.clusteringIdentifier = annotation.title as! String
             
             // String型のデータ（annotation.comment）を与えることで動的に生成されたUIImageを返す（仮実装）
             annotationView.image = self.generateImageViewController.setup(commentText: (annotation.subtitle ?? "") ?? "")

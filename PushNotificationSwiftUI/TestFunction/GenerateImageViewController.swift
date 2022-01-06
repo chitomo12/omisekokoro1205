@@ -42,7 +42,6 @@ class GenerateImageViewController: UIViewController {
         let text = commentText
         // 吹き出しのフォントサイズ
         let font = UIFont.boldSystemFont(ofSize: 16)
-        
         // 描画領域を生成
         let drawingRectWidth = 100.0 * 3
         let drawingRectHeight = 100.0
