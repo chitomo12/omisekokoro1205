@@ -1,6 +1,6 @@
 
 
-#オミセココロ 地図とオミセのSNS
+# オミセココロ　地図とオミセのSNS
 <img src="https://github.com/chitomo12/omisekokoro1205/blob/%237_arranging_codes/オミセココロ紹介220111.png" alt="アプリ労働基準法" height="400">  
 オミセココロは地図をベースにした新しいコンセプトのSNSです。
 
