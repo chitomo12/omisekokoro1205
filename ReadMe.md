@@ -1,7 +1,7 @@
 
 
 #オミセココロ　地図とオミセのSNS
-<img src="https://github.com/chitomo12/Rodokijunho/blob/main/アプリ労働基準法GitHubヘッダ.png?raw=true" alt="アプリ労働基準法" height="400">  
+<img src="https://github.com/chitomo12/omisekokoro1205/blob/%237_arranging_codes/オミセココロ紹介220111.png" alt="アプリ労働基準法" height="400">  
 オミセココロは地図をベースにした新しいコンセプトのSNSです。
 
 お店の感想を投稿すると、吹き出しとなって地図に現れます。  
