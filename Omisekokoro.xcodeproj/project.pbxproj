@@ -12,9 +12,10 @@
 		13846899275F09250034DC8D /* NotificationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13846898275F09250034DC8D /* NotificationCardView.swift */; };
 		13BB3B8C2760D6E800BD5C8F /* PostDetailViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */; };
 		13D0959E27658CC50048314E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13D0959D27658CC50048314E /* .gitignore */; };
-		13D095A0276591C40048314E /* password¥.txt in Sources */ = {isa = PBXBuildFile; fileRef = 13D0959F276591C40048314E /* password¥.txt */; };
-		13D095A2276592630048314E /* password¥2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13D095A1276592630048314E /* password¥2.txt */; };
 		13D095A62766C8210048314E /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D095A52766C8210048314E /* ResetPasswordView.swift */; };
+		13D42D3F278C86A400BCE89B /* FCMServerKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42D3E278C86A400BCE89B /* FCMServerKey.swift */; };
+		13D42D41278C872500BCE89B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 13D42D40278C872500BCE89B /* ReadMe.md */; };
+		13D42D43278C8B5A00BCE89B /* オミセココロ紹介220111.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */; };
 		13D534542769A19000101C18 /* privacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 13D534532769A19000101C18 /* privacyPolicy.md */; };
 		13F13A2F275FA7E600C40B17 /* RedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A2E275FA7E600C40B17 /* RedButtonView.swift */; };
 		13F13A31276065D400C40B17 /* IsShowPostDetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */; };
@@ -85,9 +86,10 @@
 		13846898275F09250034DC8D /* NotificationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCardView.swift; sourceTree = "<group>"; };
 		13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewTwo.swift; sourceTree = "<group>"; };
 		13D0959D27658CC50048314E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		13D0959F276591C40048314E /* password¥.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "password¥.txt"; sourceTree = "<group>"; };
-		13D095A1276592630048314E /* password¥2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "password¥2.txt"; sourceTree = "<group>"; };
 		13D095A52766C8210048314E /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResetPasswordView.swift; path = PushNotificationSwiftUI/View/ResetPasswordView.swift; sourceTree = SOURCE_ROOT; };
+		13D42D3E278C86A400BCE89B /* FCMServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMServerKey.swift; sourceTree = "<group>"; };
+		13D42D40278C872500BCE89B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
+		13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "オミセココロ紹介220111.png"; sourceTree = "<group>"; };
 		13D534532769A19000101C18 /* privacyPolicy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacyPolicy.md; sourceTree = "<group>"; };
 		13F13A2E275FA7E600C40B17 /* RedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedButtonView.swift; sourceTree = "<group>"; };
 		13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsShowPostDetailPopover.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				13F9D437275CA96100D121F2 /* FcmToken.swift */,
+				13D42D3E278C86A400BCE89B /* FCMServerKey.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,9 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				13D0959D27658CC50048314E /* .gitignore */,
-				13D0959F276591C40048314E /* password¥.txt */,
+				13D42D40278C872500BCE89B /* ReadMe.md */,
+				13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */,
 				13D534532769A19000101C18 /* privacyPolicy.md */,
-				13D095A1276592630048314E /* password¥2.txt */,
 				13F9D2E4275B984A00D121F2 /* PushNotificationSwiftUI */,
 				13F9D2E3275B984A00D121F2 /* Products */,
 				73EC672B59C7E7F2E2209948 /* Pods */,
@@ -396,11 +399,12 @@
 			files = (
 				13D0959E27658CC50048314E /* .gitignore in Resources */,
 				13F9D2ED275B984C00D121F2 /* Preview Assets.xcassets in Resources */,
-				13D095A2276592630048314E /* password¥2.txt in Resources */,
 				13D534542769A19000101C18 /* privacyPolicy.md in Resources */,
 				13F9D41E275C7D6000D121F2 /* splashLight.jpg in Resources */,
 				13F9D2EA275B984C00D121F2 /* Assets.xcassets in Resources */,
+				13D42D41278C872500BCE89B /* ReadMe.md in Resources */,
 				13F9D2F8275B995700D121F2 /* GoogleService-Info.plist in Resources */,
+				13D42D43278C8B5A00BCE89B /* オミセココロ紹介220111.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,9 +474,9 @@
 				13F13A2F275FA7E600C40B17 /* RedButtonView.swift in Sources */,
 				13F9D409275C7D6000D121F2 /* PostDetailView.swift in Sources */,
 				13F9D416275C7D6000D121F2 /* ImageController.swift in Sources */,
-				13D095A0276591C40048314E /* password¥.txt in Sources */,
 				13F9D414275C7D6000D121F2 /* CommentsInRangeView.swift in Sources */,
 				13F9D40F275C7D6000D121F2 /* ProfileEditView.swift in Sources */,
+				13D42D3F278C86A400BCE89B /* FCMServerKey.swift in Sources */,
 				13F9D41F275C7D6000D121F2 /* DidLoginTest.swift in Sources */,
 				13F9D405275C7D6000D121F2 /* CheckBookmark.swift in Sources */,
 				13F9D40A275C7D6000D121F2 /* PostCardView.swift in Sources */,

@@ -9,7 +9,7 @@ import Foundation
 
 class PushNotificationSender {
     init(){}
-    private let FCM_ServerKey = "AAAAsofxVLA:APA91bHVQmxbtr5P_VO5IHs_Heid91_dJwyuiBVUtn77bdczL6H3lQVgayEsHL84LKYuoDodKDN65yv1E-kecLs8twoBPbEfqxB8oWkYSar82fZmAHRNUHvX7o1BLX6joM67ciiuX560"
+    private let FCM_ServerKey = FCMServerKey().fcmKey
     private let endpoint = "https://fcm.googleapis.com/fcm/send"
     
     // 指定したデバイスにプッシュ通知を送信するメソッド

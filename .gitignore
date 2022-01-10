@@ -91,7 +91,4 @@ iOSInjectionProject/
 
 # Application Customize
 */GoogleService-Info.plist
-
-# For gitignore Test
-password¥.txt
-password¥2.txt
+FCMServerKey.swift
