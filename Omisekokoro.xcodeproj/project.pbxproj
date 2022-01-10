@@ -371,7 +371,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 13F9D2DD275B984A00D121F2 /* Build configuration list for PBXProject "PushNotificationSwiftUI" */;
+			buildConfigurationList = 13F9D2DD275B984A00D121F2 /* Build configuration list for PBXProject "Omisekokoro" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -712,7 +712,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13F9D2DD275B984A00D121F2 /* Build configuration list for PBXProject "PushNotificationSwiftUI" */ = {
+		13F9D2DD275B984A00D121F2 /* Build configuration list for PBXProject "Omisekokoro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13F9D2EE275B984C00D121F2 /* Debug */,
