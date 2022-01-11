@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import UIKit
 
-// Mapでアノテーション選択時に表示されるビュー（旧）
+// Mapでアノテーション選択時に表示されるビュー
 struct PostDetailView: View {
     @EnvironmentObject var environmentCurrentUser: UserData
     @EnvironmentObject var isShowProgress: ShowProgress

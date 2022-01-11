@@ -8,60 +8,7 @@
 import SwiftUI
 import MapKit
 
-//struct PostCardView: View {
-//    @Binding var post: PostForCard
-//
-//    @State var postImageUIImage: UIImage = UIImage(named: "emmy")!
-//
-//    var body: some View {
-//        let bounds = UIScreen.main.bounds
-//        let screenWidth = bounds.width
-//
-//        VStack(alignment: .leading) {
-//            HStack {
-//                Image(uiImage: post.userImageUIImage)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .frame(width: 30, height: 30)
-//                    .clipShape(Circle())
-//                Text(post.created_by_name ?? "Guest").font(.caption)
-//            }
-//            .padding(EdgeInsets(top: 15, leading: 15, bottom: 0, trailing: 0))
-//            HStack(alignment: .top) {
-//                Image(uiImage: post.imageUIImage!)
-//                    .resizable()
-//                    .scaledToFill()
-//                    .frame(width: (screenWidth / 5), height: (screenWidth / 6))
-//                    .cornerRadius(8)
-//                    .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 5))
-//                VStack(alignment: .leading){
-//                    Text(post.omiseName)
-//                        .fontWeight(.medium)
-//                        .padding(.bottom, 1)
-//                    Text(post.comment)
-//                        .font(.caption)
-//                        .frame(width:(screenWidth / (3 / 2)) - 10, alignment: .leading)
-//                        .padding(.bottom, 5)
-//                    Spacer().frame(height: 10)
-//                    Text(post.created_at)
-//                        .font(.caption2)
-//                    Spacer().frame(height: 15)
-//                }
-//                .padding(.trailing, 10)
-//            }
-//        }
-//        .background(Color.white)
-//        .cornerRadius(20)
-//        .shadow(color: Color.gray.opacity(0.2), radius: 1, x: 0, y: 3)
-//        .padding(EdgeInsets(top: 3, leading: 20, bottom: 3, trailing: 20))
-//        .onAppear {
-//            // CardViewが表示されたらプロフィールとお店の画像を読み込み開始。
-//            //  → PostCardViewTwo に移行
-//        }
-//    }
-//}
-
-struct PostCardViewTwo: View {
+struct PostCardView: View {
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
     @Binding var post: PostForCard

@@ -49,7 +49,7 @@ struct LatestPostsListView: View {
             VStack {
                 ForEach(0..<postCardList.count, id: \.self) { count in
                     // 投稿をリスト化して表示
-                    PostCardViewTwo(post: $postCardList[count])
+                    PostCardView(post: $postCardList[count])
                 }
                 Button(action: {
                     print("さらに読み込みます")

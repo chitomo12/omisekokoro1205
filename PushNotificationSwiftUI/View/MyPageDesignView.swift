@@ -394,7 +394,7 @@ struct MyPageDesignView: View {
                         VStack {
                             ForEach(0..<postedPostCardList.count, id: \.self) { count in
                                 // 投稿をリスト化して表示
-                                PostCardViewTwo(post: $postedPostCardList[count])
+                                PostCardView(post: $postedPostCardList[count])
                             }
                         }
                         
@@ -424,7 +424,7 @@ struct MyPageDesignView: View {
                         VStack {
                             ForEach(0..<bookmarkedPostCardList.count, id: \.self) { count in
                                 // ブックマークをリスト化して表示
-                                PostCardViewTwo(post: $bookmarkedPostCardList[count])
+                                PostCardView(post: $bookmarkedPostCardList[count])
                             }
                         }
                     }

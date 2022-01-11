@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 import UIKit
 
+// Map以外から投稿を選択時に表示するビュー
 struct PostDetailViewTwo: View {
     @EnvironmentObject var environmentCurrentUserData: UserData
     @EnvironmentObject var isShowProgress: ShowProgress

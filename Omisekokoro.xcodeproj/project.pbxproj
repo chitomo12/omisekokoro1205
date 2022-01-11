@@ -185,6 +185,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		13D42D48278D319B00BCE89B /* EnvironmentObject */ = {
+			isa = PBXGroup;
+			children = (
+				13846896275E55DB0034DC8D /* IsGuestMode.swift */,
+				13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */,
+				13F9D3CD275C7D5E00D121F2 /* ShowProgress.swift */,
+			);
+			path = EnvironmentObject;
+			sourceTree = "<group>";
+		};
 		13F9D2D9275B984A00D121F2 = {
 			isa = PBXGroup;
 			children = (
@@ -239,15 +249,13 @@
 		13F9D3CB275C7D5E00D121F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				13D42D48278D319B00BCE89B /* EnvironmentObject */,
 				13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */,
 				13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */,
 				13F9D3D8275C7D5E00D121F2 /* MapView.swift */,
 				13F9D3CC275C7D5E00D121F2 /* MapSwitch.swift */,
 				13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */,
-				13F9D3CD275C7D5E00D121F2 /* ShowProgress.swift */,
 				13F9D3FB275C7D5F00D121F2 /* LatestPostsListView.swift */,
-				13846896275E55DB0034DC8D /* IsGuestMode.swift */,
-				13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */,
 				13F9D3CE275C7D5E00D121F2 /* PHPickerViewController.swift */,
 				13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */,
 				13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */,

@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-// Yahoo APIを使った店舗検索ビュー
+// Yahoo APIを使った店舗検索のためのビュー
 struct OmiseSearchAndPostView: View {
     @EnvironmentObject var currentUserData: UserData
     
