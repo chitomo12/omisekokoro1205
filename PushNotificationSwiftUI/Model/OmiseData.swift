@@ -43,23 +43,6 @@ struct ResultJson: Codable {
     }
 }
 
-struct ResultJsonOfHotpepper: Codable {
-    
-    struct Results: Codable {
-        let shop: [Shop]?
-    }
-    
-    struct Shop: Codable {
-        let name: String?
-        let lat: Double?
-        let lng: Double?
-        let address: String?
-    }
-    
-    let results: Results?
-    let shop: [Shop]?
-}
-
 class OmiseData: ObservableObject{
     // 監視するプロパティに @Published を付与。
     // これによりプロパティを監視し、変化があればサブスクライバー（OmiseSearchView）に通知することができる。
@@ -140,60 +123,4 @@ class OmiseData: ObservableObject{
         })
         task.resume()  // ダウンロード開始
     } // searchOmiseここまで
-    
-    // Hotpepper API版
-    func searchOmiseByHotpepper(keyword: String) {
-        print("searchOmiseByHotpepparの処理を開始")
-        omiseList = []
-        // 検索キーワードをエンコードする
-        guard let keyword_encode = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            return
-        }
-        print("リクエストURLを組み立てます")
-        guard let req_url = URL(string: "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=8363c56cc81dbf83&format=json&name=\(keyword_encode)") else {
-            return
-        }
-        print("リクエストURL：\(req_url)")
-        print("リクエストに必要な情報を生成します")
-        // リクエストに必要な情報を生成
-        let req = URLRequest(url: req_url)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        print("リクエストをタスクとして登録します")
-        // リクエストをタスクとして登録
-        let task = session.dataTask(with: req, completionHandler: { (data, response, error) in
-            print("セッションを終了しました")
-            //セッションを終了
-            session.finishTasksAndInvalidate()
-            print("エラーハンドリングを行います")
-            // do try catch エラーハンドリング
-            do {
-                print("data!: \(String(describing: data!))")
-                print("JSONデコーダーのインスタンスを取得")
-                let decoder = JSONDecoder()  // JSONデコーダーのインスタンス取得
-                let json = try decoder.decode(ResultJsonOfHotpepper.self, from: data!)  // 解析
-                print("解析完了：\(json)")
-                // ResultJson構造のデータ群をOmiseItem構造のデータ群に置換
-                if let items = json.results?.shop {
-                    print("omiseListに追加します")
-                    self.omiseList.removeAll()  // リストを初期化
-                    // 取得した数だけ処理
-                    for item in items {
-                        if let name = item.name,
-                           let latitude = item.lat,
-                           let longitude = item.lng,
-                           let address = item.address {
-                            print("name: \(name), latitude: \(latitude), longitude: \(longitude), address: \(address)")
-                        } else {
-                            print("追加しませんでした：\(item)")
-                        }
-                    }
-                    print("self.omiseList.count: \(self.omiseList.count)")
-                }
-            } catch {
-                print("Error: \(error)")
-            }
-        })
-        task.resume()  // ダウンロード開始
-        
-    }
 }

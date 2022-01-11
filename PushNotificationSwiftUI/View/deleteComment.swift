@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
-import CoreLocation
+//import SwiftUI
+//import CoreLocation
 import FirebaseFirestore
 
 func deleteComment(targetDocumentID: String){

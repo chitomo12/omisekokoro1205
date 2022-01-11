@@ -13,9 +13,10 @@
 		13BB3B8C2760D6E800BD5C8F /* PostDetailViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */; };
 		13D0959E27658CC50048314E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 13D0959D27658CC50048314E /* .gitignore */; };
 		13D095A62766C8210048314E /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D095A52766C8210048314E /* ResetPasswordView.swift */; };
-		13D42D3F278C86A400BCE89B /* FCMServerKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42D3E278C86A400BCE89B /* FCMServerKey.swift */; };
 		13D42D41278C872500BCE89B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 13D42D40278C872500BCE89B /* ReadMe.md */; };
 		13D42D43278C8B5A00BCE89B /* オミセココロ紹介220111.png in Resources */ = {isa = PBXBuildFile; fileRef = 13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */; };
+		13D42D45278C9FA700BCE89B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13D42D44278C9FA700BCE89B /* GoogleService-Info.plist */; };
+		13D42D47278C9FBC00BCE89B /* FCMServerKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D42D46278C9FBC00BCE89B /* FCMServerKey.swift */; };
 		13D534542769A19000101C18 /* privacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 13D534532769A19000101C18 /* privacyPolicy.md */; };
 		13F13A2F275FA7E600C40B17 /* RedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A2E275FA7E600C40B17 /* RedButtonView.swift */; };
 		13F13A31276065D400C40B17 /* IsShowPostDetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */; };
@@ -25,7 +26,6 @@
 		13F9D2EA275B984C00D121F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D2E9275B984C00D121F2 /* Assets.xcassets */; };
 		13F9D2ED275B984C00D121F2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D2EC275B984C00D121F2 /* Preview Assets.xcassets */; };
 		13F9D2F4275B987000D121F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D2F3275B987000D121F2 /* AppDelegate.swift */; };
-		13F9D2F8275B995700D121F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D2F7275B995700D121F2 /* GoogleService-Info.plist */; };
 		13F9D2FC275B9B6100D121F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */; };
 		13F9D3FE275C7D6000D121F2 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3C9275C7D5D00D121F2 /* LaunchView.swift */; };
 		13F9D3FF275C7D6000D121F2 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */; };
@@ -87,9 +87,10 @@
 		13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewTwo.swift; sourceTree = "<group>"; };
 		13D0959D27658CC50048314E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		13D095A52766C8210048314E /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResetPasswordView.swift; path = PushNotificationSwiftUI/View/ResetPasswordView.swift; sourceTree = SOURCE_ROOT; };
-		13D42D3E278C86A400BCE89B /* FCMServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMServerKey.swift; sourceTree = "<group>"; };
 		13D42D40278C872500BCE89B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "オミセココロ紹介220111.png"; sourceTree = "<group>"; };
+		13D42D44278C9FA700BCE89B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "Omisekokoro/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		13D42D46278C9FBC00BCE89B /* FCMServerKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FCMServerKey.swift; path = Omisekokoro/Model/FCMServerKey.swift; sourceTree = SOURCE_ROOT; };
 		13D534532769A19000101C18 /* privacyPolicy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacyPolicy.md; sourceTree = "<group>"; };
 		13F13A2E275FA7E600C40B17 /* RedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedButtonView.swift; sourceTree = "<group>"; };
 		13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsShowPostDetailPopover.swift; sourceTree = "<group>"; };
@@ -102,7 +103,6 @@
 		13F9D2F3275B987000D121F2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13F9D2F5275B98D900D121F2 /* PushNotificationSwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushNotificationSwiftUI.entitlements; sourceTree = "<group>"; };
 		13F9D2F6275B98DF00D121F2 /* PushNotificationSwiftUIRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushNotificationSwiftUIRelease.entitlements; sourceTree = "<group>"; };
-		13F9D2F7275B995700D121F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		13F9D2FF275B9E1E00D121F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		13F9D3C9275C7D5D00D121F2 /* LaunchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
@@ -176,8 +176,11 @@
 		138DE38D276C3C44004E0499 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */,
+				13F9D3E1275C7D5E00D121F2 /* PostData.swift */,
+				13F3153E275D07B2005F60D9 /* NotificationData.swift */,
 				13F9D437275CA96100D121F2 /* FcmToken.swift */,
-				13D42D3E278C86A400BCE89B /* FCMServerKey.swift */,
+				13D42D46278C9FBC00BCE89B /* FCMServerKey.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,7 +218,7 @@
 				13F9D2F3275B987000D121F2 /* AppDelegate.swift */,
 				13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */,
 				13F9D42F275C7E3B00D121F2 /* ViewController.swift */,
-				13F9D2F7275B995700D121F2 /* GoogleService-Info.plist */,
+				13D42D44278C9FA700BCE89B /* GoogleService-Info.plist */,
 				13F9D3CB275C7D5E00D121F2 /* View */,
 				138DE38D276C3C44004E0499 /* Model */,
 				13F9D3E4275C7D5F00D121F2 /* TestFunction */,
@@ -255,10 +258,6 @@
 				13F9D3CF275C7D5E00D121F2 /* Bookmark */,
 				13F9D3D9275C7D5E00D121F2 /* Favorite */,
 				13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */,
-				13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */,
-				13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */,
-				13F9D3E1275C7D5E00D121F2 /* PostData.swift */,
-				13F3153E275D07B2005F60D9 /* NotificationData.swift */,
 				13F9D3E3275C7D5E00D121F2 /* deleteComment.swift */,
 			);
 			path = View;
@@ -287,6 +286,7 @@
 		13F9D3E4275C7D5F00D121F2 /* TestFunction */ = {
 			isa = PBXGroup;
 			children = (
+				13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */,
 				13F9D3E2275C7D5E00D121F2 /* CommentsInRangeView.swift */,
 				13F9D3FD275C7D6000D121F2 /* TabBarView.swift */,
 				13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */,
@@ -399,11 +399,11 @@
 			files = (
 				13D0959E27658CC50048314E /* .gitignore in Resources */,
 				13F9D2ED275B984C00D121F2 /* Preview Assets.xcassets in Resources */,
+				13D42D45278C9FA700BCE89B /* GoogleService-Info.plist in Resources */,
 				13D534542769A19000101C18 /* privacyPolicy.md in Resources */,
 				13F9D41E275C7D6000D121F2 /* splashLight.jpg in Resources */,
 				13F9D2EA275B984C00D121F2 /* Assets.xcassets in Resources */,
 				13D42D41278C872500BCE89B /* ReadMe.md in Resources */,
-				13F9D2F8275B995700D121F2 /* GoogleService-Info.plist in Resources */,
 				13D42D43278C8B5A00BCE89B /* オミセココロ紹介220111.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,7 +476,7 @@
 				13F9D416275C7D6000D121F2 /* ImageController.swift in Sources */,
 				13F9D414275C7D6000D121F2 /* CommentsInRangeView.swift in Sources */,
 				13F9D40F275C7D6000D121F2 /* ProfileEditView.swift in Sources */,
-				13D42D3F278C86A400BCE89B /* FCMServerKey.swift in Sources */,
+				13D42D47278C9FBC00BCE89B /* FCMServerKey.swift in Sources */,
 				13F9D41F275C7D6000D121F2 /* DidLoginTest.swift in Sources */,
 				13F9D405275C7D6000D121F2 /* CheckBookmark.swift in Sources */,
 				13F9D40A275C7D6000D121F2 /* PostCardView.swift in Sources */,
