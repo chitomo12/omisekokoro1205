@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DidLoginTest: View {
+struct DidLoginView: View {
     @EnvironmentObject var environmentCurrentUserData: UserData
     @EnvironmentObject var isGuestMode: IsGuestMode
     

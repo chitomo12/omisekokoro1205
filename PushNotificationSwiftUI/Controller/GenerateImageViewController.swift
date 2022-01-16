@@ -33,7 +33,6 @@ class GenerateImageViewController: UIViewController {
     
     // Lifecycle 6
     override func viewDidAppear(_ animated: Bool) {
-//        setup(commentText: "サンプルサンプルサンプルサンプルサンプルサンプルサンプル")
     }
     
     func setup(commentText: String) -> UIImage {

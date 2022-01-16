@@ -142,7 +142,7 @@ struct RegisterView: View {
 //        }
         
 //        // 登録ボタンを押して認証メールを送ったらログイン画面に移行
-//        NavigationLink(destination: LoginTest(currentUser: environmentUserData,
+//        NavigationLink(destination: LoginView(currentUser: environmentUserData,
 //                                              isShowLoginCheckView: $isShowLoginCheckView),
 //                       isActive: $loginController.isNavigateToLoginView
 //        ){

@@ -58,9 +58,9 @@
 		13F9D41C275C7D6000D121F2 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3EB275C7D5F00D121F2 /* UserData.swift */; };
 		13F9D41D275C7D6000D121F2 /* GeoQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */; };
 		13F9D41E275C7D6000D121F2 /* splashLight.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D3EE275C7D5F00D121F2 /* splashLight.jpg */; };
-		13F9D41F275C7D6000D121F2 /* DidLoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3EF275C7D5F00D121F2 /* DidLoginTest.swift */; };
+		13F9D41F275C7D6000D121F2 /* DidLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3EF275C7D5F00D121F2 /* DidLoginView.swift */; };
 		13F9D420275C7D6000D121F2 /* GenerateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3F0275C7D5F00D121F2 /* GenerateImageViewController.swift */; };
-		13F9D421275C7D6000D121F2 /* AuthTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3F1275C7D5F00D121F2 /* AuthTest.swift */; };
+		13F9D421275C7D6000D121F2 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3F1275C7D5F00D121F2 /* AuthView.swift */; };
 		13F9D422275C7D6000D121F2 /* AnimationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3F2275C7D5F00D121F2 /* AnimationTest.swift */; };
 		13F9D423275C7D6000D121F2 /* GenerateUIImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3F3275C7D5F00D121F2 /* GenerateUIImageTest.swift */; };
 		13F9D424275C7D6000D121F2 /* AsyncAwaitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3F4275C7D5F00D121F2 /* AsyncAwaitTest.swift */; };
@@ -72,7 +72,6 @@
 		13F9D42A275C7D6000D121F2 /* LatestPostsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3FB275C7D5F00D121F2 /* LatestPostsListView.swift */; };
 		13F9D42B275C7D6000D121F2 /* TabWithAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */; };
 		13F9D42C275C7D6000D121F2 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3FD275C7D6000D121F2 /* TabBarView.swift */; };
-		13F9D42E275C7DC600D121F2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D42D275C7DC500D121F2 /* ContentView.swift */; };
 		13F9D430275C7E3B00D121F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D42F275C7E3B00D121F2 /* ViewController.swift */; };
 		13F9D436275C9DA400D121F2 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D435275C9DA400D121F2 /* PushNotificationSender.swift */; };
 		13F9D438275CA96100D121F2 /* FcmToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D437275CA96100D121F2 /* FcmToken.swift */; };
@@ -136,9 +135,9 @@
 		13F9D3EC275C7D5F00D121F2 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoQueryTest.swift; sourceTree = "<group>"; };
 		13F9D3EE275C7D5F00D121F2 /* splashLight.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splashLight.jpg; sourceTree = "<group>"; };
-		13F9D3EF275C7D5F00D121F2 /* DidLoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DidLoginTest.swift; sourceTree = "<group>"; };
+		13F9D3EF275C7D5F00D121F2 /* DidLoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DidLoginView.swift; sourceTree = "<group>"; };
 		13F9D3F0275C7D5F00D121F2 /* GenerateImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateImageViewController.swift; sourceTree = "<group>"; };
-		13F9D3F1275C7D5F00D121F2 /* AuthTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthTest.swift; sourceTree = "<group>"; };
+		13F9D3F1275C7D5F00D121F2 /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		13F9D3F2275C7D5F00D121F2 /* AnimationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationTest.swift; sourceTree = "<group>"; };
 		13F9D3F3275C7D5F00D121F2 /* GenerateUIImageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateUIImageTest.swift; sourceTree = "<group>"; };
 		13F9D3F4275C7D5F00D121F2 /* AsyncAwaitTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncAwaitTest.swift; sourceTree = "<group>"; };
@@ -150,7 +149,6 @@
 		13F9D3FB275C7D5F00D121F2 /* LatestPostsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestPostsListView.swift; sourceTree = "<group>"; };
 		13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabWithAnimationView.swift; sourceTree = "<group>"; };
 		13F9D3FD275C7D6000D121F2 /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		13F9D42D275C7DC500D121F2 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		13F9D42F275C7E3B00D121F2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		13F9D435275C9DA400D121F2 /* PushNotificationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
 		13F9D437275CA96100D121F2 /* FcmToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FcmToken.swift; sourceTree = "<group>"; };
@@ -175,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				13F9D3E9275C7D5F00D121F2 /* LoginController.swift */,
+				13F9D3F0275C7D5F00D121F2 /* GenerateImageViewController.swift */,
 				13F9D3CE275C7D5E00D121F2 /* PHPickerViewController.swift */,
 			);
 			path = Controller;
@@ -256,6 +255,10 @@
 		13F9D3CB275C7D5E00D121F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				13F9D3F1275C7D5F00D121F2 /* AuthView.swift */,
+				13F31540275DC2B6005F60D9 /* RegisterView.swift */,
+				131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */,
+				13F9D3E7275C7D5F00D121F2 /* NameRegisterView.swift */,
 				13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */,
 				137AE7142793F16A007AD689 /* TabButtonIconView.swift */,
 				13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */,
@@ -273,6 +276,9 @@
 				13F9D3D9275C7D5E00D121F2 /* Favorite */,
 				13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */,
 				13F9D3E3275C7D5E00D121F2 /* deleteComment.swift */,
+				13F13A2E275FA7E600C40B17 /* RedButtonView.swift */,
+				13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */,
+				13F9D3EF275C7D5F00D121F2 /* DidLoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -300,27 +306,18 @@
 		13F9D3E4275C7D5F00D121F2 /* TestFunction */ = {
 			isa = PBXGroup;
 			children = (
-				13F9D42D275C7DC500D121F2 /* ContentView.swift */,
 				13F9D42F275C7E3B00D121F2 /* ViewController.swift */,
 				13F9D3E2275C7D5E00D121F2 /* CommentsInRangeView.swift */,
 				13F9D3FD275C7D6000D121F2 /* TabBarView.swift */,
 				13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */,
 				13F9D3E5275C7D5F00D121F2 /* ImageController.swift */,
 				13F9D3E6275C7D5F00D121F2 /* postComment.swift */,
-				13F13A2E275FA7E600C40B17 /* RedButtonView.swift */,
 				13F9D3E8275C7D5F00D121F2 /* AppleLoginTest.swift */,
-				13F9D3F1275C7D5F00D121F2 /* AuthTest.swift */,
-				13F31540275DC2B6005F60D9 /* RegisterView.swift */,
-				131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */,
-				13F9D3E7275C7D5F00D121F2 /* NameRegisterView.swift */,
-				13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */,
 				13D095A52766C8210048314E /* ResetPasswordView.swift */,
-				13F9D3EF275C7D5F00D121F2 /* DidLoginTest.swift */,
 				13F9D3EB275C7D5F00D121F2 /* UserData.swift */,
 				13F9D3EC275C7D5F00D121F2 /* MyPlayground.playground */,
 				13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */,
 				13F9D3EE275C7D5F00D121F2 /* splashLight.jpg */,
-				13F9D3F0275C7D5F00D121F2 /* GenerateImageViewController.swift */,
 				13F9D3F2275C7D5F00D121F2 /* AnimationTest.swift */,
 				13F9D3F3275C7D5F00D121F2 /* GenerateUIImageTest.swift */,
 				13F9D3F4275C7D5F00D121F2 /* AsyncAwaitTest.swift */,
@@ -489,7 +486,7 @@
 				13F9D416275C7D6000D121F2 /* ImageController.swift in Sources */,
 				13F9D414275C7D6000D121F2 /* CommentsInRangeView.swift in Sources */,
 				13D42D47278C9FBC00BCE89B /* FCMServerKey.swift in Sources */,
-				13F9D41F275C7D6000D121F2 /* DidLoginTest.swift in Sources */,
+				13F9D41F275C7D6000D121F2 /* DidLoginView.swift in Sources */,
 				13F9D405275C7D6000D121F2 /* CheckBookmark.swift in Sources */,
 				13F9D40A275C7D6000D121F2 /* PostCardView.swift in Sources */,
 				13F9D42C275C7D6000D121F2 /* TabBarView.swift in Sources */,
@@ -521,7 +518,6 @@
 				13F9D423275C7D6000D121F2 /* GenerateUIImageTest.swift in Sources */,
 				13F9D422275C7D6000D121F2 /* AnimationTest.swift in Sources */,
 				13F9D41B275C7D6000D121F2 /* LoginTest.swift in Sources */,
-				13F9D42E275C7DC600D121F2 /* ContentView.swift in Sources */,
 				13F9D419275C7D6000D121F2 /* AppleLoginTest.swift in Sources */,
 				13F9D415275C7D6000D121F2 /* deleteComment.swift in Sources */,
 				13F9D427275C7D6000D121F2 /* FirestorageTest.swift in Sources */,
@@ -530,7 +526,7 @@
 				13F9D41D275C7D6000D121F2 /* GeoQueryTest.swift in Sources */,
 				13F9D406275C7D6000D121F2 /* MapAndSearch.swift in Sources */,
 				13F13A31276065D400C40B17 /* IsShowPostDetailPopover.swift in Sources */,
-				13F9D421275C7D6000D121F2 /* AuthTest.swift in Sources */,
+				13F9D421275C7D6000D121F2 /* AuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

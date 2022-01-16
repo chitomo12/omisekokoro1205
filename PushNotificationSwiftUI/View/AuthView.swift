@@ -112,7 +112,7 @@ struct AuthView: View {
                             RedButtonView(buttonText: "新規登録")
                         })
                         
-                        NavigationLink(destination: LoginTest(currentUser: currentUser,
+                        NavigationLink(destination: LoginView(currentUser: currentUser,
                                                               isShowLoginCheckView: $isShowLoginCheckView)
                         ){
                             RedButtonView(buttonText: "ログイン")

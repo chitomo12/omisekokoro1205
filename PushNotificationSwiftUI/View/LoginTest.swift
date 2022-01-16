@@ -1,5 +1,5 @@
 //
-//  LoginTest.swift
+//  LoginView.swift
 //  MyMap1030
 //
 //  Created by 福田正知 on 2021/11/18.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginTest: View {
+struct LoginView: View {
     @EnvironmentObject var environmentFcmToken: FcmToken
     
     @ObservedObject var loginController = LoginController()
@@ -69,7 +69,7 @@ struct LoginTest: View {
             }
         }
         
-        NavigationLink(destination: DidLoginTest(loginController: loginController,
+        NavigationLink(destination: DidLoginView(loginController: loginController,
                                                  currentUser: currentUser,
                                                  isShowLoginCheckView: $isShowLoginCheckView).navigationBarHidden(true),
                        isActive: $loginController.isDidLogin ){
@@ -78,8 +78,8 @@ struct LoginTest: View {
     }
 }
 
-struct LoginTest_Previews: PreviewProvider {
+struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginTest(currentUser: UserData(uid: "sample", email: "sample@email.com", userName: ""), isShowLoginCheckView: .constant(true))
+        LoginView(currentUser: UserData(uid: "sample", email: "sample@email.com", userName: ""), isShowLoginCheckView: .constant(true))
     }
 }

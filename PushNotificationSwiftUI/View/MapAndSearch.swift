@@ -236,9 +236,9 @@ struct MapAndSearch: View {
                                 if isShowLoginView == true {
                                     AuthView(isShowLoginCheckView: $isShowLoginCheckView)
                                 }
-                                if isShowNameRegisterView == true {
-                                    NameRegisterView(currentUser: environmentCurrentUserData)
-                                }
+//                                if isShowNameRegisterView == true {
+//                                    NameRegisterView(currentUser: environmentCurrentUserData)
+//                                }
                             }
                             .onAppear(perform: {
                                 // ログイン情報を確認
@@ -251,11 +251,11 @@ struct MapAndSearch: View {
                                         isCheckingLoginStatus = false
                                         isShowLoginCheckView = false
                                     } else if environmentCurrentUserData.userName == nil {
-                                        // ログイン中＆名前が存在しない場合
-                                        print("ユーザー名登録画面を表示します")
-                                        isGuestMode.guestModeSwitch = false
-                                        isCheckingLoginStatus = false
-                                        isShowNameRegisterView = true
+//                                        // ログイン中＆名前が存在しない場合（ユーザー名を最初から登録必須にしたため廃止）
+//                                        print("ユーザー名登録画面を表示します")
+//                                        isGuestMode.guestModeSwitch = false
+//                                        isCheckingLoginStatus = false
+//                                        isShowNameRegisterView = true
                                     } else {
                                         // ログアウト中
                                         print("ログイン画面を表示します")
