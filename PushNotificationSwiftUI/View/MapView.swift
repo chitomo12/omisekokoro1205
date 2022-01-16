@@ -44,8 +44,6 @@ struct MapView: UIViewRepresentable {
     
     // 初回起動時の座標
     @State var targetCoordinate = CLLocationCoordinate2D(latitude: 35.3931, longitude: 139.4444)
-        
-//    var viewController = ViewController()
     
     // 表示するViewを作成する時に実行
     func makeUIView(context:Context) -> MKMapView {

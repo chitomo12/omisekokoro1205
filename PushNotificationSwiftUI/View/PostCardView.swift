@@ -18,9 +18,7 @@ struct PostCardView: View {
     @State var postOmiseImageUIImage: UIImage?
     
     @State var hasBeenInitialized: Bool = false
-    
-//    var viewController = ViewController()
-    
+        
     init(post: Binding<PostForCard>){
         self._post = post
     }

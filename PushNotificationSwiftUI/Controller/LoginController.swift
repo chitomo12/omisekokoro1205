@@ -54,10 +54,6 @@ class LoginController: ObservableObject {
     
     // ユーザー新規登録のためのメソッド
     func authCreateUser(email: String, password: String, completion: @escaping (Error) -> ()) async {
-//        _ = Auth.auth().addStateDidChangeListener{ auth, user in
-//            print("auth: \(auth)")
-//            print("user: \(String(describing: user))")
-//        }
         
         await Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if error != nil {
@@ -77,11 +73,11 @@ class LoginController: ObservableObject {
                         print("認証用メールを送信しました。")
                         self.isSentVerificationEmail = true
                         // 認証用メールを送ったらFirebaseにメール、UID、ユーザー名を登録
-                        self.RegisterUserName(registeringUser: UserData(uid: user?.uid as! String,
-                                                                        email: user?.email as! String,
+                        self.RegisterUserName(registeringUser: UserData(uid: user?.uid ?? "",
+                                                                        email: user?.email ?? "",
                                                                         userName: self.newRegisteredUserName),
                                               completion: {
-                            print("ユーザー名を登録しました")
+                            print("ユーザー名を登録しました: \(UserData(uid: user?.uid ?? "", email: user?.email ?? "", userName: self.newRegisteredUserName))")
                             // メールの送信に成功したらログアウトする
                             self.logoutUser(completion: {
                                 print("サインアウトしました")

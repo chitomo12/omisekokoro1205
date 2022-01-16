@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		131A03DE27624B1D00FC2139 /* RiyouKiyakuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */; };
+		137AE7152793F16A007AD689 /* TabButtonIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137AE7142793F16A007AD689 /* TabButtonIconView.swift */; };
 		13846897275E55DB0034DC8D /* IsGuestMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13846896275E55DB0034DC8D /* IsGuestMode.swift */; };
 		13846899275F09250034DC8D /* NotificationCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13846898275F09250034DC8D /* NotificationCardView.swift */; };
 		13BB3B8C2760D6E800BD5C8F /* PostDetailViewTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */; };
@@ -22,12 +23,11 @@
 		13F13A31276065D400C40B17 /* IsShowPostDetailPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */; };
 		13F3153F275D07B2005F60D9 /* NotificationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3153E275D07B2005F60D9 /* NotificationData.swift */; };
 		13F31541275DC2B6005F60D9 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F31540275DC2B6005F60D9 /* RegisterView.swift */; };
-		13F9D2E6275B984A00D121F2 /* PushNotificationSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D2E5275B984A00D121F2 /* PushNotificationSwiftUIApp.swift */; };
+		13F9D2E6275B984A00D121F2 /* OmisekokoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D2E5275B984A00D121F2 /* OmisekokoroApp.swift */; };
 		13F9D2EA275B984C00D121F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D2E9275B984C00D121F2 /* Assets.xcassets */; };
 		13F9D2ED275B984C00D121F2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D2EC275B984C00D121F2 /* Preview Assets.xcassets */; };
 		13F9D2F4275B987000D121F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D2F3275B987000D121F2 /* AppDelegate.swift */; };
 		13F9D2FC275B9B6100D121F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */; };
-		13F9D3FE275C7D6000D121F2 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3C9275C7D5D00D121F2 /* LaunchView.swift */; };
 		13F9D3FF275C7D6000D121F2 /* TabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */; };
 		13F9D400275C7D6000D121F2 /* MapSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3CC275C7D5E00D121F2 /* MapSwitch.swift */; };
 		13F9D401275C7D6000D121F2 /* ShowProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3CD275C7D5E00D121F2 /* ShowProgress.swift */; };
@@ -44,7 +44,6 @@
 		13F9D40C275C7D6000D121F2 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DA275C7D5E00D121F2 /* AddFavorite.swift */; };
 		13F9D40D275C7D6000D121F2 /* RemoveFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DB275C7D5E00D121F2 /* RemoveFavorite.swift */; };
 		13F9D40E275C7D6000D121F2 /* CheckFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DC275C7D5E00D121F2 /* CheckFavorite.swift */; };
-		13F9D40F275C7D6000D121F2 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */; };
 		13F9D410275C7D6000D121F2 /* MyPageDesignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */; };
 		13F9D412275C7D6000D121F2 /* OmiseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */; };
 		13F9D413275C7D6000D121F2 /* PostData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E1275C7D5E00D121F2 /* PostData.swift */; };
@@ -82,6 +81,7 @@
 
 /* Begin PBXFileReference section */
 		131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiyouKiyakuView.swift; sourceTree = "<group>"; };
+		137AE7142793F16A007AD689 /* TabButtonIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonIconView.swift; sourceTree = "<group>"; };
 		13846896275E55DB0034DC8D /* IsGuestMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsGuestMode.swift; sourceTree = "<group>"; };
 		13846898275F09250034DC8D /* NotificationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCardView.swift; sourceTree = "<group>"; };
 		13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewTwo.swift; sourceTree = "<group>"; };
@@ -96,8 +96,8 @@
 		13F13A30276065D400C40B17 /* IsShowPostDetailPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsShowPostDetailPopover.swift; sourceTree = "<group>"; };
 		13F3153E275D07B2005F60D9 /* NotificationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationData.swift; sourceTree = "<group>"; };
 		13F31540275DC2B6005F60D9 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
-		13F9D2E2275B984A00D121F2 /* PushNotificationSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PushNotificationSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13F9D2E5275B984A00D121F2 /* PushNotificationSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationSwiftUIApp.swift; sourceTree = "<group>"; };
+		13F9D2E2275B984A00D121F2 /* Omisekokoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Omisekokoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13F9D2E5275B984A00D121F2 /* OmisekokoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmisekokoroApp.swift; sourceTree = "<group>"; };
 		13F9D2E9275B984C00D121F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13F9D2EC275B984C00D121F2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		13F9D2F3275B987000D121F2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,7 +105,6 @@
 		13F9D2F6275B98DF00D121F2 /* PushNotificationSwiftUIRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PushNotificationSwiftUIRelease.entitlements; sourceTree = "<group>"; };
 		13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		13F9D2FF275B9E1E00D121F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		13F9D3C9275C7D5D00D121F2 /* LaunchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabButtonView.swift; sourceTree = "<group>"; };
 		13F9D3CC275C7D5E00D121F2 /* MapSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSwitch.swift; sourceTree = "<group>"; };
 		13F9D3CD275C7D5E00D121F2 /* ShowProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowProgress.swift; sourceTree = "<group>"; };
@@ -122,7 +121,6 @@
 		13F9D3DA275C7D5E00D121F2 /* AddFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
 		13F9D3DB275C7D5E00D121F2 /* RemoveFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveFavorite.swift; sourceTree = "<group>"; };
 		13F9D3DC275C7D5E00D121F2 /* CheckFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckFavorite.swift; sourceTree = "<group>"; };
-		13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageDesignView.swift; sourceTree = "<group>"; };
 		13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmiseData.swift; sourceTree = "<group>"; };
 		13F9D3E1275C7D5E00D121F2 /* PostData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostData.swift; sourceTree = "<group>"; };
@@ -173,9 +171,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		137AE7132793CB17007AD689 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				13F9D3E9275C7D5F00D121F2 /* LoginController.swift */,
+				13F9D3CE275C7D5E00D121F2 /* PHPickerViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		138DE38D276C3C44004E0499 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				13D42D48278D319B00BCE89B /* EnvironmentObject */,
 				13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */,
 				13F9D3E1275C7D5E00D121F2 /* PostData.swift */,
 				13F3153E275D07B2005F60D9 /* NotificationData.swift */,
@@ -212,7 +220,7 @@
 		13F9D2E3275B984A00D121F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13F9D2E2275B984A00D121F2 /* PushNotificationSwiftUI.app */,
+				13F9D2E2275B984A00D121F2 /* Omisekokoro.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -223,13 +231,12 @@
 				13F9D2FF275B9E1E00D121F2 /* Info.plist */,
 				13F9D2F6275B98DF00D121F2 /* PushNotificationSwiftUIRelease.entitlements */,
 				13F9D2F5275B98D900D121F2 /* PushNotificationSwiftUI.entitlements */,
-				13F9D2E5275B984A00D121F2 /* PushNotificationSwiftUIApp.swift */,
-				13F9D42D275C7DC500D121F2 /* ContentView.swift */,
+				13F9D2E5275B984A00D121F2 /* OmisekokoroApp.swift */,
 				13F9D2F3275B987000D121F2 /* AppDelegate.swift */,
 				13F9D2FA275B9B6100D121F2 /* SceneDelegate.swift */,
-				13F9D42F275C7E3B00D121F2 /* ViewController.swift */,
 				13D42D44278C9FA700BCE89B /* GoogleService-Info.plist */,
 				13F9D3CB275C7D5E00D121F2 /* View */,
+				137AE7132793CB17007AD689 /* Controller */,
 				138DE38D276C3C44004E0499 /* Model */,
 				13F9D3E4275C7D5F00D121F2 /* TestFunction */,
 				13F9D2E9275B984C00D121F2 /* Assets.xcassets */,
@@ -249,14 +256,13 @@
 		13F9D3CB275C7D5E00D121F2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				13D42D48278D319B00BCE89B /* EnvironmentObject */,
 				13F9D3FC275C7D6000D121F2 /* TabWithAnimationView.swift */,
+				137AE7142793F16A007AD689 /* TabButtonIconView.swift */,
 				13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */,
 				13F9D3D8275C7D5E00D121F2 /* MapView.swift */,
 				13F9D3CC275C7D5E00D121F2 /* MapSwitch.swift */,
 				13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */,
 				13F9D3FB275C7D5F00D121F2 /* LatestPostsListView.swift */,
-				13F9D3CE275C7D5E00D121F2 /* PHPickerViewController.swift */,
 				13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */,
 				13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */,
 				13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */,
@@ -294,16 +300,15 @@
 		13F9D3E4275C7D5F00D121F2 /* TestFunction */ = {
 			isa = PBXGroup;
 			children = (
-				13F9D3DD275C7D5E00D121F2 /* ProfileEditView.swift */,
+				13F9D42D275C7DC500D121F2 /* ContentView.swift */,
+				13F9D42F275C7E3B00D121F2 /* ViewController.swift */,
 				13F9D3E2275C7D5E00D121F2 /* CommentsInRangeView.swift */,
 				13F9D3FD275C7D6000D121F2 /* TabBarView.swift */,
 				13F9D3CA275C7D5D00D121F2 /* TabButtonView.swift */,
-				13F9D3C9275C7D5D00D121F2 /* LaunchView.swift */,
 				13F9D3E5275C7D5F00D121F2 /* ImageController.swift */,
 				13F9D3E6275C7D5F00D121F2 /* postComment.swift */,
 				13F13A2E275FA7E600C40B17 /* RedButtonView.swift */,
 				13F9D3E8275C7D5F00D121F2 /* AppleLoginTest.swift */,
-				13F9D3E9275C7D5F00D121F2 /* LoginController.swift */,
 				13F9D3F1275C7D5F00D121F2 /* AuthTest.swift */,
 				13F31540275DC2B6005F60D9 /* RegisterView.swift */,
 				131A03DD27624B1D00FC2139 /* RiyouKiyakuView.swift */,
@@ -348,9 +353,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13F9D2E1275B984A00D121F2 /* PushNotificationSwiftUI */ = {
+		13F9D2E1275B984A00D121F2 /* Omisekokoro */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13F9D2F0275B984C00D121F2 /* Build configuration list for PBXNativeTarget "PushNotificationSwiftUI" */;
+			buildConfigurationList = 13F9D2F0275B984C00D121F2 /* Build configuration list for PBXNativeTarget "Omisekokoro" */;
 			buildPhases = (
 				725652421DC100611B6FAF7F /* [CP] Check Pods Manifest.lock */,
 				13F9D2DE275B984A00D121F2 /* Sources */,
@@ -362,9 +367,9 @@
 			);
 			dependencies = (
 			);
-			name = PushNotificationSwiftUI;
+			name = Omisekokoro;
 			productName = PushNotificationSwiftUI;
-			productReference = 13F9D2E2275B984A00D121F2 /* PushNotificationSwiftUI.app */;
+			productReference = 13F9D2E2275B984A00D121F2 /* Omisekokoro.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -395,7 +400,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13F9D2E1275B984A00D121F2 /* PushNotificationSwiftUI */,
+				13F9D2E1275B984A00D121F2 /* Omisekokoro */,
 			);
 		};
 /* End PBXProject section */
@@ -483,12 +488,10 @@
 				13F9D409275C7D6000D121F2 /* PostDetailView.swift in Sources */,
 				13F9D416275C7D6000D121F2 /* ImageController.swift in Sources */,
 				13F9D414275C7D6000D121F2 /* CommentsInRangeView.swift in Sources */,
-				13F9D40F275C7D6000D121F2 /* ProfileEditView.swift in Sources */,
 				13D42D47278C9FBC00BCE89B /* FCMServerKey.swift in Sources */,
 				13F9D41F275C7D6000D121F2 /* DidLoginTest.swift in Sources */,
 				13F9D405275C7D6000D121F2 /* CheckBookmark.swift in Sources */,
 				13F9D40A275C7D6000D121F2 /* PostCardView.swift in Sources */,
-				13F9D3FE275C7D6000D121F2 /* LaunchView.swift in Sources */,
 				13F9D42C275C7D6000D121F2 /* TabBarView.swift in Sources */,
 				13F9D424275C7D6000D121F2 /* AsyncAwaitTest.swift in Sources */,
 				13F9D40B275C7D6000D121F2 /* MapView.swift in Sources */,
@@ -503,6 +506,7 @@
 				13BB3B8C2760D6E800BD5C8F /* PostDetailViewTwo.swift in Sources */,
 				13F9D2F4275B987000D121F2 /* AppDelegate.swift in Sources */,
 				13F9D413275C7D6000D121F2 /* PostData.swift in Sources */,
+				137AE7152793F16A007AD689 /* TabButtonIconView.swift in Sources */,
 				13F9D40D275C7D6000D121F2 /* RemoveFavorite.swift in Sources */,
 				13F9D42B275C7D6000D121F2 /* TabWithAnimationView.swift in Sources */,
 				13F9D420275C7D6000D121F2 /* GenerateImageViewController.swift in Sources */,
@@ -511,7 +515,7 @@
 				13846897275E55DB0034DC8D /* IsGuestMode.swift in Sources */,
 				13F9D41C275C7D6000D121F2 /* UserData.swift in Sources */,
 				13F9D436275C9DA400D121F2 /* PushNotificationSender.swift in Sources */,
-				13F9D2E6275B984A00D121F2 /* PushNotificationSwiftUIApp.swift in Sources */,
+				13F9D2E6275B984A00D121F2 /* OmisekokoroApp.swift in Sources */,
 				13F9D407275C7D6000D121F2 /* OmiseSearchAndPostView.swift in Sources */,
 				13F9D402275C7D6000D121F2 /* PHPickerViewController.swift in Sources */,
 				13F9D423275C7D6000D121F2 /* GenerateUIImageTest.swift in Sources */,
@@ -733,7 +737,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13F9D2F0275B984C00D121F2 /* Build configuration list for PBXNativeTarget "PushNotificationSwiftUI" */ = {
+		13F9D2F0275B984C00D121F2 /* Build configuration list for PBXNativeTarget "Omisekokoro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13F9D2F1275B984C00D121F2 /* Debug */,

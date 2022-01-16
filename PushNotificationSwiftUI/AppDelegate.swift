@@ -11,7 +11,6 @@ import FirebaseAuth
 import UserNotifications
 import UIKit
 
-//@main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     
     var loginController = LoginController()
@@ -21,9 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        // Delete all registries
+        print("RemoteNotificationの登録を解除します")
         UIApplication.shared.unregisterForRemoteNotifications()
-        print("①isRegisteredForRemoteNotifications: \(UIApplication.shared.isRegisteredForRemoteNotifications)")
 
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
@@ -33,36 +31,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             }
             print("success: \(success)")
             print("Success in APNs registry")
-            DispatchQueue.main.async {
-                print("isRegisteredForRemoteNotifications: \(UIApplication.shared.isRegisteredForRemoteNotifications)")
-
-            }
         }
         
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("settings: \(settings)")
             print("settings.authorizationStatus: \(settings.authorizationStatus)")
-             guard settings.authorizationStatus == .authorized else { return }
+            guard settings.authorizationStatus == .authorized else { return }
         }
         
+        print("デバイスをRemoteNotificationに登録します")
         application.registerForRemoteNotifications()
-
-//        Messaging.messaging().token { token, error in
-//          if let error = error {
-//            print("Error fetching FCM registration token: \(error)")
-//          } else if let token = token {
-//            print("FCM registration token: \(token)")
-////            self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
-//              // ログイン中のユーザーがいれば、データベースに当該ユーザーのFCMトークンを追加する。
-//              if let authCurrentUser = Auth.auth().currentUser {
-//                  self.loginController.setFcmTokenToFirestore(
-//                      userUid: authCurrentUser.uid,
-//                      fcmToken: token) {
-//                          print("FCMトークンを更新しました")
-//                      }
-//              }
-//          }
-//        }
         
         return true
     }
@@ -71,95 +48,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func messaging(_ messaging: Messaging,
                    didReceiveRegistrationToken fcmToken: String?) {
         print("didReceiveRegistrationToken fcmToken: \(fcmToken!)")
-        messaging.token { token, _ in
+        messaging.token { token, error in
             guard let token = token else {
+                print("エラー：\(String(describing: error))")
                 return
             }
-            print("（AppDelegate内）トークン: \(token)")
+            print("トークンを取得しました: \(token)")
             // ログイン中のユーザーがいれば、データベースに当該ユーザーのFCMトークンを追加する。
             if let authCurrentUser = Auth.auth().currentUser {
                 self.loginController.setFcmTokenToFirestore(
                     userUid: authCurrentUser.uid,
                     fcmToken: token) {
-                        print("Firebase上のFCMトークンを更新しました")
+                        print("Firebase上のFCMトークンデータを更新しました")
                     }
             }
         }
-        
-        print("isRegisteredForRemoteNotifications: \(UIApplication.shared.isRegisteredForRemoteNotifications)")
     }
-
-    
-    // MARK: UISceneSession Lifecycle
-
-//    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-//        // Called when a new scene session is being created.
-//        // Use this method to select a configuration to create the new scene with.
-//        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-//    }
-//
-//    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-//        // Called when the user discards a scene session.
-//        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-//        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-//    }
 }
 
 extension AppDelegate {
-
-    // ③ プッシュ通知の利用登録が成功した場合
+    // プッシュ通知の利用登録が成功した場合の処理
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.map { String(format: "%.2hhx", $0) }.joined()
-        print("③ プッシュ通知の利用登録が成功した場合")
         print("Device token: \(token)")
-        print("isRegisteredForRemoteNotifications: \(UIApplication.shared.isRegisteredForRemoteNotifications)")
+        // APNsトークンをFCMトークンにマッピングする
         Messaging.messaging().apnsToken = deviceToken
-        
-//        Messaging.messaging().token { token, error in
-//            if let token = token {
-//                print("（application(_ application: , didRegisterForRemoteNotificationsWithDeviceToken deviceToken: ) ）トークン: \(token)")
-//            }
-//        }
     }
 
-    // ④ プッシュ通知の利用登録が失敗した場合
+    // プッシュ通知の利用登録が失敗した場合の処理
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register to APNs: \(error)")
+        print("プッシュ通知の利用登録に失敗: \(error)")
     }
-}
-
-
-// MARK: - AppDelegate Push Notification
-// プッシュ通知のためのextension
-extension AppDelegate {
-   func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-       if let messageID = userInfo["gcm.message_id"] {
-          print("MessageID: \(messageID)")
-       }
-       print("userInfo: \(userInfo)")
-       completionHandler(.newData)
-   }
+        
+    // サイレンとプッシュ通知をバックグラウンドで受け取った場合の処理
+    func application(_ application: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if let messageID = userInfo["gcm.message_id"] {
+            print("userInfo[\"gcm.message_id\"]: \(messageID)")
+        }
+        print("userInfo: \(userInfo)")
+        completionHandler(.newData)
+    }
     
+    // 通知をタップした時の処理
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                  didReceive response: UNNotificationResponse,
-                                  withCompletionHandler completionHandler: @escaping () -> Void) {
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
-
-        // ...
-
-        // With swizzling disabled you must let Messaging know about the message, for Analytics
-        // Messaging.messaging().appDidReceiveMessage(userInfo)
-
-        // Print full message.
         print(userInfo)
-
         completionHandler()
-      }
-
-   // アプリがForeground時にPush通知を受信する処理
-   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-      completionHandler([.banner, .sound])
-   }
+    }
+    
+    // アプリがForeground時にPush通知を受信する処理
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound])
+    }
 }

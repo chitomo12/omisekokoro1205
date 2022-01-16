@@ -9,11 +9,12 @@ import SwiftUI
 import Firebase
 
 @main
-struct PushNotificationSwiftUIApp: App {
+//struct PushNotificationSwiftUIApp: App {
+struct OmisekokoroApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
         
     @State var isShowLoginCheckView = false
-    @State var fcmToken = "default"
+//    @State var fcmToken = "default"
     
     init(){
         FirebaseApp.configure()

@@ -28,7 +28,7 @@ class NotificationController: ObservableObject{
     
     let loginController = LoginController()
     
-    // Firestoreのセッティング①
+    // Firestoreのセッティング
     var db: Firestore!
     let settings = FirestoreSettings()
     init(){
@@ -101,7 +101,7 @@ class NotificationController: ObservableObject{
                                                          body: document.get("body") as! String,
                                                          created_at: notifiCreatedAtString)
                                 )
-                                // 非同期で順次読み込まれるため、リストに要素を追加するごとに並び替えを行う
+                                // リストに要素を追加するごとに順次並び替えを行う
                                 self.notificationCardList = self.notificationCardList.sorted(by: { (a,b) -> Bool in
                                     return a.created_at > b.created_at
                                 })

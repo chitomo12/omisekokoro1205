@@ -110,7 +110,6 @@ struct MyPageDesignView: View {
                     
                     // 編集ボタン
                     Button(action: {
-//                        print("environmentCurrentUserData.userName: \(environmentCurrentUserData.userName)")
                         if isGuestMode.guestModeSwitch == false && environmentCurrentUserData.userName != nil {
                             // ログイン中＆ユーザー名登録済みの場合は編集画面を表示
                             // 編集画面で表示する現在のプロフィール画像を渡す
@@ -174,7 +173,6 @@ struct MyPageDesignView: View {
                                         isShowPHPicker = true
                                     }){
                                         Text("画像を選択")
-//                                        RedButtonView(buttonText: "画像を選択")
                                     }
                                     .padding(.bottom)
                                     
@@ -247,7 +245,7 @@ struct MyPageDesignView: View {
                                             bookmarkedPostCardList = []
                                             notificationCardList = []
                                             
-                                            // ゲストモードをtrueに
+                                            // ゲストモードをtrueに切り替え
                                             isGuestMode.guestModeSwitch = true
                                             
                                             // 編集画面を閉じる

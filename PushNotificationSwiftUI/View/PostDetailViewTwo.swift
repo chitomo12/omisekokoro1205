@@ -26,10 +26,9 @@ struct PostDetailViewTwo: View {
     @State var isBookmarkAddedToSelectedPost: Bool = false 
     @State var selectedPostImageURLURL: URL?
     
-    //
     @State var showPhoto: Bool = false
-    @State var isFavoriteAdded = false
-    @State var isBookmarkAdded = false
+//    @State var isFavoriteAdded = false
+//    @State var isBookmarkAdded = false
     
     @State var viewState1: Bool = false
     @State var isShowActionSheet: Bool = false
@@ -44,8 +43,6 @@ struct PostDetailViewTwo: View {
     @State var isShowingAlert: Bool = false
     
     var body: some View {
-//        let bounds = UIScreen.main.bounds
-//        let screenWidth = bounds.width
         let triangleHeight = 15.0
     
         ZStack{
@@ -306,11 +303,8 @@ struct PostDetailViewTwo: View {
                                     // 削除ボタンが押されたらコメント削除を実行
                                     deleteComment(targetDocumentID: selectedPost.documentId)
                                     // 削除後、変数を初期化しポップオーバーを閉じる
-//                                    selectedPostDocumentID = ""
                                     isShowPostDetailPopover.selectedPostDocumentUID = ""
-                                    isShowPostDetailPopover.showSwitch = false 
-//                                    isShowingDetail = false
-//                                    map.removeAnnotation(selectedPostAnnotation.annotation!)
+                                    isShowPostDetailPopover.showSwitch = false
                                 }))
                             }
                         }
@@ -367,7 +361,6 @@ struct PostDetailViewTwo: View {
                         
                         CheckBookmark(postID: onePost.documentId, currentUserID: environmentCurrentUserData.uid, completion: { resultBool, foundedBookmarkID in
                             isBookmarkAddedToSelectedPost = resultBool
-//                            BookmarkID = foundedBookmarkID
                             
                             getUserImageFromFirestorage(userUID: onePost.created_by ?? "GuestUID") { data in
                                 if data != nil {
@@ -387,7 +380,6 @@ struct PostDetailViewTwo: View {
                 })
                 
                 print("読み込み完了")
-//                isShowingDetailContent = true
             }
             
             // 報告ウィンドウ
@@ -421,9 +413,3 @@ struct PostDetailViewTwo: View {
         } //ZStackここまで
     }
 }
-
-//struct PostDetailViewTwo_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PostDetailViewTwo()
-//    }
-//}

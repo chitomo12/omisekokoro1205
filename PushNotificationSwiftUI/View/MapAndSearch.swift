@@ -83,9 +83,7 @@ struct MapAndSearch: View {
     @State var isShowNameRegisterView = false
     @State var isShowLoginView = false
     @State var isShowNameRegisterPopover = false
-    
-//    var viewController = ViewController()
-    
+        
     var body: some View {
         let bounds = UIScreen.main.bounds
         
@@ -166,7 +164,6 @@ struct MapAndSearch: View {
                                 selectedTag: $temporalSelectedTag,
                                 searchedAndSelectedOmiseLatitude: $searchedAndSelectedOmiseLatitude,
                                 searchedAndSelectedOmiseLongitude: $searchedAndSelectedOmiseLongitude,
-//                                searchedAndSelectedOmiseName: $searchedLocationName,
                                 searchedAndSelectedOmiseAddress: $searchedAddress,
                                 searchedAndSelectedOmiseImageURL: $searchedAndSelectedOmiseImageURL,
                                 mapSwitch: $mapSwitch,
@@ -237,7 +234,7 @@ struct MapAndSearch: View {
                                     ProgressView()
                                 }
                                 if isShowLoginView == true {
-                                    AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
+                                    AuthView(isShowLoginCheckView: $isShowLoginCheckView)
                                 }
                                 if isShowNameRegisterView == true {
                                     NameRegisterView(currentUser: environmentCurrentUserData)
@@ -291,15 +288,3 @@ struct MapAndSearch: View {
         } // 一番外側のVStackここまで
     }
 }
-
-//struct ContentView_Previews: PreviewProvider {
-//    let isShowingProgressView = false
-//
-//    static var previews: some View {
-//        MapAndSearch(currentUser: UserData(uid: "sample", email: "sample", userName: "sample name"),
-//                     searchedLocationName: .constant("default"),
-//                     searchedAddress: .constant(""),
-//                     mapSwitch: .constant(.normal)
-//        )
-//    }
-//}

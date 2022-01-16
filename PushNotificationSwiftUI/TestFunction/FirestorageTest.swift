@@ -19,16 +19,15 @@ struct FirestorageTest: View {
         Button("アップロード"){
             print("画像をアップロードします")
             uploadImageToFirestorage(userUID: currentUser.uid, newImageUIImage: UIImage(systemName: "house")!, completion: { downloadURL in
-                imageURL = downloadURL
                 // アップロード後、ダウンロードURLから画像を再取得してビューに反映する
-                // GetAndRefreshImage(url: downloadURL)
+                imageURL = downloadURL
             })
         }
     }
 }
 
 func uploadImageToFirestorage(userUID: String, newImageUIImage: UIImage, completion: @escaping (URL?)->() ) {
-    //
+    
     let storage = Storage.storage()
     let storageRef = storage.reference()
     var data = Data()

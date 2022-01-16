@@ -14,8 +14,6 @@ struct TabWithAnimationView: View {
     @EnvironmentObject var environmentFcmToken: FcmToken
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
     
-//    @ObservedObject var omiseDataList = OmiseData()
-//    @ObservedObject var postData = PostData()
     @ObservedObject var currentUser: UserData
     
     // ログイン状態の管理
@@ -80,7 +78,6 @@ struct TabWithAnimationView: View {
     
     init(currentUser: UserData){
         self.currentUser = currentUser
-//        self.environmentFcmToken.fcmTokenString = appDelegate.fcmToken
     }
     
     var body: some View {
@@ -147,7 +144,7 @@ struct TabWithAnimationView: View {
                     
                     HStack {
                         GeometryReader { geo in
-                            tabButtonIconViewModel(imageName: "globe.asia.australia", iconName: "Omise")
+                            TabButtonIconView(imageName: "globe.asia.australia", iconName: "Omise")
                                 .rotationEffect(Angle.degrees(rotationOne ? 0 : 360))
                                 .foregroundColor(IconColors[1])
                                 .onAppear {
@@ -172,7 +169,7 @@ struct TabWithAnimationView: View {
                         }
                         
                         GeometryReader{ geo in
-                            tabButtonIconViewModel(imageName: "magnifyingglass", iconName: "Search")
+                            TabButtonIconView(imageName: "magnifyingglass", iconName: "Search")
                                 .foregroundColor(IconColors[2])
                                 .rotationEffect(Angle.degrees(rotationTwo ? 0 : 360))
                                 .onChange(of: selectedTag) { value in
@@ -190,7 +187,7 @@ struct TabWithAnimationView: View {
                         }
                         
                         GeometryReader{ geo in
-                            tabButtonIconViewModel(imageName: "person", iconName: "My Page")
+                            TabButtonIconView(imageName: "person", iconName: "My Page")
                                 .foregroundColor(IconColors[3])
                                 .rotationEffect(Angle.degrees(rotationThree ? 0 : 360))
                                 .onChange(of: selectedTag) { value in
@@ -207,7 +204,7 @@ struct TabWithAnimationView: View {
                         }
                         
                         GeometryReader{ geo in
-                            tabButtonIconViewModel(imageName: "envelope", iconName: "Info")
+                            TabButtonIconView(imageName: "envelope", iconName: "Info")
                                 .foregroundColor(IconColors[4])
                                 .rotationEffect(Angle.degrees(rotationFour ? 0 : 360))
                                 .onChange(of: selectedTag) { value in
@@ -259,12 +256,13 @@ struct TabWithAnimationView: View {
             }
         }
         
+        // 起動時に表示するポップオーバー。ログイン状態をチェックする。
         .popover(isPresented: $isShowLoginCheckView) {
-            AuthTest(isShowLoginCheckView: $isShowLoginCheckView)
+            AuthView(isShowLoginCheckView: $isShowLoginCheckView)
         }
         
+        // 投稿詳細画面のポップオーバー
         .popover(isPresented: $isShowPostDetailPopover.showSwitch) {
-            
             ZStack {
                 // 背景
                 Image("BackgroundOne")
@@ -319,22 +317,7 @@ struct TabWithAnimationView: View {
     }
 }
 
-struct tabButtonIconViewModel: View{
-    var imageName: String
-    var iconName: String
-    
-    var body: some View {
-        VStack {
-            Image(systemName: imageName)
-                .resizable()
-                .scaledToFit()
-            .frame(width: 20, height: 20)
-            Text(iconName)
-                .font(.caption2)
-                .fontWeight(.bold)
-        }
-    }
-}
+
 
 struct AnimationTest_Previews: PreviewProvider {
     static var previews: some View {

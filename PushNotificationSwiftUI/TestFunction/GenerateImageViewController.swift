@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ViewControllerStudy: View {
+struct ViewControllerForGenerateImage: View {
     var body: some View {
         SampleViewControllerWrapper()
     }
@@ -22,7 +22,6 @@ struct SampleViewControllerWrapper: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: GenerateImageViewController, context: Context) {
         
     }
-    
 }
 
 class GenerateImageViewController: UIViewController {
@@ -45,12 +44,6 @@ class GenerateImageViewController: UIViewController {
         // 描画領域を生成
         let drawingRectWidth = 100.0 * 3
         let drawingRectHeight = 100.0
-//        let rect = CGRect(x: 0, y: 0, width: drawingRectWidth, height: drawingRectHeight)
-        
-        // EmmyをUIImageのdrawInRectメソッドでレンダリング
-        // UIImage型はdrawメソッドを持つ
-        // drawメソッドはCGRect型を引数にとる
-//        imageEmmy.draw(in: rect)
                 
         // テキストの描画領域
         let textRect = CGRect(x: 15, y: 15, width: 250, height: 100)
@@ -99,7 +92,6 @@ class GenerateImageViewController: UIViewController {
         path.addLine(to: CGPoint(x: triangleStartX, y: triangleStartY + 10))
         path.addLine(to: CGPoint(x: triangleStartX + randomCGFloat - 10, y: triangleStartY))
         path.close()
-//        UIColor(named: randomSelectedColorString!)!.setFill()
         path.fill()
         
         // 白い四角形を描写
@@ -124,22 +116,6 @@ class GenerateImageViewController: UIViewController {
         
         self.view.addSubview(newImageView)
         
-        
-//        let label = UILabel(frame: CGRect(x: 100, y: 300, width: 100, height: 100))
-//        label.text = text
-//        label.lineBreakMode = .byCharWrapping
-//        label.numberOfLines = 0 // 行数を指定（0にすると無制限になる）
-//
-//        // 枠線の適用
-//        label.layer.borderWidth = 2
-//        label.layer.borderColor = UIColor.red.cgColor
-//
-//        // 角丸の適用
-//        label.layer.cornerRadius = 20
-//        label.clipsToBounds = true
-//
-//        self.view.addSubview(label)
-        
         return newImage!
     }
     
@@ -153,8 +129,7 @@ class GenerateImageViewController: UIViewController {
 
 struct ViewControllerStudy_Previews: PreviewProvider {
     static var previews: some View {
-        ViewControllerStudy()
+        ViewControllerForGenerateImage()
             .previewLayout(.fixed(width:300, height: 300))
-//        GenerateUIImageTest()
     }
 }

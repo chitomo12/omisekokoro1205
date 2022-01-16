@@ -63,7 +63,7 @@ struct DidLoginTest: View {
                 }) {
                     Text("ログアウトする")
                 }
-                NavigationLink(destination: AuthTest(isShowLoginCheckView: $isShowLoginCheckView).navigationBarHidden(false),
+                NavigationLink(destination: AuthView(isShowLoginCheckView: $isShowLoginCheckView).navigationBarHidden(false),
                                isActive: $loginController.isDidLogout){
                     EmptyView()
                 }

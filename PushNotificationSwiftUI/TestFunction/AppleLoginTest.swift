@@ -5,9 +5,9 @@
 //  Created by 福田正知 on 2021/11/25.
 //
 
-import SwiftUI
-import AuthenticationServices
-
+//import SwiftUI
+//import AuthenticationServices
+//
 //struct AppleLoginTest: View {
 ////    @State var appleAuthResults: Result<ASAuthorization, Error>?
 //    @ObservedObject var authViewModel = AuthViewModel()

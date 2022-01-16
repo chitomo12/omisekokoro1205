@@ -29,8 +29,8 @@ struct PostDetailView: View {
     
     //
     @State var showPhoto: Bool = false
-    @State var isFavoriteAdded = false
-    @State var isBookmarkAdded = false
+//    @State var isFavoriteAdded = false
+//    @State var isBookmarkAdded = false
     
     @State var viewState1: Bool = false
     @State var isShowActionSheet: Bool = false
@@ -334,8 +334,6 @@ struct PostDetailView: View {
 }
 
 struct PostDetailView_Previews: PreviewProvider {
-//    @ObservedObject var postData = PostData()
-    
     static var previews: some View {
         // ImageURLが存在するパターン
         PostDetailView(selectedPost:
@@ -355,16 +353,6 @@ struct PostDetailView_Previews: PreviewProvider {
                        isFavoriteAddedToSelectedPost: .constant(true),
                        isBookmarkAddedToSelectedPost: .constant(true)
         )
-        
-        // ImageURLが無いお店のパターン
-//        PostDetailView(selectedPost: .constant(Post(omiseName: "サンプル店名", documentId: "sample ID", created_at: "2020年10月20日", comment: "眺めが最高でした！💓", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), created_by: "sampleUserId", created_by_name: "サンプルユーザー", imageURL: "")),
-//                       selectedPostImageData: .constant(try? Data(contentsOf: URL(string: "https://rimage.gnst.jp/rest/img/hjxxuksz0000/s_005m.jpg")!)),
-//                       selectedPostImageUIImage: .constant(UIImage(named: "emmy")))
-        
-//        // ImageURLが無効なお店のパターン
-//        PostDetailView(selectedPost: .constant(Post(omiseName: "サンプル店名", documentId: "sample ID", created_at: "2020年10月20日", comment: "眺めが最高でした！💓", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), created_by: "sampleUserId", created_by_name: "サンプルユーザー", imageURL: "")),
-//                       selectedPostImageData: .constant(try? Data(contentsOf: URL(string: "https://rimage.gnst.jp/rest/img/hjxxuksz0000/s_005m.jp")!)),
-//                       selectedPostImageUIImage: .constant(UIImage(named: "emmy")))
     }
     
 }

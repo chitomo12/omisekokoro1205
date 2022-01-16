@@ -54,7 +54,7 @@ struct OmiseSearchAndPostView: View {
     @State var postedOmiseCoordinate: CLLocationCoordinate2D?
     
     // ViewControllerからFirebase保存の処理を呼び出す
-    var viewController = ViewController()
+//    var viewController = ViewController()
     
     var body: some View {
         let bounds = UIScreen.main.bounds

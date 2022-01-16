@@ -40,13 +40,11 @@ struct NotificationListView: View {
                     .frame(height:25)
                 Button(action: {
                     notificationCardList = [] // 初期化
-                    print("データを取得します...")
+                    print("notification一覧を取得します")
                     notificationController.getNotificationCardList(userUID: environmentCurrentUserData.uid) { notificationCardListResult in
-                        print("notificationListを取得しました")
+                        print("notification一覧を取得しました")
                         notificationCardList = notificationCardListResult
-                    
                     }
-                    print("postList: \(postList)")
                 }) {
                     HStack{
                         Image(systemName: "arrow.triangle.2.circlepath")
@@ -65,6 +63,7 @@ struct NotificationListView: View {
                 }
                 .padding(.horizontal)
                 .onAppear {
+                    print("NotificationListView is onAppear")
                     if notificationCardList.count == 0 {
                         notificationController.getNotificationCardList(userUID: environmentCurrentUserData.uid) { notificationCardListResult in
                             print("notificationListを取得しました")
