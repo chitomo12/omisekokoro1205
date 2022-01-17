@@ -31,17 +31,16 @@ func uploadImageToFirestorage(userUID: String, newImageUIImage: UIImage, complet
     let storage = Storage.storage()
     let storageRef = storage.reference()
     var data = Data()
-//    data = UIImage(named:"emmy")!.jpegData(compressionQuality: 0.1)!
     data = newImageUIImage.jpegData(compressionQuality: 0.1)!
     let riversRef = storageRef.child("images/\(userUID).jpg")
     let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, nil) in
-        print(String(describing: metadata))
         guard let metadata = metadata else {
             print("some error in metadata")
             // some errors
             return
         }
-        let size = metadata.size
+        print("metadata:\(metadata)")
+//        let size = metadata.size
         riversRef.downloadURL{ (url, error) in
             print("DL URL: \(String(describing: url))")
             guard let downloadURL = url else {
@@ -49,9 +48,10 @@ func uploadImageToFirestorage(userUID: String, newImageUIImage: UIImage, complet
                 print("some error in downloadURL")
                 return
             }
-            completion(url)
+            completion(downloadURL)
         }
     }
+    print("uploadTask: \(uploadTask)")
 }
 
 func getUserImageFromFirestorage(userUID: String, completion: @escaping (Data?) -> () ){

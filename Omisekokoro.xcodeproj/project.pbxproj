@@ -54,7 +54,7 @@
 		13F9D418275C7D6000D121F2 /* NameRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E7275C7D5F00D121F2 /* NameRegisterView.swift */; };
 		13F9D419275C7D6000D121F2 /* AppleLoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E8275C7D5F00D121F2 /* AppleLoginTest.swift */; };
 		13F9D41A275C7D6000D121F2 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3E9275C7D5F00D121F2 /* LoginController.swift */; };
-		13F9D41B275C7D6000D121F2 /* LoginTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */; };
+		13F9D41B275C7D6000D121F2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3EA275C7D5F00D121F2 /* LoginView.swift */; };
 		13F9D41C275C7D6000D121F2 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3EB275C7D5F00D121F2 /* UserData.swift */; };
 		13F9D41D275C7D6000D121F2 /* GeoQueryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */; };
 		13F9D41E275C7D6000D121F2 /* splashLight.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13F9D3EE275C7D5F00D121F2 /* splashLight.jpg */; };
@@ -130,7 +130,7 @@
 		13F9D3E7275C7D5F00D121F2 /* NameRegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameRegisterView.swift; sourceTree = "<group>"; };
 		13F9D3E8275C7D5F00D121F2 /* AppleLoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleLoginTest.swift; sourceTree = "<group>"; };
 		13F9D3E9275C7D5F00D121F2 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
-		13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTest.swift; sourceTree = "<group>"; };
+		13F9D3EA275C7D5F00D121F2 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		13F9D3EB275C7D5F00D121F2 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		13F9D3EC275C7D5F00D121F2 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoQueryTest.swift; sourceTree = "<group>"; };
@@ -175,6 +175,7 @@
 				13F9D3E9275C7D5F00D121F2 /* LoginController.swift */,
 				13F9D3F0275C7D5F00D121F2 /* GenerateImageViewController.swift */,
 				13F9D3CE275C7D5E00D121F2 /* PHPickerViewController.swift */,
+				13F9D3F7275C7D5F00D121F2 /* FirestorageTest.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -185,6 +186,7 @@
 				13D42D48278D319B00BCE89B /* EnvironmentObject */,
 				13F9D3E0275C7D5E00D121F2 /* OmiseData.swift */,
 				13F9D3E1275C7D5E00D121F2 /* PostData.swift */,
+				13F9D3EB275C7D5F00D121F2 /* UserData.swift */,
 				13F3153E275D07B2005F60D9 /* NotificationData.swift */,
 				13F9D437275CA96100D121F2 /* FcmToken.swift */,
 				13D42D46278C9FBC00BCE89B /* FCMServerKey.swift */,
@@ -277,7 +279,8 @@
 				13F9D3DE275C7D5E00D121F2 /* MyPageDesignView.swift */,
 				13F9D3E3275C7D5E00D121F2 /* deleteComment.swift */,
 				13F13A2E275FA7E600C40B17 /* RedButtonView.swift */,
-				13F9D3EA275C7D5F00D121F2 /* LoginTest.swift */,
+				13F9D3EA275C7D5F00D121F2 /* LoginView.swift */,
+				13D095A52766C8210048314E /* ResetPasswordView.swift */,
 				13F9D3EF275C7D5F00D121F2 /* DidLoginView.swift */,
 			);
 			path = View;
@@ -313,8 +316,6 @@
 				13F9D3E5275C7D5F00D121F2 /* ImageController.swift */,
 				13F9D3E6275C7D5F00D121F2 /* postComment.swift */,
 				13F9D3E8275C7D5F00D121F2 /* AppleLoginTest.swift */,
-				13D095A52766C8210048314E /* ResetPasswordView.swift */,
-				13F9D3EB275C7D5F00D121F2 /* UserData.swift */,
 				13F9D3EC275C7D5F00D121F2 /* MyPlayground.playground */,
 				13F9D3ED275C7D5F00D121F2 /* GeoQueryTest.swift */,
 				13F9D3EE275C7D5F00D121F2 /* splashLight.jpg */,
@@ -323,7 +324,6 @@
 				13F9D3F4275C7D5F00D121F2 /* AsyncAwaitTest.swift */,
 				13F9D3F5275C7D5F00D121F2 /* LocationManager.swift */,
 				13F9D3F6275C7D5F00D121F2 /* loadPost.swift */,
-				13F9D3F7275C7D5F00D121F2 /* FirestorageTest.swift */,
 				13F9D3F8275C7D5F00D121F2 /* PopUpTest.swift */,
 				13F9D3F9275C7D5F00D121F2 /* HelloUser.swift */,
 			);
@@ -517,7 +517,7 @@
 				13F9D402275C7D6000D121F2 /* PHPickerViewController.swift in Sources */,
 				13F9D423275C7D6000D121F2 /* GenerateUIImageTest.swift in Sources */,
 				13F9D422275C7D6000D121F2 /* AnimationTest.swift in Sources */,
-				13F9D41B275C7D6000D121F2 /* LoginTest.swift in Sources */,
+				13F9D41B275C7D6000D121F2 /* LoginView.swift in Sources */,
 				13F9D419275C7D6000D121F2 /* AppleLoginTest.swift in Sources */,
 				13F9D415275C7D6000D121F2 /* deleteComment.swift in Sources */,
 				13F9D427275C7D6000D121F2 /* FirestorageTest.swift in Sources */,
