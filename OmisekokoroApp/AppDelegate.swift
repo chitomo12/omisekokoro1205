@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        // APNsへの登録処理
         print("RemoteNotificationの登録を解除します")
         UIApplication.shared.unregisterForRemoteNotifications()
 
@@ -29,16 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
             guard success else {
                 return
             }
-            print("success: \(success)")
-            print("Success in APNs registry")
+            print("APNsへの登録に成功")
         }
         
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("settings.authorizationStatus: \(settings.authorizationStatus)")
             guard settings.authorizationStatus == .authorized else { return }
         }
         
-        print("デバイスをRemoteNotificationに登録します")
+        print("アプリをRemoteNotificationに登録します")
         application.registerForRemoteNotifications()
         
         return true

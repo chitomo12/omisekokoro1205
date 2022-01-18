@@ -69,6 +69,8 @@ class NotificationController: ObservableObject{
             .document("notificationDocument")
             .collection("subNotifiCollection")
             .whereField("receiveUserUid", isEqualTo: userUID)
+            .order(by: "created_at", descending: true)  // 日付降順で取得
+            .limit(to: 10)
             .getDocuments { querySnapshots, error in
                 if error == nil && querySnapshots!.documents.count != 0 {
                     print("\(querySnapshots!.documents.count)件の通知を読み込みます")

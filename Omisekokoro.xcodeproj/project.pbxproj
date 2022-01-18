@@ -38,7 +38,7 @@
 		13F9D406275C7D6000D121F2 /* MapAndSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */; };
 		13F9D407275C7D6000D121F2 /* OmiseSearchAndPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */; };
 		13F9D408275C7D6000D121F2 /* NotificationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D5275C7D5E00D121F2 /* NotificationListView.swift */; };
-		13F9D409275C7D6000D121F2 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */; };
+		13F9D409275C7D6000D121F2 /* PostDetailViewFromMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D6275C7D5E00D121F2 /* PostDetailViewFromMapView.swift */; };
 		13F9D40A275C7D6000D121F2 /* PostCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */; };
 		13F9D40B275C7D6000D121F2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3D8275C7D5E00D121F2 /* MapView.swift */; };
 		13F9D40C275C7D6000D121F2 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9D3DA275C7D5E00D121F2 /* AddFavorite.swift */; };
@@ -85,7 +85,7 @@
 		13846898275F09250034DC8D /* NotificationCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCardView.swift; sourceTree = "<group>"; };
 		13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewTwo.swift; sourceTree = "<group>"; };
 		13D0959D27658CC50048314E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		13D095A52766C8210048314E /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResetPasswordView.swift; path = PushNotificationSwiftUI/View/ResetPasswordView.swift; sourceTree = SOURCE_ROOT; };
+		13D095A52766C8210048314E /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResetPasswordView.swift; path = OmisekokoroApp/View/ResetPasswordView.swift; sourceTree = SOURCE_ROOT; };
 		13D42D40278C872500BCE89B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "オミセココロ紹介220111.png"; sourceTree = "<group>"; };
 		13D42D44278C9FA700BCE89B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "Omisekokoro/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -114,7 +114,7 @@
 		13F9D3D3275C7D5E00D121F2 /* MapAndSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapAndSearch.swift; sourceTree = "<group>"; };
 		13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmiseSearchAndPostView.swift; sourceTree = "<group>"; };
 		13F9D3D5275C7D5E00D121F2 /* NotificationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationListView.swift; sourceTree = "<group>"; };
-		13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
+		13F9D3D6275C7D5E00D121F2 /* PostDetailViewFromMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewFromMapView.swift; sourceTree = "<group>"; };
 		13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCardView.swift; sourceTree = "<group>"; };
 		13F9D3D8275C7D5E00D121F2 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		13F9D3DA275C7D5E00D121F2 /* AddFavorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 				13D42D40278C872500BCE89B /* ReadMe.md */,
 				13D42D42278C8B5A00BCE89B /* オミセココロ紹介220111.png */,
 				13D534532769A19000101C18 /* privacyPolicy.md */,
-				13F9D2E4275B984A00D121F2 /* PushNotificationSwiftUI */,
+				13F9D2E4275B984A00D121F2 /* OmisekokoroApp */,
 				13F9D2E3275B984A00D121F2 /* Products */,
 				73EC672B59C7E7F2E2209948 /* Pods */,
 				497C68AE58104589125D40A8 /* Frameworks */,
@@ -226,7 +226,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13F9D2E4275B984A00D121F2 /* PushNotificationSwiftUI */ = {
+		13F9D2E4275B984A00D121F2 /* OmisekokoroApp */ = {
 			isa = PBXGroup;
 			children = (
 				13F9D2FF275B9E1E00D121F2 /* Info.plist */,
@@ -243,7 +243,7 @@
 				13F9D2E9275B984C00D121F2 /* Assets.xcassets */,
 				13F9D2EB275B984C00D121F2 /* Preview Content */,
 			);
-			path = PushNotificationSwiftUI;
+			path = OmisekokoroApp;
 			sourceTree = "<group>";
 		};
 		13F9D2EB275B984C00D121F2 /* Preview Content */ = {
@@ -268,7 +268,7 @@
 				13F9D3CC275C7D5E00D121F2 /* MapSwitch.swift */,
 				13F9D3D4275C7D5E00D121F2 /* OmiseSearchAndPostView.swift */,
 				13F9D3FB275C7D5F00D121F2 /* LatestPostsListView.swift */,
-				13F9D3D6275C7D5E00D121F2 /* PostDetailView.swift */,
+				13F9D3D6275C7D5E00D121F2 /* PostDetailViewFromMapView.swift */,
 				13BB3B8B2760D6E800BD5C8F /* PostDetailViewTwo.swift */,
 				13F9D3D7275C7D5E00D121F2 /* PostCardView.swift */,
 				13F9D3D5275C7D5E00D121F2 /* NotificationListView.swift */,
@@ -482,7 +482,7 @@
 				13F9D412275C7D6000D121F2 /* OmiseData.swift in Sources */,
 				13F31541275DC2B6005F60D9 /* RegisterView.swift in Sources */,
 				13F13A2F275FA7E600C40B17 /* RedButtonView.swift in Sources */,
-				13F9D409275C7D6000D121F2 /* PostDetailView.swift in Sources */,
+				13F9D409275C7D6000D121F2 /* PostDetailViewFromMapView.swift in Sources */,
 				13F9D416275C7D6000D121F2 /* ImageController.swift in Sources */,
 				13F9D414275C7D6000D121F2 /* CommentsInRangeView.swift in Sources */,
 				13D42D47278C9FBC00BCE89B /* FCMServerKey.swift in Sources */,
@@ -655,16 +655,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = PushNotificationSwiftUI/PushNotificationSwiftUI.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OmisekokoroApp/PushNotificationSwiftUI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PushNotificationSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"OmisekokoroApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 5VM7ARKGV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PushNotificationSwiftUI/Info.plist;
+				INFOPLIST_FILE = OmisekokoroApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "オミセココロ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "本アプリはユーザーの位置情報を利用しません。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -691,16 +692,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = PushNotificationSwiftUI/PushNotificationSwiftUIRelease.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OmisekokoroApp/PushNotificationSwiftUIRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PushNotificationSwiftUI/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"OmisekokoroApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 5VM7ARKGV2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PushNotificationSwiftUI/Info.plist;
+				INFOPLIST_FILE = OmisekokoroApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "オミセココロ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "本アプリはユーザーの位置情報を利用しません。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;

@@ -166,7 +166,7 @@ struct MapAndSearch: View {
                                 searchedAndSelectedOmiseLongitude: $searchedAndSelectedOmiseLongitude,
                                 searchedAndSelectedOmiseAddress: $searchedAddress,
                                 searchedAndSelectedOmiseImageURL: $searchedAndSelectedOmiseImageURL,
-                                mapSwitch: $mapSwitch,
+//                                mapSwitch: $mapSwitch,
                                 isPopover: $isShowSearchAndPostPopover,
                                 mkMapView: $map)
                         } // .popoverここまで
@@ -183,7 +183,7 @@ struct MapAndSearch: View {
                                     .opacity(0.8)
                                 
                                 VStack {
-                                    PostDetailView(selectedPost: $selectedPost,
+                                    PostDetailViewFromMapView(selectedPost: $selectedPost,
                                                    isShowingDetail: $isShowingDetail,
                                                    isShowingDetailContent: $isShowingDetailContent,
                                                    selectedPostImageData: $selectedPostImageData,

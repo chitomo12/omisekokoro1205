@@ -13,18 +13,16 @@ struct OmiseSearchAndPostView: View {
     @EnvironmentObject var currentUserData: UserData
     
     @ObservedObject var omiseDataList: OmiseData
-//    @ObservedObject var currentUser: UserData
     
     @Binding var selectedTag: Int
     @Binding var searchedAndSelectedOmiseLatitude: Double
     @Binding var searchedAndSelectedOmiseLongitude: Double
-//    @Binding var searchedAndSelectedOmiseName: String
     @Binding var searchedAndSelectedOmiseAddress: String
     @Binding var searchedAndSelectedOmiseImageURL: String?
     @State var searchedAndSelectedOmiseImage: UIImage? = UIImage(named: "SampleImage")
     @State var searchedAndSelectedOmiseUid: String?
     @State var isSomeOmiseSelected: Bool = false
-    @Binding var mapSwitch: MapSwitch
+//    @Binding var mapSwitch: MapSwitch
     @Binding var isPopover: Bool
     @Binding var mkMapView: MKMapView
     
@@ -322,7 +320,7 @@ struct OmiseSearchAndPostView_Previews: PreviewProvider {
                                searchedAndSelectedOmiseLongitude: .constant(0.0),
                                searchedAndSelectedOmiseAddress: .constant("sample address"),
                                searchedAndSelectedOmiseImageURL: .constant("sample url"),
-                               mapSwitch: .constant(.normal),
+//                               mapSwitch: .constant(.normal),
                                isPopover: .constant(true),
                                mkMapView: .constant(MKMapView()))
     }

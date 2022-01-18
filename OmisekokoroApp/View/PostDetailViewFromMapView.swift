@@ -10,7 +10,7 @@ import MapKit
 import UIKit
 
 // Mapでアノテーション選択時に表示されるビュー
-struct PostDetailView: View {
+struct PostDetailViewFromMapView: View {
     @EnvironmentObject var environmentCurrentUser: UserData
     @EnvironmentObject var isShowProgress: ShowProgress
     @EnvironmentObject var isShowPostDetailPopover: IsShowPostDetailPopover
@@ -336,7 +336,7 @@ struct PostDetailView: View {
 struct PostDetailView_Previews: PreviewProvider {
     static var previews: some View {
         // ImageURLが存在するパターン
-        PostDetailView(selectedPost:
+        PostDetailViewFromMapView(selectedPost:
                             .constant(Post(omiseName: "サンプル焼き肉店名",
                                            documentId: "sample ID",
                                            created_at: "2020年10月20日",
